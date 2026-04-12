@@ -961,6 +961,7 @@ section {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  gap: 0;
 }
 
 .flow-step-wrapper {
@@ -968,6 +969,7 @@ section {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  max-width: 320px;
 }
 
 .flow-step {
@@ -979,12 +981,12 @@ section {
   padding: 28px 24px;
   text-align: center;
   width: 100%;
-  max-width: 400px;
   position: relative;
   transition: transform var(--t-norm), box-shadow var(--t-norm);
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1;
 }
 .flow-step:hover {
   transform: translateY(-3px);
@@ -1030,6 +1032,7 @@ section {
   line-height: 1.8;
 }
 
+/* 矢印: モバイルは下向き(↓) */
 .flow-arrow {
   display: flex;
   align-items: center;
@@ -1040,7 +1043,7 @@ section {
 .flow-arrow svg {
   width: 18px;
   height: 18px;
-  transform: rotate(0deg); /* ↓ default: 下向き */
+  transform: rotate(0deg);
 }
 
 /* ============================================
@@ -1516,20 +1519,28 @@ section {
 
   .flow-steps {
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: stretch;
+    gap: 0;
   }
   .flow-step-wrapper {
     display: flex;
     flex-direction: row;
     align-items: stretch;
+    max-width: none;
   }
-  .flow-step { flex: 1; max-width: 185px; word-break: keep-all; overflow-wrap: break-word; height: 100%; }
+  .flow-step {
+    flex: 1;
+    min-width: 0;
+    max-width: 180px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
   .flow-step h4 { font-size: 13px; word-break: keep-all; overflow-wrap: break-word; }
-  .flow-step p { font-size: 12px; word-break: keep-all; overflow-wrap: break-word; }
-  .flow-arrow { padding: 0 8px; align-self: center; }
-  .flow-arrow svg { transform: rotate(-90deg); }
+  .flow-step p { font-size: 11px; word-break: keep-all; overflow-wrap: break-word; }
+  .flow-arrow { padding: 0 6px; align-self: center; }
+  .flow-arrow svg { transform: rotate(-90deg); /* → 右向き */ }
 
   .cta-btn--line { width: auto; max-width: none; }
   .float-cta { display: none; }
