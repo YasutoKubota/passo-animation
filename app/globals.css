@@ -1011,7 +1011,6 @@ section {
   flex-direction: column;
   align-items: center;
   flex: 1;
-  overflow: hidden;
   box-sizing: border-box;
 }
 .flow-step:hover {
