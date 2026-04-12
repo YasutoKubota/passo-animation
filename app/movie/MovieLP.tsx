@@ -461,7 +461,7 @@ export default function MovieLP() {
               </address>
               <div className="about-studio-map">
                 <iframe
-                  src="https://maps.google.com/maps?q=Passo+animation+studio+岡崎&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1633.2!2d137.1641941!3d34.9584077!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6004bd15847a915f%3A0xe6ca949c235af3a7!2z44OR44OD44K944Ki44OL44Oh44O844K344On44Oz44K544K_44K444Kq77yI5bCx5Yq057aZ57aa5pSv5o-0QuWei--8iQ!5e0!3m2!1sja!2sjp!4v1"
                   width="100%"
                   height="200"
                   style={{ border: 0, borderRadius: "var(--r-sm)", marginTop: 16 }}
@@ -480,7 +480,7 @@ export default function MovieLP() {
               </address>
               <div className="about-studio-map">
                 <iframe
-                  src="https://maps.google.com/maps?q=Passo+animation+studio豊田&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1631.5!2d137.1479506!3d35.0490656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6004a13f4c6d7335%3A0x4781f4b5efb15f9f!2z44OR44OD44K944Ki44OL44Oh44O844K344On44Oz44K544K_44K444Kq6LGK55Sw77yI5bCx5Yq057aZ57aa5pSv5o-0QuWei--8iQ!5e0!3m2!1sja!2sjp!4v1"
                   width="100%"
                   height="200"
                   style={{ border: 0, borderRadius: "var(--r-sm)", marginTop: 16 }}
