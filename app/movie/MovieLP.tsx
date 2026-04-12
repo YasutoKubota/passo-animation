@@ -115,11 +115,11 @@ export default function MovieLP() {
                 動画制作において、どんなスキルよりも強い武器になります。
               </p>
               <p>
-                ここは、あなたの「好き」という気持ちを、<br />
-                そのまま「仕事」に変えるための場所です。
+                ここは、その気持ちを「本当のお仕事」へと育てていく場所です。
               </p>
               <p>
-                当スタジオで手がける、制作案件のジャンルをご紹介します。
+                ディレクターの丁寧なサポートのもとで、実際の企業案件にチャレンジする。<br />
+                世に出る動画を作り上げた経験が、そのままあなたの「プロとしての名刺（実績）」に変わっていきます。
               </p>
             </div>
           </div>
@@ -132,10 +132,17 @@ export default function MovieLP() {
           <div className="projects-header reveal">
             <div className="section-label"><span className="dot"></span> PROJECTS</div>
             <h2 className="section-title">制作案件のジャンル</h2>
-            <p className="section-sub">
-              <span style={{ display: "inline-block" }}>多種多様な案件に継続的に携わることで、</span>
-              <span style={{ display: "inline-block" }}>クリエイターとしての制作の幅が大きく拡がります。</span>
-            </p>
+            <div className="section-sub">
+              <p>
+                <span style={{ display: "inline-block" }}>ここで紹介する3つのジャンルを経験すれば、</span>
+                <span style={{ display: "inline-block" }}>世の中の動画編集のお仕事の「8〜9割」に</span>
+                <span style={{ display: "inline-block" }}>対応できると言っても過言ではありません。</span>
+              </p>
+              <p style={{ marginTop: "12px" }}>
+                <span style={{ display: "inline-block" }}>現場で活きる実践的なスキルを身につけ、</span>
+                <span style={{ display: "inline-block" }}>どこでも必要とされるクリエイターを目指せます。</span>
+              </p>
+            </div>
           </div>
           <div className="project-cards">
             {[
