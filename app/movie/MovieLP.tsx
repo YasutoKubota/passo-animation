@@ -388,19 +388,43 @@ export default function MovieLP() {
           </div>
           <div className="about-studios">
             <div className="about-studio glass reveal reveal-d1">
-              <div className="about-studio-label">岡崎スタジオ</div>
+              <div className="about-studio-label">パッソアニメーションスタジオ</div>
               <address className="about-studio-address">
                 〒444-0045<br />
                 愛知県岡崎市康生通東1-1<br />
                 岡崎フロントビル6-B
               </address>
+              <div className="about-studio-map">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3266.7!2d137.1617!3d34.9563!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6004a31e2a9a1a1d%3A0x0!2z5bKh5bSO44OV44Ot44Oz44OI44OT44Or!5e0!3m2!1sja!2sjp!4v1"
+                  width="100%"
+                  height="200"
+                  style={{ border: 0, borderRadius: "var(--r-sm)", marginTop: 16 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="パッソアニメーションスタジオ 岡崎"
+                ></iframe>
+              </div>
             </div>
             <div className="about-studio glass reveal reveal-d2">
-              <div className="about-studio-label">豊田スタジオ</div>
+              <div className="about-studio-label">パッソアニメーションスタジオ豊田</div>
               <address className="about-studio-address">
                 〒473-0901<br />
                 愛知県豊田市御幸本町5-311-8
               </address>
+              <div className="about-studio-map">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3263.5!2d137.1555!3d35.0825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6004bb8e8e8e8e8d%3A0x0!2z6LGK55Sw5biC5b6h5bm45pys55S6!5e0!3m2!1sja!2sjp!4v1"
+                  width="100%"
+                  height="200"
+                  style={{ border: 0, borderRadius: "var(--r-sm)", marginTop: 16 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="パッソアニメーションスタジオ豊田"
+                ></iframe>
+              </div>
             </div>
           </div>
         </div>
