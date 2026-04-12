@@ -115,11 +115,8 @@ export default function MovieLP() {
                 動画制作において、どんなスキルよりも強い武器になります。
               </p>
               <p>
-                ここは、その気持ちを「本当のお仕事」へと育てていく場所です。
-              </p>
-              <p>
-                ディレクターの丁寧なサポートのもとで、実際の企業案件にチャレンジする。<br />
-                世に出る動画を作り上げた経験が、そのままあなたの「プロとしての名刺（実績）」に変わっていきます。
+                パッソでは、ディレクターの丁寧なサポートのもとで企業案件にチャレンジできます。<br />
+                ここで手がけた案件は、そのままあなたの「ポートフォリオ（実績）」として積み上がっていきます。
               </p>
             </div>
           </div>
@@ -132,17 +129,9 @@ export default function MovieLP() {
           <div className="projects-header reveal">
             <div className="section-label"><span className="dot"></span> PROJECTS</div>
             <h2 className="section-title">制作案件のジャンル</h2>
-            <div className="section-sub">
-              <p>
-                <span style={{ display: "inline-block" }}>ここで紹介する3つのジャンルを経験すれば、</span>
-                <span style={{ display: "inline-block" }}>世の中の動画編集のお仕事の「8〜9割」に</span>
-                <span style={{ display: "inline-block" }}>対応できると言っても過言ではありません。</span>
-              </p>
-              <p style={{ marginTop: "12px" }}>
-                <span style={{ display: "inline-block" }}>現場で活きる実践的なスキルを身につけ、</span>
-                <span style={{ display: "inline-block" }}>どこでも必要とされるクリエイターを目指せます。</span>
-              </p>
-            </div>
+            <p className="section-sub">
+              当スタジオで手がける、主な制作案件のジャンルをご紹介します。
+            </p>
           </div>
           <div className="project-cards">
             {[
@@ -160,6 +149,12 @@ export default function MovieLP() {
                 </div>
               </div>
             ))}
+          </div>
+          <div className="projects-note reveal" style={{ textAlign: "center", marginTop: "48px" }}>
+            <p className="section-sub" style={{ margin: "0 auto" }}>
+              現在、Web上の動画編集案件の「8〜9割」が、以上の3つのジャンルで占められています。<br />
+              これらを経験することが、どこでも必要とされるクリエイターになるための一番の近道です。
+            </p>
           </div>
         </div>
       </section>
