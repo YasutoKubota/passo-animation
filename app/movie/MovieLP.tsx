@@ -66,7 +66,7 @@ export default function MovieLP() {
       <header className="site-header" id="header">
         <div className="header-inner">
           <a href="#hero" className="logo" onClick={scrollTo("hero")}>
-            <img src="/images/logo-passo.png" alt="Passo a Passo" className="logo-img" />
+            <img src="/images/logo-passo.png" alt="パッソアニメーションスタジオ" className="logo-img" />
           </a>
           <a href="#final-cta" className="header-cta" id="header-cta-btn" onClick={scrollTo("final-cta")}>
             お問い合わせ
@@ -83,14 +83,41 @@ export default function MovieLP() {
           </video>
         </div>
         <div className="hero-content">
-          <p className="hero-sub-copy">働くことに障がいのあるクリエイターのための制作スタジオ（就労継続支援B型）</p>
+          <p className="hero-sub-copy">パッソアニメーションスタジオ｜働くことに障がいのあるクリエイターのための制作スタジオ（就労継続支援B型）</p>
           <h1>
             あなたの「好き」が、仕事になる。<br />
-            多彩な動画の企業案件が、揃っています。
+            多彩な企業案件が、揃っています。
           </h1>
           <div className="scroll-hint">
             <span className="scroll-line"></span>
             <span>SCROLL</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ── BRIDGE ── */}
+      <section className="bridge" id="bridge">
+        <div className="container">
+          <div className="bridge-inner reveal">
+            <h2 className="bridge-heading">
+              「好き」であること。<br />
+              それが、何よりの強みになります。
+            </h2>
+            <div className="bridge-body">
+              <p>「好きなことには、時間を忘れてのめり込める」</p>
+              <p>
+                もしあなたがそうなら、その「好き」という純粋なエネルギーは、<br />
+                動画制作において、どんなスキルよりも強い武器になります。
+              </p>
+              <p>
+                ここは、あなたの「好き」という気持ちを、<br />
+                そのまま「仕事」に変えるための場所です。
+              </p>
+              <p>
+                あなたの「好き」がどんな仕事になるのか。<br />
+                まずは、実際の企業案件を覗いてみてください。
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -352,11 +379,38 @@ export default function MovieLP() {
         </div>
       </section>
 
+      {/* ── ABOUT ── */}
+      <section className="about" id="about">
+        <div className="container">
+          <div className="about-header reveal">
+            <div className="section-label"><span className="dot"></span> About</div>
+            <h2 className="section-title">施設概要</h2>
+          </div>
+          <div className="about-studios">
+            <div className="about-studio glass reveal reveal-d1">
+              <div className="about-studio-label">岡崎スタジオ</div>
+              <address className="about-studio-address">
+                〒444-0045<br />
+                愛知県岡崎市康生通東1-1<br />
+                岡崎フロントビル6-B
+              </address>
+            </div>
+            <div className="about-studio glass reveal reveal-d2">
+              <div className="about-studio-label">豊田スタジオ</div>
+              <address className="about-studio-address">
+                〒473-0901<br />
+                愛知県豊田市御幸本町5-311-8
+              </address>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── FOOTER ── */}
       <footer className="site-footer" id="footer">
         <p className="footer-supplement">※イラストレーターも同時募集しています。所属クリエイターが描いたイラストを動画で動かすなど、チームでの制作も行っています。</p>
         <div className="footer-logo">
-          <img src="/images/logo-passo.png" alt="Passo a Passo" className="footer-logo-img" />
+          <img src="/images/logo-passo.png" alt="パッソアニメーションスタジオ" className="footer-logo-img" />
         </div>
         <p className="footer-copy">&copy; 2026 Passo a Passo. All rights reserved.</p>
       </footer>

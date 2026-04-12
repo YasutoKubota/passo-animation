@@ -281,9 +281,9 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(2px);
-  -webkit-filter: blur(2px);
-  transform: scale(1.02);
+  filter: blur(0px);
+  -webkit-filter: blur(0px);
+  transform: scale(1.01);
 }
 .hero-bg::after {
   content: '';
@@ -373,6 +373,50 @@ section {
    ============================================ */
 .projects {
   padding: var(--section-py-lg) 0;
+}
+
+/* ============================================
+   BRIDGE — 「好き」が強み
+   ============================================ */
+.bridge {
+  padding: 96px 0 80px;
+  background: var(--bg-primary);
+  text-align: center;
+}
+
+.bridge-inner {
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.bridge-heading {
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+  margin-bottom: 40px;
+  color: var(--text-primary);
+}
+
+.bridge-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.bridge-body p {
+  font-size: 15px;
+  line-height: 2.2;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.bridge-body p:first-child {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.08em;
 }
 
 .projects-header {
@@ -1094,6 +1138,54 @@ section {
 }
 
 /* ============================================
+   ABOUT — 施設概要
+   ============================================ */
+.about {
+  background: var(--bg-primary);
+  padding: var(--section-py-lg) 0;
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 44px;
+}
+
+.about-studios {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.about-studio {
+  padding: 32px 28px;
+  text-align: center;
+  transition: transform var(--t-norm), box-shadow var(--t-norm);
+}
+.about-studio:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.about-studio-label {
+  font-family: var(--font-jp);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+
+.about-studio-address {
+  font-style: normal;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 2;
+  letter-spacing: 0.04em;
+}
+
+/* ============================================
    FINAL CTA
    ============================================ */
 .final-cta {
@@ -1218,6 +1310,16 @@ section {
   .hero { padding-bottom: 80px; }
   .hero h1 { font-size: 36px; }
 
+  .bridge { padding: 120px 0 100px; }
+  .bridge-heading { font-size: 34px; }
+  .bridge-body p { font-size: 16px; }
+
+  .about-studios {
+    flex-direction: row;
+    gap: 20px;
+  }
+  .about-studio { flex: 1; }
+
   .project-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1298,6 +1400,9 @@ section {
   }
   .hero h1 { font-size: 42px; }
   .hero-sub-copy { font-size: 12px; }
+
+  .bridge { padding: 160px 0 140px; }
+  .bridge-heading { font-size: 38px; }
 
   .project-card-thumb img { height: 210px; }
   .env-item-image img { height: 320px; }
