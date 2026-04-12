@@ -106,17 +106,20 @@ export default function MovieLP() {
           <div className="bridge-inner reveal">
             <h2 className="bridge-heading">
               <span style={{ display: "inline-block" }}>「好き」であること。</span><br />
-              <span style={{ display: "inline-block" }}>それが、</span><span style={{ display: "inline-block" }}>何よりの強みになります。</span>
+              <span style={{ display: "inline-block" }}>それが、</span><span style={{ display: "inline-block" }}>何よりの力になります。</span>
             </h2>
             <div className="bridge-body">
               <p>「好きなことには、時間を忘れてのめり込める」</p>
               <p>
-                もしあなたがそうなら、その「好き」という純粋なエネルギーは、<br />
-                動画制作において、どんなスキルよりも強い武器になります。
+                もしそうなら、その「好き」という純粋なエネルギーは、<br />
+                動画制作において、どんなスキルよりも強い原動力になります。
               </p>
               <p>
-                パッソでは、ディレクターの丁寧なサポートのもとで企業案件にチャレンジできます。<br />
-                ここで手がけた案件は、そのままあなたの「ポートフォリオ（実績）」として積み上がっていきます。
+                パッソでは、専属の支援スタッフ（ディレクター）の丁寧なサポートのもとで企業案件にチャレンジできます。<br />
+                ここで手がけた案件が、そのまま自分の実績として積み上がっていきます。
+              </p>
+              <p>
+                在籍クリエイターが実際に取り組んでいる案件をご紹介します。
               </p>
             </div>
           </div>
@@ -128,10 +131,7 @@ export default function MovieLP() {
         <div className="container">
           <div className="projects-header reveal">
             <div className="section-label"><span className="dot"></span> PROJECTS</div>
-            <h2 className="section-title">制作案件のジャンル</h2>
-            <p className="section-sub">
-              当スタジオで手がける、主な制作案件のジャンルをご紹介します。
-            </p>
+            <h2 className="section-title">在籍クリエイターが手がけている案件</h2>
           </div>
           <div className="project-cards">
             {[
@@ -156,8 +156,8 @@ export default function MovieLP() {
               <span style={{ display: "inline-block" }}>以上の3つのジャンルで占められています。</span>
             </p>
             <p className="section-sub" style={{ margin: "0 auto", marginTop: "12px" }}>
-              <span style={{ display: "inline-block" }}>これらを経験することが、どこでも必要とされる</span>
-              <span style={{ display: "inline-block" }}>クリエイターになるための一番の近道です。</span>
+              <span style={{ display: "inline-block" }}>これらを経験することが、将来フリーランスとして仕事を受けたり、</span>
+              <span style={{ display: "inline-block" }}>企業の制作チームに加わるための、一番の近道です。</span>
             </p>
           </div>
         </div>
@@ -174,8 +174,8 @@ export default function MovieLP() {
 
           <div className="wf-steps-editorial">
             {[
-              { img: "wf-proposal.png", num: 1, title: "案件の決定", desc: "あなたの現在のスキルや目標、日々のコンディションを考慮し、ディレクターが最適なプロジェクトをアサインします。無理のないペースで取り組めるよう、スケジュールの調整も行います。", note: "", reverse: false },
-              { img: "wf-briefing.png", num: 2, title: "要件の共有と制作スタート", desc: "制作する動画の目的や具体的な要件を、対面やチャット（Teams）で共有します。企業との連絡はすべてスタッフが担当するため、制作そのものに集中することができます。", note: "", reverse: true },
+              { img: "wf-proposal.png", num: 1, title: "案件の決定", desc: "クリエイターの現在のスキルや目標、日々のコンディションを考慮し、ディレクターが最適なプロジェクトをアサインします。無理のないペースで取り組めるよう、スケジュールの調整も行います。", note: "", reverse: false },
+              { img: "wf-briefing.png", num: 2, title: "要件の共有と制作スタート", desc: "制作する動画の目的や具体的な要件を、対面やチャット（Teams）で共有します。企業との連絡はすべてディレクターが担当するため、制作そのものに集中することができます。", note: "", reverse: true },
               { img: "wf-production.png", num: 3, title: "制作と進捗共有", desc: "パーソナルデスクで、ご自身の作業に集中していただきます。制作中に迷うことがあれば、対面やチャット（Teams）でいつでもディレクターに相談できる環境が整っています。", note: "", reverse: false },
               { img: "wf-review.png", num: 4, title: "レビューと品質向上", desc: "完成した動画は、ディレクターによるレビューを行います。より良い作品にするための具体的なフィードバックを行い、納品基準を満たすクオリティへと引き上げます。", note: "", reverse: true },
               { img: "wf-portfolio.png", num: 5, title: "納品、そしてご自身の実績へ", desc: "最終確認を終えた作品は、ディレクターが責任を持って企業へ納品します。携わったプロジェクトは、ご自身の確かな「実績（ポートフォリオ）」として蓄積されていきます。", note: "", reverse: false },
@@ -196,7 +196,7 @@ export default function MovieLP() {
 
           <div className="workflow-closing reveal">
             <div className="workflow-closing-inner glass">
-              <p>この制作のサイクルを、無理のないペースで繰り返していく。<br />その経験の積み重ねの中で、実践的なテクニックや仕事の進め方など、クリエイターとしての多彩なスキルが自然と身についていきます。</p>
+              <p>この制作のサイクルを、無理のないペースで繰り返していく。<br />その経験の積み重ねの中で、実践的なテクニックや仕事の進め方など、クリエイターとしての多彩なスキルが自然と身についていきます。その積み上げた実績とスキルが、将来の選択肢を広げていきます。</p>
             </div>
           </div>
         </div>
@@ -218,8 +218,8 @@ export default function MovieLP() {
                   <path d="M20 36l-4-4c-1.1-1.1-1.1-2.9 0-4l8-8c1.1-1.1 2.9-1.1 4 0l2 2M44 28l4 4c1.1 1.1 1.1 2.9 0 4l-8 8c-1.1 1.1-2.9 1.1-4 0l-2-2M22 30l10 10M28 24l10 10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <h3>【案件開拓・窓口】専属のスタッフが企業と連携</h3>
-              <p>スタジオには専属のスタッフがおり、継続的に多彩な案件を獲得しています。クライアントとの交渉や細かな調整は、すべてディレクターや専属スタッフが担当します。外部との直接的な折衝を任せることはないため、制作そのものに集中できます。その分、スタジオ内でのTeams等を用いた「業務の進捗報告」や「チーム間のコミュニケーション」に専念し、将来に向けたビジネススキルの基盤を作ることができます。</p>
+              <h3>【案件開拓・窓口】専属のディレクターが企業と連携</h3>
+              <p>スタジオには専属のディレクターがおり、継続的に多彩な案件を獲得しています。クライアントとの交渉や細かな調整は、すべてディレクターが担当します。外部との直接的な折衝を任せることはないため、制作そのものに集中できます。その分、スタジオ内でのTeams等を用いた「業務の進捗報告」や「チーム間のコミュニケーション」に専念し、将来に向けたビジネススキルの基盤を作ることができます。</p>
             </div>
             <div className="support-pillar glass reveal reveal-d2" id="support-production">
               <div className="support-pillar-icon">
@@ -232,8 +232,8 @@ export default function MovieLP() {
                   <path d="M44 29v2M44 45v2M37 38h2M49 38h2M39 33l1.4 1.4M47.6 41.6l1.4 1.4M39 43l1.4-1.4M47.6 34.4l1.4-1.4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
               </div>
-              <h3>【技術・品質管理】現場を知るスタッフが伴走</h3>
-              <p>制作中に行き詰まった時は、いつでもスタッフに相談できます。最終的なクオリティの確認や納品もスタッフが責任を持って行うため、一人で大きなプレッシャーを抱え込むことはありません。</p>
+              <h3>【技術・品質管理】現場を知るディレクターが伴走</h3>
+              <p>制作中に行き詰まった時は、いつでもディレクターに相談できます。最終的なクオリティの確認や納品もディレクターが責任を持って行うため、一人で大きなプレッシャーを抱え込むことはありません。</p>
             </div>
           </div>
         </div>
@@ -244,7 +244,7 @@ export default function MovieLP() {
         <div className="container">
           <div className="env-header reveal">
             <div className="section-label"><span className="dot"></span> ENVIRONMENT</div>
-            <h2 className="section-title">制作に深く没入できる空間</h2>
+            <h2 className="section-title">自分のペースで、集中できる場所</h2>
             <p className="section-sub">周囲の目を気にすることなく、ご自身のペースで作業に向き合えるワークスペースを整えています。</p>
           </div>
           <div className="env-items">
@@ -306,8 +306,8 @@ export default function MovieLP() {
               { num: 1, icon: <path d="M6 8h20v14H10l-4 4V8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />, circles: [12, 16, 20], title: "お問い合わせ", desc: "まずはLINEより、お気軽にお問い合わせください。" },
               { num: 2, icon: <><path d="M4 16s5-8 12-8 12 8 12 8-5 8-12 8S4 16 4 16z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /><circle cx="16" cy="16" r="4" stroke="currentColor" strokeWidth="2" /></>, title: "見学", desc: "スタジオの洗練された雰囲気や、実際の制作現場をご案内します。" },
               { num: 3, icon: <><rect x="6" y="8" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="2" /><path d="M2 24h28" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></>, title: "体験利用（3日間）", desc: "実際の制作環境に触れていただき、ご自身のペースに合うかをご確認いただけます。" },
-              { num: 4, icon: <><path d="M10 4h8l6 6v18H10a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /><path d="M18 4v6h6M12 16h8M12 20h8M12 24h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></>, title: "受給者証の申請", desc: "お住まいの自治体での必要なお手続きは、スタッフが丁寧にサポートします。" },
-              { num: 5, icon: <><path d="M16 4c0 0-8 6-8 18h16C24 10 16 4 16 4z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /><circle cx="16" cy="16" r="3" stroke="currentColor" strokeWidth="2" /><path d="M10 22l-4 4M22 22l4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></>, title: "利用開始", desc: "あなたに合わせたペースで、クリエイターとしての活動がスタートします。" },
+              { num: 4, icon: <><path d="M10 4h8l6 6v18H10a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /><path d="M18 4v6h6M12 16h8M12 20h8M12 24h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></>, title: "受給者証の申請", desc: "お住まいの自治体での必要なお手続きは、ディレクターが丁寧にサポートします。" },
+              { num: 5, icon: <><path d="M16 4c0 0-8 6-8 18h16C24 10 16 4 16 4z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /><circle cx="16" cy="16" r="3" stroke="currentColor" strokeWidth="2" /><path d="M10 22l-4 4M22 22l4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></>, title: "利用開始", desc: "ご自身のペースで、クリエイターとしての活動がスタートします。" },
             ].map((step, i) => (
               <div key={step.num} className="flow-step-wrapper">
                 <div className={`flow-step reveal reveal-d${Math.min(i + 1, 3)}`} id={`flow-step${step.num}`}>
@@ -334,7 +334,36 @@ export default function MovieLP() {
         </div>
       </section>
 
-      {/* ── STORY（新設: FLOWとQ&Aの間） ── */}
+      {/* ── 8. FAQ ── */}
+      <section className="faq" id="faq">
+        <div className="container">
+          <div className="faq-header reveal">
+            <div className="section-label"><span className="dot"></span> Q&A</div>
+            <h2 className="section-title">よくある質問</h2>
+          </div>
+          <div className="faq-list">
+            {[
+              { q: "動画制作のスクール（学校）とは違うのですか？", a: "はい、当スタジオは「学校」ではなく、実際の企業案件を手がける「制作スタジオ」です。実際のプロジェクトに参加し、ディレクターのサポートを受けながら実践的な実績（ポートフォリオ）を積んでいく環境です。" },
+              { q: "どのような人が利用できますか？", a: "精神・知的・身体障がい、難病をお持ちの方で、原則として「障がい者手帳」をお持ちの方、あるいは医師の診断や意見書がある方が対象です。" },
+              { q: "動画編集が全くの未経験なのですが、利用できますか？", a: "はい、パソコンの基本操作ができれば問題ありません。未経験からでも段階的に学べるカリキュラムをご用意しており、ディレクターが基礎から丁寧にお教えいたします。" },
+              { q: "週に何日から利用できますか？", a: <>経験の有無に関わらず、当スタジオでは「週3日・1日4時間以上」のご利用を推奨しています。<br />未経験の方にとっては「スキルの着実な習得と定着」のため、経験者の方にとっては「企業案件の納期を守り、安定した制作リズムを作る」ため、どちらの場合も継続的な時間が不可欠だと考えています。</> },
+              { q: "在宅での制作（リモートワーク）は可能ですか？", a: "当スタジオでは、原則として通所によるサポートを行っており、在宅支援は行っておりません。スタジオという「仕事の場」に通うことで、生活リズムにメリハリが生まれ、体調の安定にも繋がると考えているからです。対面でのコミュニケーションや現場の空気感に触れることが、社会的な自立への確かな一歩になると信じています。" },
+              { q: "制作に対する報酬は支払われますか？", a: "はい。作業時間に応じた基本工賃に加え、実際の企業案件に携わった成果や貢献度に応じた『生産活動ボーナス』を上乗せしてお支払いしています。頑張りがしっかり評価される仕組みです。" },
+            ].map((faq, i) => (
+              <details className={`faq-item glass reveal reveal-d${Math.min(i + 1, 3)}`} key={i}>
+                <summary className="faq-question">
+                  <span className="faq-q-icon">Q</span>
+                  <span className="faq-q-text">{faq.q}</span>
+                  <span className="faq-toggle" aria-hidden="true"></span>
+                </summary>
+                <div className="faq-answer"><p>{faq.a}</p></div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── STORY ── */}
       <section className="stories" id="stories">
         <div className="container">
           <div className="stories-header reveal">
@@ -372,35 +401,6 @@ export default function MovieLP() {
                   <span className="story-editorial-credit">{story.credit}</span>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 8. FAQ ── */}
-      <section className="faq" id="faq">
-        <div className="container">
-          <div className="faq-header reveal">
-            <div className="section-label"><span className="dot"></span> Q&A</div>
-            <h2 className="section-title">よくある質問</h2>
-          </div>
-          <div className="faq-list">
-            {[
-              { q: "動画制作のスクール（学校）とは違うのですか？", a: "はい、当スタジオは「学校」ではなく、実際の企業案件を手がける「制作スタジオ」です。実際のプロジェクトに参加し、ディレクターのサポートを受けながら実践的な実績（ポートフォリオ）を積んでいく環境です。" },
-              { q: "どのような人が利用できますか？", a: "精神・知的・身体障がい、難病をお持ちの方で、原則として「障がい者手帳」をお持ちの方、あるいは医師の診断や意見書がある方が対象です。" },
-              { q: "動画編集が全くの未経験なのですが、利用できますか？", a: "はい、パソコンの基本操作ができれば問題ありません。未経験からでも段階的に学べるカリキュラムをご用意しており、スタッフが基礎から丁寧にお教えいたします。" },
-              { q: "週に何日から利用できますか？", a: <>経験の有無に関わらず、当スタジオでは「週3日・1日4時間以上」のご利用を推奨しています。<br />未経験の方にとっては「スキルの着実な習得と定着」のため、経験者の方にとっては「企業案件の納期を守り、安定した制作リズムを作る」ため、どちらの場合も継続的な時間が不可欠だと考えています。</> },
-              { q: "在宅での制作（リモートワーク）は可能ですか？", a: "当スタジオでは、原則として通所によるサポートを行っており、在宅支援は行っておりません。スタジオという「仕事の場」に通うことで、生活リズムにメリハリが生まれ、体調の安定にも繋がると考えているからです。対面でのコミュニケーションや現場の空気感に触れることが、社会的な自立への確かな一歩になると信じています。" },
-              { q: "制作に対する報酬は支払われますか？", a: "はい。作業時間に応じた基本工賃に加え、実際の企業案件に携わった成果や貢献度に応じた『生産活動ボーナス』を上乗せしてお支払いしています。頑張りがしっかり評価される仕組みです。" },
-            ].map((faq, i) => (
-              <details className={`faq-item glass reveal reveal-d${Math.min(i + 1, 3)}`} key={i}>
-                <summary className="faq-question">
-                  <span className="faq-q-icon">Q</span>
-                  <span className="faq-q-text">{faq.q}</span>
-                  <span className="faq-toggle" aria-hidden="true"></span>
-                </summary>
-                <div className="faq-answer"><p>{faq.a}</p></div>
-              </details>
             ))}
           </div>
         </div>
