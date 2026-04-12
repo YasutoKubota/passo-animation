@@ -14,13 +14,18 @@ export default function MovieLP() {
 
   const stories = [
     {
-      name: "Aさん（20代女性 / 未経験スタート）",
-      quote: "「自分には何もない」と思っていました。でもここでPremiere Proに触れ、少しずつ動画が形になる喜びを知りました。今は自分の編集した動画が世に出るのが本当に楽しいです。",
+      name: "Aさん（未経験スタート）",
+      quote: "「自分には何もない」と思っていました。でもここでPremiere Proに触れて、少しずつ動画が形になっていく喜びを知りました。スタッフの方が丁寧に教えてくれるので、未経験でも安心して取り組めています。今は自分の編集した動画が実際に企業様に届くのが、本当に楽しいです。",
       avatar: <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="32" fill="#E6DED3"/><path d="M32 30c3.8 0 7-3.2 7-7s-3.2-7-7-7-7 3.2-7 7 3.2 7 7 7zm0 6c-6.6 0-20 3.3-20 10v4h40v-4c0-6.7-13.4-10-20-10z" fill="#A09890"/></svg>
     },
     {
-      name: "Bさん（30代女性 / 経験者）",
-      quote: "前職では納期に追われ体調を崩してしまいましたが、ここでは専属スタッフさんが無理のないスケジュールを組んでくれるので、安心して動画制作に没頭できています。",
+      name: "Bさん（在籍クリエイター）",
+      quote: "元々は趣味でYouTubeの切り抜き動画などを作っていて、パッソを知りました。最初は『体調のこともあり、自分なんかに本当にできるのかな？』と不安でしたが、実際の企業案件で信頼して仕事を任せてもらえることが、大きなモチベーションになりました。以前は家から出るのも少し億劫だったのですが、今では自分から『もっと案件はないですか？』とスタッフに聞いてしまうほど、前向きに取り組めています",
+      avatar: <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="32" fill="#E6DED3"/><path d="M32 30c3.8 0 7-3.2 7-7s-3.2-7-7-7-7 3.2-7 7 3.2 7 7 7zm0 6c-6.6 0-20 3.3-20 10v4h40v-4c0-6.7-13.4-10-20-10z" fill="#A09890"/></svg>
+    },
+    {
+      name: "Cさん（フリーランス独立）",
+      quote: "パッソに通って一番良かったのは、生活リズムが整い、体調が安定したことです。実際の案件に携わることで、具体的な取り組み方や進め方、スタッフの方の案件管理の仕方などが非常に勉強になり、自信に繋がりました。また、ここで携わった多くの企業案件がそのまま自分の強力なポートフォリオになったことで、独立後の案件獲得がとてもやりやすくなりました",
       avatar: <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="32" fill="#E6DED3"/><path d="M32 30c3.8 0 7-3.2 7-7s-3.2-7-7-7-7 3.2-7 7 3.2 7 7 7zm0 6c-6.6 0-20 3.3-20 10v4h40v-4c0-6.7-13.4-10-20-10z" fill="#A09890"/></svg>
     }
   ];
@@ -211,8 +216,8 @@ export default function MovieLP() {
       <section className="stories" id="stories">
         <div className="container">
           <div className="stories-header reveal">
-            <div className="section-label"><span className="dot"></span> Voice</div>
-            <h2 className="section-title">先輩クリエイターの声</h2>
+            <div className="section-label"><span className="dot"></span> Success Stories</div>
+            <h2 className="section-title">クリエイターの成功ストーリー</h2>
             <p className="section-sub">パッソで新しい一歩を踏み出した方々のお話です。</p>
           </div>
           <div className="story-carousel reveal reveal-d1">
