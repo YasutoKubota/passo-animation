@@ -978,7 +978,7 @@ section {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-subtle);
   border-radius: var(--r-md);
-  padding: 28px 24px;
+  padding: 28px 16px;
   text-align: center;
   width: 100%;
   position: relative;
@@ -987,6 +987,8 @@ section {
   flex-direction: column;
   align-items: center;
   flex: 1;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .flow-step:hover {
   transform: translateY(-3px);
@@ -1533,14 +1535,14 @@ section {
   .flow-step {
     flex: 1;
     min-width: 0;
-    max-width: 180px;
+    max-width: none;
     word-break: keep-all;
     overflow-wrap: break-word;
   }
   .flow-step h4 { font-size: 13px; word-break: keep-all; overflow-wrap: break-word; }
-  .flow-step p { font-size: 11px; word-break: keep-all; overflow-wrap: break-word; }
-  .flow-arrow { padding: 0 6px; align-self: center; }
-  .flow-arrow svg { transform: rotate(-90deg); /* → 右向き */ }
+  .flow-step p { font-size: 11px; word-break: break-all; overflow-wrap: break-word; }
+  .flow-arrow { padding: 0 4px; align-self: center; flex-shrink: 0; }
+  .flow-arrow svg { transform: rotate(-90deg); }
 
   .cta-btn--line { width: auto; max-width: none; }
   .float-cta { display: none; }
@@ -1574,7 +1576,7 @@ section {
   .flow-step-wrapper {
     margin-bottom: 0px;
   }
-  .flow-step { max-width: 200px; }
+  .flow-step { max-width: none; }
 }
 
 /* ============================================
