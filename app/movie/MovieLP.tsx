@@ -461,7 +461,7 @@ export default function MovieLP() {
               </address>
               <div className="about-studio-map">
                 <iframe
-                  src="https://maps.google.com/maps?q=34.9587426,137.1663189+(パッソアニメーションスタジオ)&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                  src="https://maps.google.com/maps?q=Passo+animation+studio+岡崎&t=&z=16&ie=UTF8&iwloc=&output=embed"
                   width="100%"
                   height="200"
                   style={{ border: 0, borderRadius: "var(--r-sm)", marginTop: 16 }}
