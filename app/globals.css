@@ -122,7 +122,6 @@ section {
   max-width: 560px;
   font-weight: 400;
   margin: 0 auto;
-  overflow-wrap: anywhere;
 }
 
 .title-sub {
@@ -1629,8 +1628,8 @@ section {
 
 @media (max-width: 767px) {
   /* 基本 */
-  .section-title { font-size: 20px; margin-bottom: 14px; overflow-wrap: anywhere; }
-  .section-sub { margin-bottom: 24px; font-size: 12px; overflow-wrap: anywhere; }
+  .section-title { font-size: 20px; margin-bottom: 14px; }
+  .section-sub { margin-bottom: 24px; font-size: 12px; }
   .section-label { margin-bottom: 10px; font-size: 11px; }
 
   /* Hero */
@@ -1639,14 +1638,12 @@ section {
     font-size: 20px;
     line-height: 1.7;
     letter-spacing: 0;
-    overflow-wrap: anywhere;
     margin-bottom: 24px;
   }
   .hero-sub-copy {
     font-size: 11px;
     margin-bottom: 10px;
     line-height: 1.8;
-    overflow-wrap: anywhere;
   }
 
   /* Bridge */
@@ -1655,80 +1652,74 @@ section {
     font-size: 19px;
     line-height: 1.75;
     letter-spacing: 0.01em;
-    overflow-wrap: anywhere;
   }
   .bridge-body p {
     font-size: 13px;
     line-height: 2;
-    overflow-wrap: anywhere;
   }
   .bridge-body p br { display: none; }
 
   /* Projects */
   .project-card { margin-bottom: 12px; }
   .project-card-body { padding: 16px 14px; }
-  .project-card-body h3 { font-size: 14px; overflow-wrap: anywhere; }
-  .project-card-body p { font-size: 12px; overflow-wrap: anywhere; }
+  .project-card-body h3 { font-size: 14px; }
+  .project-card-body p { font-size: 12px; }
 
   /* Workflow */
   .workflow .container { padding: 0 20px; }
   .wf-editorial-photo img { height: 180px; }
   .wf-editorial-body { padding: 20px 18px 24px; }
-  .wf-editorial-body h3 { font-size: 14px; overflow-wrap: anywhere; }
-  .wf-editorial-body p { font-size: 12px; overflow-wrap: anywhere; }
-  .wf-editorial-note { overflow-wrap: anywhere; }
+  .wf-editorial-body h3 { font-size: 14px; }
+  .wf-editorial-body p { font-size: 12px; }
   .workflow-closing { margin-top: 28px; }
   .workflow-closing-inner { padding: 24px 18px; }
-  .workflow-closing-inner p { font-size: 12px; overflow-wrap: anywhere; }
+  .workflow-closing-inner p { font-size: 12px; }
 
   /* Support */
   .support-pillar { padding: 28px 18px; }
-  .support-pillar h3 { font-size: 14px; overflow-wrap: anywhere; }
-  .support-pillar p { font-size: 12px; overflow-wrap: anywhere; }
+  .support-pillar h3 { font-size: 14px; }
+  .support-pillar p { font-size: 12px; }
 
   /* Environment */
   .env-item { margin-bottom: 24px; }
   .env-item-body { padding: 20px; }
-  .env-item-body h3 { font-size: 14px; overflow-wrap: anywhere; }
-  .env-item-body p { font-size: 12px; overflow-wrap: anywhere; }
+  .env-item-body h3 { font-size: 14px; }
+  .env-item-body p { font-size: 12px; }
 
   /* Lifestyle / Work Style */
   .lifestyle-block { padding: 24px 18px; }
-  .lifestyle-block h3 { overflow-wrap: anywhere; }
-  .lifestyle-block p { font-size: 12px; overflow-wrap: anywhere; }
+  .lifestyle-block p { font-size: 12px; }
 
   /* Flow */
   .flow .container { padding: 0 20px; }
   .flow-step { padding: 18px 14px; }
-  .flow-step h4 { font-size: 13px; overflow-wrap: anywhere; }
-  .flow-step p { font-size: 11px; overflow-wrap: anywhere; }
+  .flow-step h4 { font-size: 13px; }
+  .flow-step p { font-size: 11px; }
   .flow-arrow svg { transform: rotate(0deg) !important; }
 
   /* Story */
   .story-editorial { padding: 28px 20px; }
-  .story-editorial-heading { font-size: 15px; overflow-wrap: anywhere; }
-  .story-editorial-body { font-size: 13px; overflow-wrap: anywhere; }
+  .story-editorial-heading { font-size: 15px; }
+  .story-editorial-body { font-size: 13px; }
 
   /* CTA Message */
-  .cta-message-heading { font-size: 18px; overflow-wrap: anywhere; }
-  .cta-message-body p { font-size: 13px; overflow-wrap: anywhere; }
+  .cta-message-heading { font-size: 18px; }
+  .cta-message-body p { font-size: 13px; }
   .cta-message-body p br { display: none; }
 
   /* FAQ */
   .faq-item summary { padding: 16px 14px; gap: 10px; }
-  .faq-q-text { overflow-wrap: anywhere; font-size: 13px; }
+  .faq-q-text { font-size: 13px; }
   .faq-answer { padding: 0 14px 20px 42px; }
-  .faq-answer p { font-size: 12px; overflow-wrap: anywhere; }
+  .faq-answer p { font-size: 12px; }
 
   /* Trust & About */
   .track-record { padding: 24px 20px; flex-direction: column; align-items: center; text-align: center; }
-  .track-record-content h3 { overflow-wrap: anywhere; }
-  .track-record-content p { font-size: 12px; overflow-wrap: anywhere; }
+  .track-record-content p { font-size: 12px; }
   .about-studio { padding: 24px 20px; }
   .about-studio-label { font-size: 13px; }
   .about-studio-address { font-size: 12px; }
 
   /* Footer */
   .site-footer { padding-bottom: 100px; }
-  .footer-supplement { overflow-wrap: anywhere; }
 }
