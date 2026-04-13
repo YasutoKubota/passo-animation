@@ -27,17 +27,17 @@ export default function RootLayout({
         {/* Google tag (gtag.js) */}
         <Script async src="https://www.googletagmanager.com/gtag/js?id=AW-597391026" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
-          {\`
+          {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'AW-597391026');
-          \`}
+          `}
         </Script>
 
         {/* Event snippet for LINE登録 conversion page */}
         <Script id="google-conversion" strategy="afterInteractive">
-          {\`
+          {`
             function gtag_report_conversion(url) {
               var callback = function () {
                 if (typeof(url) != 'undefined') {
@@ -50,7 +50,7 @@ export default function RootLayout({
               });
               return false;
             }
-          \`}
+          `}
         </Script>
         {children}
       </body>
