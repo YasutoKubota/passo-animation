@@ -54,7 +54,7 @@
 
 /* --- Reset --- */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
 body {
   font-family: var(--font-jp);
   font-weight: 400;
@@ -76,6 +76,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   margin: 0 auto;
   padding: 0 24px;
   overflow: hidden;
+  box-sizing: border-box;
 }
 .container--wide {
   max-width: var(--container-wide);
@@ -121,7 +122,7 @@ section {
   max-width: 560px;
   font-weight: 400;
   margin: 0 auto;
-  word-break: auto-phrase;
+  overflow-wrap: anywhere;
 }
 
 .title-sub {
@@ -1628,8 +1629,8 @@ section {
 
 @media (max-width: 767px) {
   /* 基本 */
-  .section-title { font-size: 22px; margin-bottom: 14px; word-break: auto-phrase; overflow-wrap: break-word; }
-  .section-sub { margin-bottom: 24px; font-size: 13px; word-break: auto-phrase; overflow-wrap: break-word; }
+  .section-title { font-size: 20px; margin-bottom: 14px; overflow-wrap: anywhere; }
+  .section-sub { margin-bottom: 24px; font-size: 12px; overflow-wrap: anywhere; }
   .section-label { margin-bottom: 10px; font-size: 11px; }
 
   /* Hero */
@@ -1638,16 +1639,14 @@ section {
     font-size: 20px;
     line-height: 1.7;
     letter-spacing: 0;
-    word-break: auto-phrase;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
     margin-bottom: 24px;
   }
   .hero-sub-copy {
     font-size: 11px;
     margin-bottom: 10px;
     line-height: 1.8;
-    word-break: auto-phrase;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
   }
 
   /* Bridge */
@@ -1656,80 +1655,80 @@ section {
     font-size: 19px;
     line-height: 1.75;
     letter-spacing: 0.01em;
-    word-break: auto-phrase;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
   }
   .bridge-body p {
     font-size: 13px;
     line-height: 2;
-    word-break: auto-phrase;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
   }
   .bridge-body p br { display: none; }
 
   /* Projects */
   .project-card { margin-bottom: 12px; }
   .project-card-body { padding: 16px 14px; }
-  .project-card-body h3 { font-size: 15px; word-break: auto-phrase; overflow-wrap: break-word; }
-  .project-card-body p { word-break: auto-phrase; overflow-wrap: break-word; }
+  .project-card-body h3 { font-size: 14px; overflow-wrap: anywhere; }
+  .project-card-body p { font-size: 12px; overflow-wrap: anywhere; }
 
   /* Workflow */
+  .workflow .container { padding: 0 20px; }
   .wf-editorial-photo img { height: 180px; }
   .wf-editorial-body { padding: 20px 18px 24px; }
-  .wf-editorial-body h3 { font-size: 15px; word-break: auto-phrase; overflow-wrap: break-word; }
-  .wf-editorial-body p { word-break: auto-phrase; overflow-wrap: break-word; }
-  .wf-editorial-note { word-break: auto-phrase; overflow-wrap: break-word; }
+  .wf-editorial-body h3 { font-size: 14px; overflow-wrap: anywhere; }
+  .wf-editorial-body p { font-size: 12px; overflow-wrap: anywhere; }
+  .wf-editorial-note { overflow-wrap: anywhere; }
   .workflow-closing { margin-top: 28px; }
   .workflow-closing-inner { padding: 24px 18px; }
-  .workflow-closing-inner p { word-break: auto-phrase; overflow-wrap: break-word; }
+  .workflow-closing-inner p { font-size: 12px; overflow-wrap: anywhere; }
 
   /* Support */
-  .support-pillar { padding: 28px 20px; }
-  .support-pillar h3 { font-size: 15px; word-break: auto-phrase; overflow-wrap: break-word; }
-  .support-pillar p { word-break: auto-phrase; overflow-wrap: break-word; }
+  .support-pillar { padding: 28px 18px; }
+  .support-pillar h3 { font-size: 14px; overflow-wrap: anywhere; }
+  .support-pillar p { font-size: 12px; overflow-wrap: anywhere; }
 
   /* Environment */
   .env-item { margin-bottom: 24px; }
   .env-item-body { padding: 20px; }
-  .env-item-body h3 { font-size: 15px; word-break: auto-phrase; overflow-wrap: break-word; }
-  .env-item-body p { word-break: auto-phrase; overflow-wrap: break-word; }
+  .env-item-body h3 { font-size: 14px; overflow-wrap: anywhere; }
+  .env-item-body p { font-size: 12px; overflow-wrap: anywhere; }
 
   /* Lifestyle / Work Style */
   .lifestyle-block { padding: 24px 18px; }
-  .lifestyle-block h3 { word-break: auto-phrase; overflow-wrap: break-word; }
-  .lifestyle-block p { word-break: auto-phrase; overflow-wrap: break-word; }
+  .lifestyle-block h3 { overflow-wrap: anywhere; }
+  .lifestyle-block p { font-size: 12px; overflow-wrap: anywhere; }
 
   /* Flow */
+  .flow .container { padding: 0 20px; }
   .flow-step { padding: 18px 14px; }
-  .flow-step h4 { word-break: auto-phrase; overflow-wrap: break-word; }
-  .flow-step p { word-break: auto-phrase; overflow-wrap: break-word; }
+  .flow-step h4 { font-size: 13px; overflow-wrap: anywhere; }
+  .flow-step p { font-size: 11px; overflow-wrap: anywhere; }
   .flow-arrow svg { transform: rotate(0deg) !important; }
 
   /* Story */
   .story-editorial { padding: 28px 20px; }
-  .story-editorial-heading { font-size: 15px; word-break: auto-phrase; overflow-wrap: break-word; }
-  .story-editorial-body { font-size: 13px; word-break: auto-phrase; overflow-wrap: break-word; }
+  .story-editorial-heading { font-size: 15px; overflow-wrap: anywhere; }
+  .story-editorial-body { font-size: 13px; overflow-wrap: anywhere; }
 
   /* CTA Message */
-  .cta-message-heading { font-size: 18px; word-break: auto-phrase; overflow-wrap: break-word; }
-  .cta-message-body p { font-size: 13px; word-break: auto-phrase; overflow-wrap: break-word; }
+  .cta-message-heading { font-size: 18px; overflow-wrap: anywhere; }
+  .cta-message-body p { font-size: 13px; overflow-wrap: anywhere; }
   .cta-message-body p br { display: none; }
 
   /* FAQ */
   .faq-item summary { padding: 16px 14px; gap: 10px; }
-  .faq-q-text { word-break: auto-phrase; overflow-wrap: break-word; font-size: 13px; }
+  .faq-q-text { overflow-wrap: anywhere; font-size: 13px; }
   .faq-answer { padding: 0 14px 20px 42px; }
-  .faq-answer p { word-break: auto-phrase; overflow-wrap: break-word; }
+  .faq-answer p { font-size: 12px; overflow-wrap: anywhere; }
 
   /* Trust & About */
   .track-record { padding: 24px 20px; flex-direction: column; align-items: center; text-align: center; }
-  .track-record-content h3 { word-break: auto-phrase; overflow-wrap: break-word; }
-  .track-record-content p { word-break: auto-phrase; overflow-wrap: break-word; }
+  .track-record-content h3 { overflow-wrap: anywhere; }
+  .track-record-content p { font-size: 12px; overflow-wrap: anywhere; }
   .about-studio { padding: 24px 20px; }
   .about-studio-label { font-size: 13px; }
   .about-studio-address { font-size: 12px; }
 
   /* Footer */
   .site-footer { padding-bottom: 100px; }
-  .footer-supplement { word-break: auto-phrase; overflow-wrap: break-word; }
+  .footer-supplement { overflow-wrap: anywhere; }
 }
