@@ -450,7 +450,7 @@ export default function MovieLP() {
         <div className="container">
           <div className="about-header reveal">
             <div className="section-label"><span className="dot"></span> About</div>
-            <h2 className="section-title">施設概要</h2>
+            <h2 className="section-title">スタジオ概要</h2>
           </div>
           <div className="about-studios">
             <div className="about-studio glass reveal reveal-d1">
