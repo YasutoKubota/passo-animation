@@ -218,7 +218,7 @@ export default function MovieLP() {
                   <path d="M20 36l-4-4c-1.1-1.1-1.1-2.9 0-4l8-8c1.1-1.1 2.9-1.1 4 0l2 2M44 28l4 4c1.1 1.1 1.1 2.9 0 4l-8 8c-1.1 1.1-2.9 1.1-4 0l-2-2M22 30l10 10M28 24l10 10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <h3>【案件開拓・窓口】専属のディレクターが企業と連携</h3>
+              <h3>【案件開拓・窓口】<br />専属のディレクターが企業と連携</h3>
               <p>スタジオには専属のディレクターがおり継続的に多彩な案件を獲得しています。クライアントとの交渉や細かな調整はすべてディレクターが担当。外部との直接的な折衝を任せることはないため制作に集中できます。その分スタジオ内でのTeams等を用いた「業務の進捗報告」や「チーム間のコミュニケーション」に専念し将来に向けたビジネススキルの基盤を作れます。</p>
             </div>
             <div className="support-pillar glass reveal reveal-d2" id="support-production">
@@ -232,7 +232,7 @@ export default function MovieLP() {
                   <path d="M44 29v2M44 45v2M37 38h2M49 38h2M39 33l1.4 1.4M47.6 41.6l1.4 1.4M39 43l1.4-1.4M47.6 34.4l1.4-1.4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
               </div>
-              <h3>【技術・品質管理】現場を知るディレクターがサポート</h3>
+              <h3>【技術・品質管理】<br />現場を知るディレクターがサポート</h3>
               <p>制作中に行き詰まったときはいつでもディレクターに相談できます。最終的なクオリティの確認や納品もディレクターが責任を持って行うため一人で大きなプレッシャーを抱え込むことはありません。</p>
             </div>
           </div>
