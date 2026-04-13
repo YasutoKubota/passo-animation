@@ -1653,6 +1653,7 @@ section {
     line-height: 1.75;
     letter-spacing: 0.01em;
   }
+  .bridge-body { text-align: left; }
   .bridge-body p {
     font-size: 12px;
     line-height: 2;
