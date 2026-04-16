@@ -126,28 +126,6 @@ export default function MovieLP() {
         </div>
       </section>
 
-      {/* ── ELIGIBILITY ── */}
-      <section className="eligibility" id="eligibility">
-        <div className="container">
-          <div className="eligibility-inner glass reveal">
-            <h2 className="eligibility-heading">ご利用について</h2>
-            <div className="eligibility-body">
-              <p>
-                パッソアニメーションスタジオは、<br />
-                働くことに障がいのある方のための<br />
-                就労継続支援B型事業所です。
-              </p>
-              <p>
-                障害者手帳または医師の意見書をお持ちの方が対象です。<br />
-                週3日以上の通所を推奨しています。<br />
-                利用にあたっては受給者証の取得が必要です。<br />
-                対象の方は無償または低負担でご利用いただけます。
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ── 2. PROJECTS ── */}
       <section className="projects" id="projects">
         <div className="container">
