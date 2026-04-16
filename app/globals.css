@@ -10,6 +10,8 @@
   --bg-primary: #F5F0E8;
   --bg-secondary: #EDE7DC;
   --bg-accent: #E6DED3;
+  --bg-offwhite: #F7F7F5;
+  --border-section: #E8E4DC;
   --bg-dark: #D9D0C4;
   --bg-card: rgba(255, 253, 248, 0.6);
   --bg-glass: rgba(255, 253, 248, 0.3);
@@ -386,28 +388,9 @@ section {
    ============================================ */
 .projects {
   padding: var(--section-py-lg) 0;
-  background: #ffffff;
+  background: var(--bg-offwhite);
   position: relative;
-}
-.projects::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(to bottom, var(--bg-secondary), #ffffff);
-  pointer-events: none;
-}
-.projects::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(to bottom, #ffffff, var(--bg-secondary));
-  pointer-events: none;
+  border-top: 1px solid var(--border-section);
 }
 
 /* ============================================
@@ -415,7 +398,7 @@ section {
    ============================================ */
 .bridge {
   padding: 96px 0 80px;
-  background: var(--bg-secondary);
+  background: var(--bg-primary);
   text-align: center;
 }
 
@@ -567,7 +550,8 @@ section {
    WORKFLOW — 企業案件の進め方
    ============================================ */
 .workflow {
-  background: var(--bg-secondary);
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-section);
   padding: var(--section-py-lg) 0;
 }
 
@@ -684,6 +668,7 @@ section {
    ============================================ */
 .stories {
   background: var(--bg-primary);
+  border-top: 1px solid var(--border-section);
   padding: var(--section-py-lg) 0;
 }
 
@@ -859,7 +844,8 @@ section {
    ENVIRONMENT
    ============================================ */
 .environment {
-  background: var(--bg-primary);
+  background: var(--bg-offwhite);
+  border-top: 1px solid var(--border-section);
   padding: var(--section-py-lg) 0;
 }
 
@@ -978,7 +964,8 @@ section {
    FLOW
    ============================================ */
 .flow {
-  background: var(--bg-primary);
+  background: var(--bg-offwhite);
+  border-top: 1px solid var(--border-section);
   padding: var(--section-py-lg) 0;
 }
 
@@ -1082,7 +1069,8 @@ section {
    FAQ
    ============================================ */
 .faq {
-  background: var(--bg-secondary);
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-section);
   padding: var(--section-py-lg) 0;
 }
 
@@ -1288,7 +1276,8 @@ section {
    TRUST — 10年の実績
    ============================================ */
 .trust {
-  background: var(--bg-accent);
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-section);
   padding: 64px 0;
 }
 
@@ -1370,7 +1359,8 @@ section {
 .final-cta {
   padding: var(--section-py-lg) 0 72px;
   text-align: center;
-  background: var(--bg-primary);
+  background: var(--bg-offwhite);
+  border-top: 1px solid var(--border-section);
 }
 
 .cta-btn--line {
@@ -1750,112 +1740,7 @@ section {
   .site-footer { padding-bottom: 100px; }
 }
 
-/* ============================================
-   SECTION GRADIENT TRANSITIONS
-   ============================================ */
-
-/* Hero → Bridge */
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Bridge → Projects */
-.bridge {
-  position: relative;
-}
-.bridge::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(to bottom, var(--bg-secondary), #ffffff);
-  pointer-events: none;
-}
-
-/* Workflow → Environment */
-.workflow {
-  position: relative;
-}
-.workflow::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(to bottom, var(--bg-secondary), var(--bg-primary));
-  pointer-events: none;
-}
-
-/* Flow → FAQ */
-.flow {
-  position: relative;
-}
-.flow::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
-  pointer-events: none;
-}
-
-/* FAQ → CTA */
-.faq {
-  position: relative;
-}
-.faq::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(to bottom, var(--bg-secondary), var(--bg-primary));
-  pointer-events: none;
-}
-
-/* CTA → Trust */
-.final-cta {
-  position: relative;
-}
-.final-cta::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(to bottom, var(--bg-primary), var(--bg-accent));
-  pointer-events: none;
-}
-
-/* Trust → About */
-.trust {
-  position: relative;
-}
-.trust::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(to bottom, var(--bg-accent), var(--bg-primary));
-  pointer-events: none;
-}
+/* Gradient transitions removed — using 1px border lines instead */
 
 /* ============================================
    TOP PAGE — 事業所一覧
