@@ -1,35 +1,93 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "株式会社Passo a Passo",
+  description:
+    "愛知県岡崎市・豊田市を拠点に4つの事業所を運営。映像・イラスト制作、軽作業、就労移行支援など多彩な福祉サービスを提供しています。",
+};
 
 export default function Home() {
   return (
-    <main style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "40px 24px" }}>
-      <img src="/images/logo-passo.png" alt="Passo a Passo" style={{ width: 200, marginBottom: 32 }} />
-      <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 16 }}>パッソ制作スタジオ</h1>
-      <p style={{ color: "var(--text-secondary)", marginBottom: 48, maxWidth: 480 }}>
-        働くことに障がいのあるクリエイターのための制作スタジオ（就労継続支援B型）
-      </p>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16, width: "100%", maxWidth: 600 }}>
-        <Link href="/movie" className="glass" style={{ padding: "32px 20px", borderRadius: "var(--r-md)", textAlign: "center", transition: "transform 0.3s, box-shadow 0.3s" }}>
-          <div style={{ fontSize: 32, marginBottom: 8 }}>🎬</div>
-          <div style={{ fontWeight: 700 }}>動画制作</div>
-          <div style={{ fontSize: 12, color: "var(--text-light)", marginTop: 4 }}>Movie</div>
-        </Link>
-        <div className="glass" style={{ padding: "32px 20px", borderRadius: "var(--r-md)", textAlign: "center", opacity: 0.5 }}>
-          <div style={{ fontSize: 32, marginBottom: 8 }}>🎨</div>
-          <div style={{ fontWeight: 700 }}>イラスト制作</div>
-          <div style={{ fontSize: 12, color: "var(--text-light)", marginTop: 4 }}>Coming Soon</div>
+    <main className="top-page">
+      {/* ── HEADER ── */}
+      <header className="top-header">
+        <img src="/images/logo-passo.png" alt="Passo a Passo" className="top-header-logo" />
+      </header>
+
+      {/* ── HERO ── */}
+      <section className="top-hero">
+        <h1 className="top-hero-title">株式会社Passo a Passo</h1>
+        <p className="top-hero-sub">
+          愛知県岡崎市・豊田市を拠点に<br />
+          4つの事業所を運営しています。
+        </p>
+      </section>
+
+      {/* ── 事業所カード ── */}
+      <section className="top-offices">
+        <div className="top-offices-container">
+
+          {/* 事業所① パッソアニメーションスタジオ */}
+          <div className="top-office-card top-office-card--featured">
+            <div className="top-office-card-body">
+              <h2 className="top-office-card-title">パッソアニメーションスタジオ</h2>
+              <p className="top-office-card-sub">岡崎・豊田／就労継続支援B型</p>
+              <p className="top-office-card-desc">
+                企業から映像・イラスト制作を受託する<br />クリエイターチームです。
+              </p>
+              <div className="top-office-card-actions">
+                <Link href="/movie" className="top-btn top-btn--primary">
+                  クリエイターとして加わりたい方
+                </Link>
+                <span className="top-btn top-btn--disabled" aria-disabled="true">
+                  制作を依頼したい企業様
+                  <span className="top-btn-badge">Coming Soon</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* 事業所② 創造空間 */}
+          <div className="top-office-card">
+            <div className="top-office-card-body">
+              <h2 className="top-office-card-title">創造空間Passo a Passo</h2>
+              <p className="top-office-card-sub">岡崎市／就労継続支援B型</p>
+              <p className="top-office-card-desc">軽作業・清掃・食品工場出向等</p>
+              <div className="top-office-card-actions">
+                <span className="top-btn top-btn--disabled" aria-disabled="true">
+                  詳しくはこちら
+                  <span className="top-btn-badge">Coming Soon</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* 事業所③ 就職ゼミナール */}
+          <div className="top-office-card">
+            <div className="top-office-card-body">
+              <h2 className="top-office-card-title">就職ゼミナールPasso a Passo</h2>
+              <p className="top-office-card-sub">岡崎市／就労移行支援</p>
+              <p className="top-office-card-desc">
+                自己理解・コミュニケーションスキル向上を<br />軸としたジョブマッチングサービス
+              </p>
+              <div className="top-office-card-actions">
+                <span className="top-btn top-btn--disabled" aria-disabled="true">
+                  詳しくはこちら
+                  <span className="top-btn-badge">Coming Soon</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
         </div>
-        <div className="glass" style={{ padding: "32px 20px", borderRadius: "var(--r-md)", textAlign: "center", opacity: 0.5 }}>
-          <div style={{ fontSize: 32, marginBottom: 8 }}>✂️</div>
-          <div style={{ fontWeight: 700 }}>創造空間</div>
-          <div style={{ fontSize: 12, color: "var(--text-light)", marginTop: 4 }}>Coming Soon</div>
-        </div>
-        <div className="glass" style={{ padding: "32px 20px", borderRadius: "var(--r-md)", textAlign: "center", opacity: 0.5 }}>
-          <div style={{ fontSize: 32, marginBottom: 8 }}>🎓</div>
-          <div style={{ fontWeight: 700 }}>就職ゼミナール</div>
-          <div style={{ fontSize: 12, color: "var(--text-light)", marginTop: 4 }}>Coming Soon</div>
-        </div>
-      </div>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <footer className="top-footer">
+        <p className="top-footer-name">株式会社Passo a Passo</p>
+        <p className="top-footer-copy">© 2026 Passo a Passo. All rights reserved.</p>
+      </footer>
     </main>
   );
 }
