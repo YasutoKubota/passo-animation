@@ -390,7 +390,8 @@ section {
   padding: var(--section-py-lg) 0;
   background: var(--bg-offwhite);
   position: relative;
-  border-top: 1px solid var(--border-section);
+  border-top: 1px solid;
+  border-image: linear-gradient(to right, transparent, #E8E4DC, transparent) 1;
 }
 
 /* ============================================
@@ -551,7 +552,8 @@ section {
    ============================================ */
 .workflow {
   background: var(--bg-primary);
-  border-top: 1px solid var(--border-section);
+  border-top: 1px solid;
+  border-image: linear-gradient(to right, transparent, #E8E4DC, transparent) 1;
   padding: var(--section-py-lg) 0;
 }
 
@@ -668,7 +670,8 @@ section {
    ============================================ */
 .stories {
   background: var(--bg-primary);
-  border-top: 1px solid var(--border-section);
+  border-top: 1px solid;
+  border-image: linear-gradient(to right, transparent, #E8E4DC, transparent) 1;
   padding: var(--section-py-lg) 0;
 }
 
@@ -845,7 +848,8 @@ section {
    ============================================ */
 .environment {
   background: var(--bg-offwhite);
-  border-top: 1px solid var(--border-section);
+  border-top: 1px solid;
+  border-image: linear-gradient(to right, transparent, #E8E4DC, transparent) 1;
   padding: var(--section-py-lg) 0;
 }
 
@@ -965,7 +969,8 @@ section {
    ============================================ */
 .flow {
   background: var(--bg-offwhite);
-  border-top: 1px solid var(--border-section);
+  border-top: 1px solid;
+  border-image: linear-gradient(to right, transparent, #E8E4DC, transparent) 1;
   padding: var(--section-py-lg) 0;
 }
 
@@ -1070,7 +1075,8 @@ section {
    ============================================ */
 .faq {
   background: var(--bg-primary);
-  border-top: 1px solid var(--border-section);
+  border-top: 1px solid;
+  border-image: linear-gradient(to right, transparent, #E8E4DC, transparent) 1;
   padding: var(--section-py-lg) 0;
 }
 
@@ -1277,7 +1283,8 @@ section {
    ============================================ */
 .trust {
   background: var(--bg-primary);
-  border-top: 1px solid var(--border-section);
+  border-top: 1px solid;
+  border-image: linear-gradient(to right, transparent, #E8E4DC, transparent) 1;
   padding: 64px 0;
 }
 
@@ -1360,7 +1367,8 @@ section {
   padding: var(--section-py-lg) 0 72px;
   text-align: center;
   background: var(--bg-offwhite);
-  border-top: 1px solid var(--border-section);
+  border-top: 1px solid;
+  border-image: linear-gradient(to right, transparent, #E8E4DC, transparent) 1;
 }
 
 .cta-btn--line {
