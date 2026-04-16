@@ -235,7 +235,7 @@ section {
 }
 .logo { display: flex; align-items: center; }
 .logo-img { height: 36px; width: auto; transition: height var(--t-norm); }
-.site-header.is-scrolled .logo-img { height: 30px; }
+.site-header.is-scrolled .logo-img { height: 36px; }
 
 .header-cta {
   display: inline-flex;
