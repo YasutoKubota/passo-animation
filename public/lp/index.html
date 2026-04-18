@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>パッソアニメーションスタジオ｜企業案件を、チームで形にする。</title>
-  <meta name="description" content="パッソアニメーションスタジオは、動画編集・イラスト制作の2つのクリエイティブチームで企業案件を手がける制作スタジオです。" />
+  <title>パッソアニメーションスタジオ｜企業案件を、チームで制作する。</title>
+  <meta name="description" content="パッソアニメーションスタジオは、動画編集とイラスト制作の2つのチームで、企業案件と自社メディアの実制作に取り組むスタジオです。フォロワー1万人規模の自社メディアも運営。愛知県岡崎市・豊田市。" />
+
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png" />
   <link rel="apple-touch-icon" href="/images/favicon-192.png" />
+
+  <link rel="canonical" href="https://www.passo-ww.com/lp" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
   <style>
     /* ============================================
        パッソアニメーションスタジオ ハブLP
-       Design: Japandi Premium — Typography & Ma (間)
+       Design: Japandi Premium — Editorial Studio
        ============================================ */
 
     :root {
@@ -24,40 +29,48 @@
       --bg-accent: #E6DED3;
       --bg-offwhite: #F7F7F5;
       --bg-card: rgba(255, 253, 248, 0.6);
+      --bg-dark: #2A2522;
+
       --border-subtle: rgba(58, 51, 48, 0.04);
       --border-light: rgba(58, 51, 48, 0.07);
       --border-section: #E8E4DC;
+
       --text-primary: #3A3330;
       --text-secondary: #706560;
       --text-light: #A09890;
       --text-muted: #C0B8B0;
+      --text-on-dark: #F5F0E8;
+
       --accent: #B87868;
       --accent-hover: #A56858;
       --accent-soft: rgba(184, 120, 104, 0.08);
-      --accent-glow: rgba(184, 120, 104, 0.2);
+      --accent-glow: rgba(184, 120, 104, 0.22);
+      --line: #06C755;
+      --line-hover: #05B64A;
+
       --white: #FFFCF7;
+
       --shadow-sm: 0 4px 16px rgba(58,51,48, 0.04);
       --shadow-md: 0 8px 32px rgba(58,51,48, 0.06);
-      --shadow-lg: 0 16px 48px rgba(58,51,48, 0.08);
+      --shadow-lg: 0 20px 60px rgba(58,51,48, 0.12);
+
       --font-en: 'Outfit', sans-serif;
       --font-jp: 'Noto Sans JP', sans-serif;
-      --container-max: 800px;
-      --r-sm: 14px;
-      --r-md: 22px;
-      --r-lg: 32px;
-      --r-full: 9999px;
-      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-      --t-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      --t-norm: 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-      --t-slow: 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-      --t-reveal: 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-      --footer-h: 72px;
-    }
 
-    @media (min-width: 768px) {
-      :root {
-        --footer-h: 80px;
-      }
+      --container-max: 1080px;
+      --container-narrow: 720px;
+
+      --r-sm: 12px;
+      --r-md: 20px;
+      --r-lg: 28px;
+      --r-xl: 40px;
+      --r-full: 9999px;
+
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --t-fast: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      --t-norm: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      --t-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      --t-reveal: 1s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* --- Reset --- */
@@ -75,10 +88,10 @@
       -moz-osx-font-smoothing: grayscale;
       line-break: strict;
       word-break: normal;
-      padding-bottom: var(--footer-h);
     }
     img { max-width: 100%; height: auto; display: block; }
     a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
     /* --- Container --- */
     .container {
@@ -86,20 +99,47 @@
       margin: 0 auto;
       padding: 0 24px;
     }
+    .container-narrow {
+      max-width: var(--container-narrow);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* --- Label utility --- */
+    .label-en {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-en);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .label-en .dot {
+      width: 5px;
+      height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .label-en.on-dark { color: var(--bg-primary); }
+    .label-en.on-dark .dot { background: var(--bg-primary); }
 
     /* --- Scroll Reveal --- */
     .reveal {
       opacity: 0;
-      transform: translateY(28px);
+      transform: translateY(32px);
       transition: opacity var(--t-reveal), transform var(--t-reveal);
     }
     .reveal.is-visible {
       opacity: 1;
       transform: translateY(0);
     }
-    .reveal-d1 { transition-delay: 0.08s; }
-    .reveal-d2 { transition-delay: 0.18s; }
-    .reveal-d3 { transition-delay: 0.28s; }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.22s; }
+    .reveal-d3 { transition-delay: 0.34s; }
+    .reveal-d4 { transition-delay: 0.46s; }
 
     /* ============================================
        HERO — First View
@@ -110,7 +150,7 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 0 24px 64px;
+      padding: 0 24px 72px;
       position: relative;
       overflow: hidden;
     }
@@ -125,7 +165,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 30%;
+      object-position: center 40%;
     }
     .hero-bg::after {
       content: '';
@@ -133,11 +173,11 @@
       inset: 0;
       z-index: 1;
       background: linear-gradient(
-        175deg,
-        rgba(245, 240, 232, 0.15) 0%,
-        rgba(245, 240, 232, 0.35) 30%,
-        rgba(245, 240, 232, 0.85) 55%,
-        rgba(245, 240, 232, 1) 80%
+        180deg,
+        rgba(245, 240, 232, 0.1) 0%,
+        rgba(245, 240, 232, 0.3) 30%,
+        rgba(245, 240, 232, 0.88) 65%,
+        rgba(245, 240, 232, 1) 88%
       );
     }
 
@@ -160,34 +200,20 @@
     }
 
     .hero-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-en);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 20px;
+      margin-bottom: 28px;
       opacity: 0;
-      animation: heroFade 0.8s var(--ease-out) 0.2s forwards;
-    }
-    .hero-label .dot {
-      width: 5px;
-      height: 5px;
-      background: var(--accent);
-      border-radius: 50%;
+      animation: heroFade 0.9s var(--ease-out) 0.2s forwards;
     }
 
     .hero h1 {
-      font-size: 26px;
+      font-size: clamp(32px, 7vw, 64px);
       font-weight: 900;
-      line-height: 1.75;
-      letter-spacing: 0.02em;
+      line-height: 1.4;
+      letter-spacing: 0.01em;
       margin-bottom: 0;
       opacity: 0;
-      animation: heroFade 0.8s var(--ease-out) 0.45s forwards;
+      animation: heroFade 0.9s var(--ease-out) 0.45s forwards;
+      max-width: 900px;
     }
 
     .hero-studio-name {
@@ -195,8 +221,8 @@
       font-size: 13px;
       font-weight: 500;
       color: var(--text-secondary);
-      letter-spacing: 0.08em;
-      margin-top: 20px;
+      letter-spacing: 0.1em;
+      margin-top: 28px;
       opacity: 0;
       animation: heroFade 0.8s var(--ease-out) 0.7s forwards;
     }
@@ -204,18 +230,18 @@
     .scroll-hint {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       font-family: var(--font-en);
       font-size: 10px;
       font-weight: 500;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.2em;
       color: var(--text-muted);
-      margin-top: 56px;
+      margin-top: 64px;
       opacity: 0;
-      animation: heroFade 0.8s var(--ease-out) 0.9s forwards;
+      animation: heroFade 0.8s var(--ease-out) 0.95s forwards;
     }
     .scroll-line {
-      width: 32px;
+      width: 36px;
       height: 1px;
       background: var(--text-muted);
       position: relative;
@@ -229,11 +255,11 @@
       width: 100%;
       height: 100%;
       background: var(--accent);
-      animation: scrollAnim 2.4s ease-in-out infinite;
+      animation: scrollAnim 2.8s ease-in-out infinite;
     }
 
     @keyframes heroFade {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     @keyframes scrollAnim {
@@ -243,334 +269,524 @@
     }
 
     /* ============================================
-       CONCEPT
+       INTRO — Studio Identity
        ============================================ */
-    .concept {
-      padding: 96px 0 88px;
-      text-align: center;
+    .intro {
+      padding: 112px 0 104px;
     }
 
-    .concept-heading {
-      font-size: 24px;
-      font-weight: 900;
-      line-height: 1.8;
-      letter-spacing: 0.04em;
-      margin-bottom: 48px;
-      color: var(--text-primary);
-    }
-
-    .concept-body {
+    .intro-body {
       max-width: 640px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 28px;
-      text-align: left;
+      gap: 44px;
     }
 
-    .concept-body p {
-      font-size: 14.5px;
-      line-height: 2.2;
+    .intro-body p {
+      font-size: 15.5px;
+      line-height: 2.15;
       letter-spacing: 0.04em;
       color: var(--text-secondary);
       font-weight: 400;
     }
 
-    /* ============================================
-       TEAMS
-       ============================================ */
-    .teams {
-      padding: 80px 0 100px;
-      background: var(--bg-offwhite);
-      border-top: 1px solid;
-      border-image: linear-gradient(to right, transparent, var(--border-section), transparent) 1;
-      position: relative;
+    .intro-body p strong {
+      color: var(--text-primary);
+      font-weight: 600;
     }
 
-    .teams-header {
+    /* Signature number moment */
+    .signature-number {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      padding: 12px 0;
+      position: relative;
+    }
+    .signature-number::before,
+    .signature-number::after {
+      content: '';
+      display: block;
+      width: 56px;
+      height: 1px;
+      background: var(--border-section);
+    }
+    .signature-big {
+      font-family: var(--font-en);
+      font-size: clamp(48px, 12vw, 84px);
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    .signature-big sup {
+      font-family: var(--font-jp);
+      font-size: 0.28em;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      vertical-align: baseline;
+      margin-left: 6px;
+      position: relative;
+      top: -0.9em;
+    }
+    .signature-sub {
+      font-size: 13.5px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      letter-spacing: 0.06em;
+      text-align: center;
+      line-height: 1.9;
+    }
+
+    /* ============================================
+       PORTALS SECTION
+       ============================================ */
+    .portals {
+      padding: 88px 0 96px;
+      background: var(--bg-offwhite);
+      border-top: 1px solid var(--border-section);
+      border-bottom: 1px solid var(--border-section);
+    }
+
+    .portals-header {
       text-align: center;
       margin-bottom: 56px;
     }
+    .portals-header .section-eyebrow {
+      font-family: var(--font-en);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 14px;
+      display: block;
+    }
+    .portals-header h2 {
+      font-size: clamp(22px, 3.5vw, 28px);
+      font-weight: 800;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
 
-    .teams-label {
+    /* --- Portal ① Movie (主役) --- */
+    .portal-main {
+      margin-bottom: 80px;
+    }
+
+    .portal-main-visual {
+      position: relative;
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      box-shadow: var(--shadow-lg);
+      background: var(--bg-accent);
+    }
+    .portal-main-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform var(--t-slow);
+    }
+    .portal-main:hover .portal-main-visual img { transform: scale(1.03); }
+
+    .portal-main-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(42,37,34,0) 40%, rgba(42,37,34,0.5) 100%);
+      pointer-events: none;
+    }
+
+    .portal-main-body {
+      padding: 36px 4px 0;
+    }
+
+    .portal-main-number {
+      font-family: var(--font-en);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      color: var(--text-light);
+      margin-bottom: 10px;
+    }
+
+    .portal-main-name {
+      font-size: clamp(26px, 5vw, 36px);
+      font-weight: 900;
+      line-height: 1.4;
+      letter-spacing: 0.01em;
+      margin-bottom: 20px;
+    }
+
+    .portal-main-tag {
+      font-size: 15px;
+      line-height: 2.1;
+      letter-spacing: 0.03em;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      max-width: 540px;
+    }
+
+    /* Portfolio strip */
+    .portfolio-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 36px;
+      max-width: 520px;
+    }
+    .portfolio-item {
+      aspect-ratio: 4 / 3;
+      border-radius: var(--r-sm);
+      overflow: hidden;
+      background: var(--bg-accent);
+      position: relative;
+    }
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--t-slow);
+    }
+    .portal-main:hover .portfolio-item img { transform: scale(1.05); }
+    .portfolio-label {
+      display: block;
+      font-family: var(--font-en);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: var(--text-light);
+      text-transform: uppercase;
+      margin-top: 12px;
+    }
+
+    /* Main CTA Button */
+    .btn-main-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 36px;
+      background: var(--text-primary);
+      color: var(--text-on-dark);
+      border-radius: var(--r-full);
+      font-size: 15.5px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      transition: all var(--t-norm);
+      box-shadow: 0 6px 24px rgba(58,51,48,0.15);
+    }
+    .btn-main-cta:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 36px var(--accent-glow);
+    }
+    .btn-main-cta .arrow {
+      font-family: var(--font-en);
+      font-weight: 400;
+      font-size: 20px;
+      transition: transform var(--t-fast);
+    }
+    .btn-main-cta:hover .arrow { transform: translateX(6px); }
+
+    /* --- Portal ② Illust (Coming Soon) --- */
+    .portal-sub {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 32px;
+      background: rgba(255, 253, 248, 0.5);
+      border: 1px solid var(--border-light);
+      border-radius: var(--r-lg);
+    }
+
+    .portal-sub-visual {
+      aspect-ratio: 16 / 10;
+      border-radius: var(--r-md);
+      overflow: hidden;
+      position: relative;
+      background: var(--bg-accent);
+    }
+    .portal-sub-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(0.25) brightness(0.95);
+      transition: filter var(--t-slow);
+    }
+    .portal-sub-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(245, 240, 232, 0.2);
+      pointer-events: none;
+    }
+
+    .portal-sub-body {
+      padding: 4px;
+    }
+    .portal-sub-number {
+      font-family: var(--font-en);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+    .portal-sub-name {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.5;
+      letter-spacing: 0.01em;
+      margin-bottom: 14px;
+      color: var(--text-primary);
+    }
+    .portal-sub-tag {
+      font-size: 14px;
+      line-height: 2;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+    .portal-sub-status {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       font-family: var(--font-en);
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .teams-label .dot {
-      width: 5px;
-      height: 5px;
-      background: var(--accent);
-      border-radius: 50%;
-    }
-
-    .teams-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      letter-spacing: 0.06em;
-    }
-
-    .team-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-    }
-
-    .team-card {
-      background: var(--bg-card);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--r-lg);
-      padding: 40px 32px 44px;
-      position: relative;
-      overflow: hidden;
-      transition: transform var(--t-norm), box-shadow var(--t-norm);
-    }
-
-    .team-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), transparent);
-      opacity: 0;
-      transition: opacity var(--t-norm);
-    }
-
-    .team-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .team-card:hover::before {
-      opacity: 1;
-    }
-
-    .team-card-name {
-      font-size: 20px;
-      font-weight: 900;
-      line-height: 1.5;
-      margin-bottom: 28px;
-      letter-spacing: 0.02em;
-    }
-
-    .team-card-name::after {
-      content: '';
-      display: block;
-      width: 32px;
-      height: 2px;
-      background: var(--accent);
-      margin-top: 16px;
-      border-radius: 1px;
-    }
-
-    .team-detail {
-      margin-bottom: 20px;
-    }
-    .team-detail:last-child {
-      margin-bottom: 0;
-    }
-
-    .team-detail-label {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--accent);
-      letter-spacing: 0.06em;
-      margin-bottom: 6px;
-      line-height: 1.5;
-    }
-
-    .team-detail-text {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 2.1;
-      letter-spacing: 0.02em;
-    }
-
-    /* ============================================
-       FOOTER — Site Footer
-       ============================================ */
-    .site-footer {
-      padding: 48px 24px 32px;
-      text-align: center;
-      border-top: 1px solid;
-      border-image: linear-gradient(to right, transparent, var(--border-section), transparent) 1;
-    }
-
-    .footer-copy {
-      font-family: var(--font-en);
-      font-size: 11px;
       color: var(--text-muted);
-      letter-spacing: 0.08em;
+      padding: 8px 16px;
+      border: 1px solid var(--border-light);
+      border-radius: var(--r-full);
+    }
+    .portal-sub-status .pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
     }
 
     /* ============================================
-       STICKY FOOTER — Team Navigation
+       CONTACT — LINE
        ============================================ */
-    .sticky-footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      background: rgba(245, 240, 232, 0.92);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-top: 1px solid var(--border-light);
-      padding: 12px 16px;
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      align-items: center;
-      height: var(--footer-h);
+    .contact {
+      padding: 96px 0 104px;
+      text-align: center;
+      background: var(--bg-primary);
     }
 
-    .sticky-btn {
-      flex: 1;
-      max-width: 320px;
-      display: flex;
+    .contact-heading {
+      font-size: clamp(20px, 3vw, 24px);
+      font-weight: 700;
+      line-height: 1.7;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+
+    .contact-sub {
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--text-secondary);
+      margin-bottom: 36px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-line {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      padding: 13px 16px;
+      gap: 12px;
+      padding: 17px 40px;
+      background: var(--line);
+      color: var(--white);
       border-radius: var(--r-full);
-      font-size: 12.5px;
+      font-size: 15px;
       font-weight: 700;
       letter-spacing: 0.04em;
-      text-align: center;
-      line-height: 1.4;
-      transition: all var(--t-fast);
-      white-space: nowrap;
+      transition: all var(--t-norm);
+      box-shadow: 0 4px 20px rgba(6, 199, 85, 0.28);
+    }
+    .btn-line:hover {
+      background: var(--line-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(6, 199, 85, 0.4);
     }
 
-    .sticky-btn--movie {
-      background: var(--accent);
-      color: var(--white);
-      box-shadow: 0 3px 12px var(--accent-glow);
-    }
-    .sticky-btn--movie:hover {
-      background: var(--accent-hover);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px var(--accent-glow);
+    /* ============================================
+       FOOTER — SEO / Studio Info
+       ============================================ */
+    .site-footer {
+      padding: 64px 24px 48px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-section);
     }
 
-    .sticky-btn--illust {
-      background: transparent;
-      color: var(--text-light);
-      border: 1.5px solid var(--border-light);
-      cursor: default;
-      position: relative;
+    .footer-inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
     }
 
-    .sticky-btn--illust .coming-soon {
+    .footer-brand-name {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .footer-brand-en {
       font-family: var(--font-en);
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 24px;
+    }
+
+    .footer-info {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .footer-info-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    .footer-info-label {
+      font-family: var(--font-en);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      padding-top: 3px;
+    }
+    .footer-info-value {
+      color: var(--text-primary);
+    }
+    .footer-info-value a {
+      color: var(--text-primary);
+      transition: color var(--t-fast);
+    }
+    .footer-info-value a:hover { color: var(--accent); }
+
+    .footer-copy {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-light);
+      font-family: var(--font-en);
+      font-size: 10.5px;
       color: var(--text-muted);
-      margin-left: 8px;
+      letter-spacing: 0.12em;
     }
 
     /* ============================================
        RESPONSIVE — Desktop
        ============================================ */
     @media (min-width: 768px) {
+      body { font-size: 15.5px; }
+
       .hero {
-        padding: 0 48px 88px;
+        padding: 0 48px 96px;
       }
 
-      .hero h1 {
-        font-size: 38px;
-        letter-spacing: 0.03em;
+      .intro {
+        padding: 140px 0 132px;
+      }
+      .intro-body {
+        gap: 52px;
+      }
+      .intro-body p {
+        font-size: 16px;
       }
 
-      .hero-studio-name {
-        font-size: 14px;
-        margin-top: 24px;
+      .portals {
+        padding: 112px 0 120px;
       }
 
-      .concept {
-        padding: 120px 0 112px;
+      .portal-main-visual {
+        aspect-ratio: 16 / 8;
       }
 
-      .concept-heading {
-        font-size: 30px;
+      .portal-main-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        align-items: start;
+        padding-top: 44px;
       }
 
-      .concept-body p {
-        font-size: 15px;
+      .portal-main-head {
+        grid-column: 1;
+      }
+      .portal-main-content {
+        grid-column: 2;
+        padding-top: 8px;
       }
 
-      .teams {
-        padding: 100px 0 120px;
+      .portfolio-strip {
+        max-width: none;
       }
 
-      .team-cards {
-        gap: 32px;
+      .portal-sub {
+        grid-template-columns: 1.2fr 1fr;
+        gap: 40px;
+        padding: 40px;
+        align-items: center;
       }
 
-      .team-card {
-        padding: 52px 48px 56px;
+      .portal-sub-body {
+        padding: 12px 8px;
       }
 
-      .team-card-name {
-        font-size: 22px;
+      .site-footer {
+        padding: 80px 48px 56px;
       }
-
-      .team-detail-text {
-        font-size: 14.5px;
-      }
-
-      .sticky-footer {
-        padding: 14px 24px;
-        gap: 14px;
-      }
-
-      .sticky-btn {
-        font-size: 13.5px;
-        padding: 14px 24px;
+      .footer-inner {
+        grid-template-columns: 1fr 1.4fr;
+        gap: 64px;
       }
     }
 
     @media (min-width: 1024px) {
       .hero h1 {
-        font-size: 44px;
+        line-height: 1.35;
       }
+      .intro {
+        padding: 160px 0 144px;
+      }
+      .portal-main-body {
+        gap: 64px;
+      }
+    }
 
-      .concept-heading {
-        font-size: 34px;
+    /* --- Reduced motion --- */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01s !important;
+        transition-duration: 0.01s !important;
       }
-
-      .team-cards {
-        flex-direction: row;
-        gap: 28px;
-      }
-
-      .team-card {
-        flex: 1;
-      }
-
-      .sticky-footer {
-        padding: 16px 32px;
-        gap: 16px;
-      }
-
-      .sticky-btn {
-        max-width: 360px;
-        font-size: 14px;
-        padding: 15px 28px;
-      }
+      .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
@@ -579,14 +795,13 @@
   <!-- ── HERO ── -->
   <section class="hero" id="hero">
     <div class="hero-bg">
-      <img src="/lp/hero-bg.jpg" alt="" width="1200" height="800" />
+      <img src="/lp/images/studio-wide.jpg" alt="" width="1600" height="1200" />
     </div>
     <div class="hero-inner">
       <div class="hero-label">
-        <span class="dot"></span>
-        PASSO ANIMATION STUDIO
+        <span class="label-en"><span class="dot"></span>PASSO ANIMATION STUDIO</span>
       </div>
-      <h1>企業案件を、チームで形にする。</h1>
+      <h1>企業案件を、<br />チームで制作する。</h1>
       <span class="hero-studio-name">パッソアニメーションスタジオ</span>
       <div class="scroll-hint">
         <span class="scroll-line"></span>
@@ -595,75 +810,118 @@
     </div>
   </section>
 
-  <!-- ── CONCEPT ── -->
-  <section class="concept" id="concept">
-    <div class="container">
-      <h2 class="concept-heading reveal">スキルを、自立する力に。</h2>
-      <div class="concept-body">
-        <p class="reveal reveal-d1">パッソアニメーションスタジオが手がけるのは、年間200件以上の企業案件です。<br>自社で登録者約1万人規模のTikTokチャンネルを運営しており、そこで培ったノウハウや制作環境を日々の業務に活かしています。</p>
-        <p class="reveal reveal-d2">動画編集やイラスト制作で、チームの一員として実際の制作に関わるスタジオです。<br>就労継続支援B型の枠組みを活用し、企業案件を通じて実務経験を積んでいきます。<br>ここでの目的は、その経験を活かして、フリーランスとしての独立や一般企業への就職など、ご自身で収入を得て自立していく力を身につけることです。</p>
+  <!-- ── INTRO ── -->
+  <section class="intro" id="intro">
+    <div class="container-narrow">
+      <div class="intro-body">
+        <p class="reveal">パッソは、動画編集とイラスト制作の2つのチームで<strong>制作業務を行うスタジオ</strong>です。取り組むのは、企業案件と自社メディアの<strong>実制作</strong>。</p>
+
+        <div class="signature-number reveal reveal-d1">
+          <div class="signature-big">10,000<sup>フォロワー規模</sup></div>
+          <div class="signature-sub">自社メディアを、<br />チームで企画から運用まで行っています。</div>
+        </div>
+
+        <p class="reveal reveal-d2">チームで工程を分担し、納品まで関わります。<br />積み上がるのは、ポートフォリオと実務経験です。</p>
       </div>
     </div>
   </section>
 
-  <!-- ── TEAMS ── -->
-  <section class="teams" id="teams">
+  <!-- ── PORTALS ── -->
+  <section class="portals" id="teams">
     <div class="container">
-      <div class="teams-header reveal">
-        <div class="teams-label">
-          <span class="dot"></span>
-          TEAMS
+      <div class="portals-header reveal">
+        <span class="section-eyebrow">2 Teams</span>
+        <h2>2つのチームが、日々動いています。</h2>
+      </div>
+
+      <!-- Portal ①: 動画編集チーム -->
+      <a href="/movie" class="portal-main reveal reveal-d1" aria-label="動画編集チームの詳細ページへ">
+        <div class="portal-main-visual">
+          <img src="/lp/images/movie-workspace.jpg" alt="動画編集チームの制作風景" width="1600" height="1000" />
+        </div>
+
+        <div class="portal-main-body">
+          <div class="portal-main-head">
+            <div class="portal-main-number">01 / MOVIE EDITING</div>
+            <h3 class="portal-main-name">動画編集チーム</h3>
+            <p class="portal-main-tag">企業の映像案件を、チームで制作。SNS向けショート動画から企業プロモーション、自社メディア運用まで。Premiere Pro を中心に、撮影 / 編集 / 納品を分担しています。</p>
+          </div>
+
+          <div class="portal-main-content">
+            <div class="portfolio-strip" aria-hidden="true">
+              <div class="portfolio-item"><img src="/lp/images/work-ashibaya.jpg" alt="" width="400" height="300" loading="lazy" /></div>
+              <div class="portfolio-item"><img src="/lp/images/work-chibaru.jpg" alt="" width="400" height="300" loading="lazy" /></div>
+              <div class="portfolio-item"><img src="/lp/images/work-adobe.jpg" alt="" width="400" height="300" loading="lazy" /></div>
+            </div>
+            <span class="portfolio-label">Recent client work</span>
+
+            <div style="margin-top: 40px;">
+              <span class="btn-main-cta">
+                動画編集チームを見る
+                <span class="arrow">→</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Portal ②: イラスト制作チーム (Coming Soon) -->
+      <div class="portal-sub reveal reveal-d2">
+        <div class="portal-sub-visual">
+          <img src="/lp/images/illust-workspace.jpg" alt="イラスト制作チームの制作風景" width="1200" height="800" loading="lazy" />
+        </div>
+        <div class="portal-sub-body">
+          <div class="portal-sub-number">02 / ILLUSTRATION</div>
+          <h3 class="portal-sub-name">イラスト制作チーム</h3>
+          <p class="portal-sub-tag">商業イラスト、漫画作画、動画内で使用する素材制作。クライアントの目的に合わせた絵柄・タッチで納品まで対応します。</p>
+          <span class="portal-sub-status">
+            <span class="pulse"></span>
+            Coming Soon
+          </span>
         </div>
       </div>
 
-      <div class="team-cards">
-        <!-- 動画編集チーム -->
-        <div class="team-card reveal reveal-d1">
-          <h3 class="team-card-name">動画編集チーム</h3>
-          <div class="team-detail">
-            <div class="team-detail-label">業務内容</div>
-            <p class="team-detail-text">SNS向けショート動画や企業プロモーション映像などの編集作業。</p>
-          </div>
-          <div class="team-detail">
-            <div class="team-detail-label">特徴</div>
-            <p class="team-detail-text">未経験からでも、チームで分担しながらPremiere Pro等を使用した実務経験を積める環境です。</p>
-          </div>
-          <div class="team-detail">
-            <div class="team-detail-label">対象者</div>
-            <p class="team-detail-text">PCの基本操作ができ、動画制作を通じて将来の仕事に繋げたい方。</p>
-          </div>
-        </div>
+    </div>
+  </section>
 
-        <!-- イラスト制作チーム -->
-        <div class="team-card reveal reveal-d2">
-          <h3 class="team-card-name">イラスト制作チーム</h3>
-          <div class="team-detail">
-            <div class="team-detail-label">業務内容</div>
-            <p class="team-detail-text">企業の要望に合わせた商業用イラストや漫画の作画、動画内で使用する素材の作成。</p>
-          </div>
-          <div class="team-detail">
-            <div class="team-detail-label">特徴</div>
-            <p class="team-detail-text">自分の好きな絵を描くアーティスト活動ではなく、クライアントの目的に沿って絵柄やタッチを適応させる商業クリエイターとしての経験を積みます。</p>
-          </div>
-          <div class="team-detail">
-            <div class="team-detail-label">対象者</div>
-            <p class="team-detail-text">経験者。日常的に絵を描いており、その技術を趣味ではなく仕事として活かし、自立を目指したい方。</p>
-          </div>
-        </div>
-      </div>
+  <!-- ── CONTACT ── -->
+  <section class="contact" id="contact">
+    <div class="container-narrow reveal">
+      <h2 class="contact-heading">話を聞いてみたい方は、<br />LINEから直接どうぞ。</h2>
+      <p class="contact-sub">見学のご予約・お問い合わせ・雑談まで、どんなことでも。</p>
+      <a href="https://line.me/R/ti/p/@passo" class="btn-line" target="_blank" rel="noopener">
+        LINE で問い合わせる
+      </a>
     </div>
   </section>
 
   <!-- ── SITE FOOTER ── -->
   <footer class="site-footer">
-    <p class="footer-copy">&copy; 2026 Passo a Passo. All rights reserved.</p>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-brand-name">パッソアニメーションスタジオ</div>
+        <div class="footer-brand-en">Passo Animation Studio</div>
+        <div style="font-size: 12.5px; line-height: 1.9; color: var(--text-secondary); max-width: 360px;">
+          動画編集とイラスト制作の2つのチームで<br />制作業務を行うスタジオ（就労継続支援B型）
+        </div>
+      </div>
+      <div class="footer-info">
+        <div class="footer-info-item">
+          <div class="footer-info-label">岡崎</div>
+          <div class="footer-info-value">〒444-0059　愛知県岡崎市康生通東1丁目1 岡崎フロントビル6-B<br />TEL 0564-47-7881</div>
+        </div>
+        <div class="footer-info-item">
+          <div class="footer-info-label">Hours</div>
+          <div class="footer-info-value">月〜金 10:00 - 15:30（土日祝休）</div>
+        </div>
+        <div class="footer-info-item">
+          <div class="footer-info-label">Line</div>
+          <div class="footer-info-value"><a href="https://line.me/R/ti/p/@passo" target="_blank" rel="noopener">@passo（LINEで見学予約）</a></div>
+        </div>
+      </div>
+    </div>
+    <p class="footer-copy">&copy; 2026 Passo a Passo, Inc. All rights reserved.</p>
   </footer>
-
-  <!-- ── STICKY FOOTER NAVIGATION ── -->
-  <nav class="sticky-footer" id="sticky-footer" aria-label="チーム選択">
-    <a href="/movie" class="sticky-btn sticky-btn--movie" id="btn-movie">動画編集チームの詳細を見る</a>
-    <span class="sticky-btn sticky-btn--illust" id="btn-illust">イラスト制作チームの詳細を見る<span class="coming-soon">Coming Soon</span></span>
-  </nav>
 
   <script>
     /* ── Scroll Reveal ── */
@@ -675,7 +933,7 @@
             observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 
       document.querySelectorAll('.reveal').forEach(function (el) {
         observer.observe(el);
