@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>パッソアニメーションスタジオ｜LP用 撮影ガイド</title>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 18mm 16mm 18mm;
+  }
+
+  :root {
+    --ink: #2A2522;
+    --sub: #6A625C;
+    --light: #9A9088;
+    --line: #D8D0C4;
+    --line-strong: #B8AEA0;
+    --accent: #B87868;
+    --bg-soft: #F7F3EB;
+    --bg-warn: #FBF3F0;
+    --bg-ok: #F0F4EE;
+    --green: #6A8A60;
+    --red: #B86060;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", -apple-system, "Helvetica Neue", sans-serif;
+    color: var(--ink);
+    line-height: 1.85;
+    font-size: 10.5pt;
+    background: white;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "palt" 1;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Cover ── */
+  .cover {
+    page-break-after: always;
+    height: 100%;
+    min-height: 240mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30mm 0;
+  }
+
+  .cover-eyebrow {
+    font-family: "Helvetica Neue", "Arial", sans-serif;
+    font-size: 9.5pt;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+
+  .cover-title {
+    font-size: 32pt;
+    font-weight: 800;
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+    margin-bottom: 18px;
+  }
+  .cover-subtitle {
+    font-size: 13pt;
+    color: var(--sub);
+    line-height: 1.9;
+    font-weight: 500;
+  }
+  .cover-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--accent);
+    margin: 32px 0 28px;
+  }
+
+  .cover-meta {
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    font-size: 9.5pt;
+    color: var(--sub);
+  }
+  .cover-meta-label {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  /* ── Sections ── */
+  .section {
+    margin-bottom: 18mm;
+    page-break-inside: avoid;
+  }
+
+  .section-head {
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 10px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+  .section-num {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 14pt;
+    font-weight: 300;
+    color: var(--accent);
+    letter-spacing: -0.01em;
+  }
+  .section-title {
+    font-size: 16pt;
+    font-weight: 800;
+    letter-spacing: 0;
+  }
+
+  h3 {
+    font-size: 12pt;
+    font-weight: 700;
+    margin: 18px 0 10px;
+    color: var(--ink);
+  }
+  h3 .num {
+    color: var(--accent);
+    font-family: "Helvetica Neue", sans-serif;
+    font-weight: 400;
+    margin-right: 8px;
+  }
+
+  p {
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+
+  .lead {
+    font-size: 11.5pt;
+    line-height: 2;
+    color: var(--sub);
+    margin-bottom: 16px;
+  }
+
+  /* ── Boxes ── */
+  .box {
+    background: var(--bg-soft);
+    border-left: none;
+    padding: 18px 22px;
+    margin: 14px 0;
+    border-radius: 4px;
+  }
+  .box.warn {
+    background: var(--bg-warn);
+  }
+  .box.ok {
+    background: var(--bg-ok);
+  }
+  .box-label {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 8.5pt;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .box.warn .box-label { color: var(--red); }
+  .box.ok .box-label { color: var(--green); }
+
+  /* ── Lists ── */
+  ul, ol { padding-left: 1.4em; margin: 8px 0 14px; }
+  li { margin-bottom: 6px; line-height: 1.85; }
+
+  ul.checklist {
+    list-style: none;
+    padding-left: 0;
+  }
+  ul.checklist li {
+    padding-left: 28px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+  ul.checklist li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 3px;
+  }
+
+  /* Rule cards */
+  .rule {
+    border: 1px solid var(--line);
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    background: white;
+    page-break-inside: avoid;
+  }
+  .rule-num {
+    display: inline-block;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 11pt;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 4px;
+    letter-spacing: 0.06em;
+  }
+  .rule-title {
+    font-size: 12pt;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .rule-why {
+    font-size: 10pt;
+    color: var(--sub);
+    line-height: 1.85;
+  }
+  .rule-why strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* DO / DON'T row */
+  .do-dont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 14px 0;
+  }
+  .dd-card {
+    border: 1px solid var(--line);
+    padding: 16px;
+    border-radius: 6px;
+  }
+  .dd-card.do { background: var(--bg-ok); border-color: rgba(106, 138, 96, 0.3); }
+  .dd-card.dont { background: var(--bg-warn); border-color: rgba(184, 96, 96, 0.3); }
+  .dd-label {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+  }
+  .do .dd-label { color: var(--green); }
+  .dont .dd-label { color: var(--red); }
+  .dd-card ul { padding-left: 1.2em; margin: 0; }
+  .dd-card li { font-size: 10pt; margin-bottom: 4px; }
+
+  /* Shot list */
+  .shot {
+    border: 1px solid var(--line);
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    page-break-inside: avoid;
+  }
+  .shot-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .shot-num {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 11pt;
+    font-weight: 300;
+    color: var(--accent);
+  }
+  .shot-title {
+    font-size: 11.5pt;
+    font-weight: 700;
+  }
+  .shot-meta {
+    margin-left: auto;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 8.5pt;
+    color: var(--light);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .shot-desc {
+    font-size: 10pt;
+    color: var(--sub);
+    line-height: 1.9;
+    padding-left: 0;
+  }
+  .shot-desc li {
+    list-style: disc;
+    margin-left: 16px;
+    margin-bottom: 4px;
+  }
+
+  /* Cards 2 col */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 12px 0;
+  }
+  .col-card {
+    border: 1px solid var(--line);
+    padding: 18px;
+    border-radius: 6px;
+    background: white;
+  }
+  .col-card-title {
+    font-size: 11pt;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .col-card-meta {
+    font-size: 9pt;
+    color: var(--light);
+    margin-bottom: 12px;
+    line-height: 1.7;
+  }
+
+  /* Quote / callout */
+  .callout {
+    background: white;
+    border: 1px solid var(--accent);
+    padding: 20px 22px;
+    border-radius: 6px;
+    margin: 18px 0;
+  }
+  .callout-title {
+    font-size: 11pt;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  /* footer */
+  .doc-footer {
+    margin-top: 24mm;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 8.5pt;
+    color: var(--light);
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  strong { font-weight: 700; }
+  em { font-style: normal; color: var(--accent); font-weight: 600; }
+
+  /* Print */
+  @media print {
+    body { font-size: 10pt; }
+    .section { page-break-inside: avoid; }
+    .rule, .shot { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ────────────────────────────────────────────────
+     COVER
+──────────────────────────────────────────────── -->
+<section class="cover">
+  <div>
+    <div class="cover-eyebrow">PASSO ANIMATION STUDIO</div>
+    <h1 class="cover-title">スタジオ撮影ガイド</h1>
+    <div class="cover-divider"></div>
+    <p class="cover-subtitle">
+      LP・広告に使う写真の撮影方針<br />
+      iPhone 16 Pro で「プロの制作スタジオ」に見せる
+    </p>
+  </div>
+
+  <div class="cover-meta">
+    <div>
+      <div class="cover-meta-label">For</div>
+      パッソアニメーションスタジオ各事業所スタッフ
+    </div>
+    <div>
+      <div class="cover-meta-label">Use case</div>
+      LP（passo-ww.com）／ Instagram広告 ／ 各種広報素材
+    </div>
+    <div>
+      <div class="cover-meta-label">Equipment</div>
+      iPhone 16 Pro（各事業所配備）
+    </div>
+    <div>
+      <div class="cover-meta-label">Version</div>
+      1.0 / 2026.04
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────────
+     1. CONCEPT
+──────────────────────────────────────────────── -->
+<section class="section">
+  <div class="section-head">
+    <span class="section-num">01</span>
+    <h2 class="section-title">撮影の方針</h2>
+  </div>
+
+  <p class="lead">
+    パッソが伝えたいのは「福祉施設」ではなく「<em>プロの制作スタジオ</em>」です。<br />
+    20代のクリエイター志望者が「ここに通いたい」と思う、おしゃれで先進的な写真を目指します。
+  </p>
+
+  <div class="callout">
+    <div class="callout-title">写真で表現したいこと</div>
+    <ul>
+      <li>制作物・編集画面が主役（人物は脇役）</li>
+      <li>少し暗めのシネマティックなトーン</li>
+      <li>背景や手前を大胆にボケさせる「奥行き」</li>
+      <li>「指導されている」ではなく「自律して作業している」構図</li>
+    </ul>
+  </div>
+
+  <div class="box warn">
+    <div class="box-label">避けるトーン</div>
+    <p style="margin: 0; font-size: 10pt;">
+      福祉施設の事務室を伝えるような証拠写真／笑顔で正面を向くポーズ／全員カメラ目線／蛍光灯のベタ光／凡庸な広告写真。
+    </p>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────────
+     2. CAMERA SETTINGS
+──────────────────────────────────────────────── -->
+<section class="section">
+  <div class="section-head">
+    <span class="section-num">02</span>
+    <h2 class="section-title">iPhone 16 Pro の設定</h2>
+  </div>
+
+  <h3><span class="num">1.</span>「ポートレート」モードを選ぶ</h3>
+  <p>カメラアプリを開いて、下のメニューから「ポートレート」を選択します。<br />
+  人物のまわりが自動的にボケて、奥行きのある写真になります。</p>
+
+  <h3><span class="num">2.</span>「f / 値」を 1.4 〜 2.0 に設定</h3>
+  <p>画面右上の「<strong>f</strong>」マークをタップして、数字を <strong>1.4 〜 2.0</strong>（小さい数字）に設定します。<br />
+  数字が小さいほどボケが強くなり、シネマティックな雰囲気になります。</p>
+
+  <h3><span class="num">3.</span>少し暗めに撮る</h3>
+  <p>画面のどこかをタップした後、太陽マーク（明るさ調整）を <strong>少し下にスライド</strong>。<br />
+  明るすぎると安っぽく見えるので、ほんの少しだけ暗めが正解です。</p>
+
+  <h3><span class="num">4.</span>縦・横どちらでもOK</h3>
+  <p>LPでは横位置・縦位置どちらも使います。同じ被写体で <strong>両方撮影</strong>しておくと安心です。</p>
+</section>
+
+<!-- ────────────────────────────────────────────────
+     3. RULES
+──────────────────────────────────────────────── -->
+<section class="section">
+  <div class="section-head">
+    <span class="section-num">03</span>
+    <h2 class="section-title">撮影で守ってほしい3つのルール</h2>
+  </div>
+
+  <div class="rule">
+    <div class="rule-num">RULE 01</div>
+    <div class="rule-title">「人」じゃなくて「画面」にピントを合わせる</div>
+    <p class="rule-why">
+      撮影前に、iPhone画面のなかで <strong>モニターをタップ</strong>。ピントを画面に固定します。<br />
+      手前の髪・肩・手はボケてOK。むしろ大胆にボケさせる方が「プロっぽい」写真になります。
+      主役は<strong>制作物・編集画面</strong>であって、人ではありません。
+    </p>
+  </div>
+
+  <div class="rule">
+    <div class="rule-num">RULE 02</div>
+    <div class="rule-title">少し暗めに、シネマティックに</div>
+    <p class="rule-why">
+      ピントを合わせた後、画面の <strong>太陽マーク</strong> を少し下にスライドして暗めに。<br />
+      蛍光灯のベタ光だけだと安っぽくなるので、可能なら <strong>ブラインドを少し開けて</strong> 窓からの光も取り入れる。光と影のコントラストが「映画みたいな空気感」を作ります。
+    </p>
+  </div>
+
+  <div class="rule">
+    <div class="rule-num">RULE 03</div>
+    <div class="rule-title">被写体を画面の真ん中に置かない</div>
+    <p class="rule-why">
+      人物やパソコンを画面の <strong>少し左寄り or 右寄り</strong>に配置。<br />
+      余白を残すことで、雑誌の誌面のような「編集された写真」になります。中央揃えは広告写真っぽくなり、おしゃれ感が落ちます。
+    </p>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────────
+     4. PRE-SHOOT CHECK
+──────────────────────────────────────────────── -->
+<section class="section">
+  <div class="section-head">
+    <span class="section-num">04</span>
+    <h2 class="section-title">撮影前のチェックリスト（5分）</h2>
+  </div>
+
+  <ul class="checklist">
+    <li>机の上の <strong>私物を片付ける</strong>（カップ・お菓子・付箋・書類・ティッシュ）</li>
+    <li>パソコン画面に <strong>Premiere Pro や Clip Studio</strong> を開いておく（できれば実案件のタイムライン）</li>
+    <li>画面の輝度は <strong>最大近く</strong> に上げる（暗いと写真上で潰れる）</li>
+    <li>ブラインドを <strong>少し開ける</strong>（窓からの自然光を入れる）</li>
+    <li>映る人の服は <strong>無地・落ち着いた色</strong>（蛍光色・大きな柄・ロゴはNG）</li>
+    <li>マスクの色も <strong>白か黒</strong>を推奨（不織布の青・ピンクは避ける）</li>
+    <li>顔出しNGの方が映り込まないか <strong>事前確認</strong></li>
+  </ul>
+</section>
+
+<!-- ────────────────────────────────────────────────
+     5. DO / DONT
+──────────────────────────────────────────────── -->
+<section class="section">
+  <div class="section-head">
+    <span class="section-num">05</span>
+    <h2 class="section-title">やる・やらない</h2>
+  </div>
+
+  <div class="do-dont">
+    <div class="dd-card do">
+      <div class="dd-label">DO ✓</div>
+      <ul>
+        <li>編集画面にピントを合わせる</li>
+        <li>少し暗めの露出</li>
+        <li>窓からの自然光を入れる</li>
+        <li>被写体を画面の端に寄せる</li>
+        <li>後ろ姿・横顔・手元のショット</li>
+        <li>同じシーンで複数枚撮る</li>
+      </ul>
+    </div>
+    <div class="dd-card dont">
+      <div class="dd-label">DON'T ✕</div>
+      <ul>
+        <li>カメラ目線・笑顔のポーズ</li>
+        <li>iMacを真正面から撮る</li>
+        <li>蛍光灯のみのフラットな光</li>
+        <li>全員が画面に注目する演出</li>
+        <li>派手な色・柄の服が映る</li>
+        <li>「指導している」上下関係の構図</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────────
+     6. SHOT LIST
+──────────────────────────────────────────────── -->
+<section class="section">
+  <div class="section-head">
+    <span class="section-num">06</span>
+    <h2 class="section-title">必要なカット（ショットリスト）</h2>
+  </div>
+
+  <p class="lead">各事業所で以下のカットを撮影してください。各カット <strong>5〜10枚</strong>ずつ撮ると後で選びやすいです。</p>
+
+  <div class="shot">
+    <div class="shot-head">
+      <span class="shot-num">01</span>
+      <span class="shot-title">スタジオの俯瞰（広角・無人）</span>
+      <span class="shot-meta">Wide / Empty</span>
+    </div>
+    <ul class="shot-desc">
+      <li>誰もいない、整った状態のスタジオ全景</li>
+      <li>パーテーションとiMacが整列して見える構図</li>
+      <li>自然光とブラインドの陰影あり</li>
+      <li>朝の早い時間 or 昼休み中の静かな時間がベスト</li>
+    </ul>
+  </div>
+
+  <div class="shot">
+    <div class="shot-head">
+      <span class="shot-num">02</span>
+      <span class="shot-title">編集中の手元（接写・ボケ強）</span>
+      <span class="shot-meta">Close-up / Hands</span>
+    </div>
+    <ul class="shot-desc">
+      <li>Premiere Pro のタイムライン部分にピントを合わせる</li>
+      <li>キーボードに置かれた手はボケで動きを表現</li>
+      <li>横や斜め後ろから狙う</li>
+    </ul>
+  </div>
+
+  <div class="shot">
+    <div class="shot-head">
+      <span class="shot-num">03</span>
+      <span class="shot-title">2人での画面相談（横位置）</span>
+      <span class="shot-meta">Collaboration</span>
+    </div>
+    <ul class="shot-desc">
+      <li>モニター画面の指している先にピント</li>
+      <li>2人の顔は半分ボケる（後ろ姿・横顔）</li>
+      <li>「指導されている」ではなく「<strong>対等に相談している</strong>」構図</li>
+      <li>後ろから2人を撮る角度がおすすめ</li>
+    </ul>
+  </div>
+
+  <div class="shot">
+    <div class="shot-head">
+      <span class="shot-num">04</span>
+      <span class="shot-title">ペンタブで描画中（手元中心）</span>
+      <span class="shot-meta">Illustration</span>
+    </div>
+    <ul class="shot-desc">
+      <li>ペンタブのペン先・キャラクター描画中の画面にピント</li>
+      <li>髪・服はボケる</li>
+      <li>モニター内の絵に集中させる構図</li>
+    </ul>
+  </div>
+
+  <div class="shot">
+    <div class="shot-head">
+      <span class="shot-num">05</span>
+      <span class="shot-title">チーム全体の俯瞰（複数人作業中）</span>
+      <span class="shot-meta">Team</span>
+    </div>
+    <ul class="shot-desc">
+      <li>パーテーション越しに複数の制作風景</li>
+      <li>後ろから・斜め上から（脚立や椅子の上から狙う）</li>
+      <li>全員の作業画面が少しずつ見える</li>
+    </ul>
+  </div>
+
+  <div class="shot">
+    <div class="shot-head">
+      <span class="shot-num">06</span>
+      <span class="shot-title">環境ディテール（小物寄り）</span>
+      <span class="shot-meta">Detail / Object</span>
+    </div>
+    <ul class="shot-desc">
+      <li>iMac、ペンタブ、キーボード、植物、観葉植物</li>
+      <li>物の質感を活かした静物的なカット</li>
+      <li>「スタジオの世界観」を演出する補完カット</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────────
+     7. AFTER SHOOT
+──────────────────────────────────────────────── -->
+<section class="section">
+  <div class="section-head">
+    <span class="section-num">07</span>
+    <h2 class="section-title">撮影後の流れ</h2>
+  </div>
+
+  <ol>
+    <li>撮影した写真をすべて、Teams の「アニメ共通 / 01_業務連絡」にアップロード</li>
+    <li>各カット <strong>5〜10枚</strong>ずつ送ってください（こちらで選定します）</li>
+    <li><strong>加工は不要</strong>。撮りっぱなしのオリジナルデータで送ってください</li>
+    <li>窪田さんが採用カットを選定し、必要に応じて色補正してLPに反映</li>
+  </ol>
+
+  <div class="box">
+    <div class="box-label">送り方のヒント</div>
+    <p style="margin: 0; font-size: 10pt;">
+      iPhoneから直接Teamsへアップロードする際、<strong>「実際のサイズ」</strong>を選んでください。<br />
+      圧縮されたサイズだと、後でLPに使うときに画質が足りなくなります。
+    </p>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────────
+     FOOTER
+──────────────────────────────────────────────── -->
+<div class="doc-footer">
+  パッソアニメーションスタジオ｜LP撮影ガイド v1.0｜2026年4月作成
+</div>
+
+</body>
+</html>
