@@ -1,26 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-/* ── SVG icon data (shared across sections) ── */
 const LINE_ICON = (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.271.173-.508.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314" />
   </svg>
 );
 
-export default function MovieLP() {
-  const [activeStory, setActiveStory] = useState(0);
-
+export default function IllustLP() {
   useEffect(() => {
-    /* Header scroll effect */
     const header = document.getElementById("header");
     const onScroll = () => {
       header?.classList.toggle("is-scrolled", window.scrollY > 40);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
 
-    /* Floating CTA visibility */
     const floatCta = document.getElementById("float-cta");
     const heroEl = document.getElementById("hero");
     const ctaEl = document.getElementById("final-cta");
@@ -34,7 +29,6 @@ export default function MovieLP() {
     };
     window.addEventListener("scroll", onScrollCta, { passive: true });
 
-    /* Reveal on scroll */
     const revealObs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -82,10 +76,7 @@ export default function MovieLP() {
       {/* ── 1. HERO ── */}
       <section className="hero" id="hero">
         <div className="hero-bg">
-          <img src="/images/photo-hero-collab.jpg" alt="" width={1200} height={800} className="hero-bg-fallback" />
-          <video className="hero-video" autoPlay muted loop playsInline disablePictureInPicture preload="auto">
-            <source src="/images/hero-bg-video.mp4" type="video/mp4" />
-          </video>
+          <img src="/images/illust-hero.jpg" alt="" width={1200} height={800} className="hero-bg-fallback" />
         </div>
         <div className="hero-content">
           <div className="section-label" style={{ marginBottom: 16, opacity: 0, animation: "heroFade 0.8s var(--ease-out) 0.2s forwards" }}>
@@ -93,8 +84,7 @@ export default function MovieLP() {
             PASSO ANIMATION STUDIO
           </div>
           <h1>
-            <span style={{ display: "inline-block" }}>企業案件の映像制作に、</span><span style={{ display: "inline-block" }}>チームで関わる。</span><br />
-            <span style={{ display: "inline-block" }}>その日々が、あなたの</span><span style={{ display: "inline-block" }}>ポートフォリオになる。</span>
+            <span style={{ display: "inline-block" }}>あなたの絵が、</span><span style={{ display: "inline-block" }}>世界に出る。</span>
           </h1>
           <div className="scroll-hint">
             <span className="scroll-line"></span>
@@ -108,18 +98,23 @@ export default function MovieLP() {
         <div className="container">
           <div className="bridge-inner reveal">
             <h2 className="bridge-heading">
-              <span style={{ display: "inline-block" }}>動画編集を、</span><span style={{ display: "inline-block" }}>続けてきたあなたへ。</span>
+              <span style={{ display: "inline-block" }}>描き続けてきた、</span><span style={{ display: "inline-block" }}>あなたへ。</span>
             </h2>
             <div className="bridge-body">
               <p>
+                SNSに投稿しても、なかなか届かない。<br />
+                趣味で描いているだけじゃもったいない。<br />
+                そう感じながらも、絵を描くことをやめられない。
+              </p>
+              <p>
                 パッソアニメーションスタジオは、<br />
-                企業から映像制作を受託する<br />
+                企業からイラスト制作を受託する<br />
                 クリエイターチームです。
               </p>
               <p>
-                年間2,000件以上の案件が常に動くこのスタジオで、<br />
-                あなたが関わる仕事は、<br />
-                そのままあなたのポートフォリオになります。
+                年間2,000件以上の案件が動くこのスタジオで、<br />
+                あなたが描いたイラストは、<br />
+                企業の広告や商品として、世の中に届きます。
               </p>
             </div>
           </div>
@@ -131,14 +126,14 @@ export default function MovieLP() {
         <div className="container">
           <div className="projects-header reveal">
             <div className="section-label"><span className="dot"></span> WORKS</div>
-            <h2 className="section-title">チームで手がける企業案件</h2>
+            <h2 className="section-title">あなたの絵が使われる場所</h2>
           </div>
           <div className="project-cards">
             {[
-              { img: "photo-card-short.jpg", alt: "SNSショート・Web動画広告", title: "SNSショート・Web動画広告", desc: "TikTok、Instagramリール、YouTubeショートなどの縦型動画から、Web上の動画広告まで。テンポの良いカット編集やテロップデザインを形にします。" },
-              { img: "photo-card-corporate.jpg", alt: "コーポレート・採用PR映像", title: "コーポレート・採用PR映像", desc: "企業の公式チャンネルや採用特設サイトに向けた映像制作。経営者や社員のインタビュー、社内風景のドキュメンタリーなど、企業の魅力を視覚的に翻訳し、制作します。" },
-              { img: "photo-card-manga.jpg", alt: "漫画動画・YouTubeエンタメ編集", title: "漫画動画・YouTubeエンタメ編集", desc: "企業が運営するビジネス系・エンタメ系チャンネルの動画編集。トークのカットアップや、イラスト素材を活用した漫画動画など、それぞれのチャンネルに合わせた世界観を形にします。" },
-              { img: "photo-card-motion.jpg", alt: "モーショングラフィックス", title: "モーショングラフィックス（キーフレームアニメーション）", desc: "イラストやテキストなどの素材を、キーフレームを使って動かしていく編集作業。静止画に細やかな動きや表情を加え、映像ならではの豊かな表現を手がけます。" },
+              { img: "illust-card-sns.jpg", alt: "SNSイラスト・アイコン制作", title: "SNSイラスト・アイコン制作", desc: "企業のSNSアカウントで使用するオリジナルイラストやアイコン制作。毎日目にするSNSの投稿に、あなたの絵が使われます。" },
+              { img: "illust-card-character.jpg", alt: "キャラクターデザイン・商品イラスト", title: "キャラクターデザイン・商品イラスト", desc: "企業のマスコットキャラクターや商品パッケージのイラスト制作。あなたが描いたキャラクターが、店頭や広告で生き続けます。" },
+              { img: "illust-card-manga.jpg", alt: "漫画・コミックイラスト", title: "漫画・コミックイラスト", desc: "企業のPR漫画や解説コミックの制作。コマの中のキャラクターや背景が、読者に届く瞬間を一緒につくります。" },
+              { img: "illust-card-motion.jpg", alt: "モーション素材イラスト", title: "モーション素材イラスト", desc: "動画チームがアニメーションをつけるためのイラスト素材制作。あなたが描いたキャラクターが、動き出す瞬間を体験できます。" },
             ].map((c, i) => (
               <div className={`project-card glass reveal reveal-d${Math.min(i + 1, 3)}`} key={i}>
                 <div className="project-card-thumb">
@@ -153,14 +148,12 @@ export default function MovieLP() {
           </div>
           <div className="projects-note reveal" style={{ textAlign: "center", marginTop: "48px" }}>
             <p className="section-sub" style={{ margin: "0 auto" }}>
-              <span style={{ display: "inline-block" }}>スタジオが手がけるのは、</span>
-              <span style={{ display: "inline-block" }}>多岐にわたるジャンルの企業案件です。</span>
+              <span style={{ display: "inline-block" }}>ひとりで描いていた絵が、</span>
+              <span style={{ display: "inline-block" }}>企業の仕事として世の中に出ていく。</span>
             </p>
             <p className="section-sub" style={{ margin: "0 auto", marginTop: "12px" }}>
-              <span style={{ display: "inline-block" }}>クライアントの意図を汲み取り、</span>
-              <span style={{ display: "inline-block" }}>チームで映像として完成させる。</span><br />
-              <span style={{ display: "inline-block" }}>その日々の仕事が、</span>
-              <span style={{ display: "inline-block" }}>あなたを「選ばれるクリエイター」にします。</span>
+              <span style={{ display: "inline-block" }}>その積み重ねが、</span>
+              <span style={{ display: "inline-block" }}>イラストレーターとしての確かな実績になります。</span>
             </p>
           </div>
         </div>
@@ -172,15 +165,15 @@ export default function MovieLP() {
           <div className="workflow-header reveal">
             <div className="section-label"><span className="dot"></span> WORKFLOW</div>
             <h2 className="section-title">チームで進める制作ステップ</h2>
-            <p className="section-sub">映像制作の現場で、実務に集中できる環境を。パッソアニメーションスタジオでは、専属のディレクターを中心に、それぞれの強みを掛け合わせてひとつのプロジェクトを動かします。</p>
+            <p className="section-sub">あなたのタッチや得意なスタイルを活かして、企業案件に向き合える環境を。パッソアニメーションスタジオでは、専属のディレクターがあなたのイラストスタイルを理解したうえで案件を共有します。</p>
           </div>
 
           <div className="wf-steps-editorial">
             {[
-              { img: "photo-wf-proposal.jpg", num: 1, title: "案件の共有・キックオフ", desc: "あなたのスキルに合わせて、ディレクターから最適な案件が共有されます。クライアントとのやり取りもすべてディレクターが担当し、目的や構成が整理された状態でスタートするため、目の前の制作に集中できる環境です。", note: "", reverse: false },
-              { img: "photo-wf-briefing.jpg", num: 2, title: "編集・制作作業", desc: "共有された構成をもとに、あなたのスキルを活かして編集を進めます。制作中の仕様確認やアイデアの共有は、チャットツール等を用いてシームレスに行われます。作業の手を止めることなく、チームと連携しながら形にしていきます。", note: "", reverse: true },
-              { img: "photo-wf-review.jpg", num: 3, title: "チームでのブラッシュアップ", desc: "出来上がった制作物は、ディレクターと一緒に確認します。クオリティを一段引き上げ、クライアントの期待を超えるための「磨き上げ」の時間です。", note: "", reverse: false },
-              { img: "photo-wf-portfolio.jpg", num: 4, title: "納品・そして実績へ", desc: "完成した映像をクライアントへ納品します。チームで品質を担保して世に出した実績。その一つひとつが、クリエイターとしてのあなたの価値を証明します。", note: "", reverse: true },
+              { img: "illust-wf-proposal.jpg", num: 1, title: "スタイルの把握・案件の共有", desc: "まずディレクターがあなたの得意なタッチや表現スタイルを把握します。そのうえで、あなたの絵に合った案件を共有します。「自分のスタイルを変えなければいけない」という心配はありません。クライアントとのやり取りはすべてディレクターが担当するので、描くことに集中できます。", note: "", reverse: false },
+              { img: "illust-wf-drawing.jpg", num: 2, title: "ラフ・制作作業", desc: "共有されたイメージをもとに、ラフから丁寧に描き進めます。制作中の方向性の確認やアイデアの共有は、チャットツールを通じてスムーズに行えます。ペンを止めることなく、チームと連携しながら形にしていきます。", note: "", reverse: true },
+              { img: "illust-wf-review.jpg", num: 3, title: "チームでのブラッシュアップ", desc: "仕上がったイラストは、ディレクターと一緒に確認します。「もっとよくなる」という視点で一緒に磨き上げる時間です。自分ひとりでは気づかなかった表現に出会えることもあります。", note: "", reverse: false },
+              { img: "illust-wf-portfolio.jpg", num: 4, title: "納品・そして実績へ", desc: "完成したイラストがクライアントのもとへ届き、広告や商品として世の中に出ていきます。SNSに投稿し続けても届かなかった絵が、確かな仕事として誰かの目に触れる。その手応えが、次の制作への力になります。", note: "", reverse: true },
             ].map((s) => (
               <div className={`wf-editorial-step${s.reverse ? " wf-editorial-step--reverse" : ""} reveal`} key={s.num} id={`wf-step${s.num}`}>
                 <div className="wf-editorial-photo">
@@ -198,20 +191,19 @@ export default function MovieLP() {
         </div>
       </section>
 
-
       {/* ── 5. ENVIRONMENT ── */}
       <section className="environment" id="environment">
         <div className="container">
           <div className="env-header reveal">
             <div className="section-label"><span className="dot"></span> ENVIRONMENT</div>
             <h2 className="section-title">制作に集中できる環境</h2>
-            <p className="section-sub">チームの一員として、目の前の仕事に向き合える環境が整っています。</p>
+            <p className="section-sub">チームの一員として、目の前の絵に向き合える環境が整っています。</p>
           </div>
           <div className="env-items">
             {[
-              { img: "photo-env-desk.jpg", title: "【パーソナルデスク】自分の作業スペース", desc: "視界を遮り、制作に専念できる半個室型のデスクを採用。", cls: "reveal-left", reverse: false },
-              { img: "photo-env-premiere.jpg", title: "【Premiere Pro】業界標準の制作ツール", desc: "Adobe Premiere Proを使用しています。", cls: "reveal-right", reverse: true },
-              { img: "photo-env-teams.jpg", title: "【チャットツール】スマートなチーム連携", desc: "ビジネスチャットツールで、チームと連携します。", cls: "reveal-left", reverse: false },
+              { img: "photo-env-desk.jpg", title: "【パーソナルデスク】自分の作業スペース", desc: "視界を遮り、制作に専念できる半個室型のデスクを採用。液晶タブレットを使ったデジタルイラスト制作に対応しています。", cls: "reveal-left", reverse: false },
+              { img: "illust-env-clipstudio.jpg", title: "【Clip Studio Paint】業界標準の制作ツール", desc: "Clip Studio Paintを使用。漫画・イラスト制作に特化した機能が揃っており、プロの現場と同じ環境で制作に取り組めます。", cls: "reveal-right", reverse: true },
+              { img: "photo-env-teams.jpg", title: "【チャットツール】スマートなチーム連携", desc: "ビジネスチャットツールでチームと連携します。ひとりで悩まず、ディレクターや他のクリエイターにすぐ相談できる環境です。", cls: "reveal-left", reverse: false },
             ].map((e, i) => (
               <div className={`env-item${e.reverse ? " env-item--reverse" : ""} ${e.cls}`} key={i}>
                 <div className="env-item-image">
@@ -238,20 +230,20 @@ export default function MovieLP() {
             {[
               {
                 label: "STORY A",
-                heading: "趣味だった動画制作が、仕事になった。",
-                body: "元々は趣味でYouTubeの切り抜き動画などを作っていて、パッソを知りました。最初は「本当にできるのかな？」と不安でしたが、企業の案件を任せてもらえることが大きなモチベーションになりました。今では自分から「もっと案件はないですか？」とスタッフに聞いてしまうほど、前向きに取り組めています。",
+                heading: "自分の絵が、広告になった日。",
+                body: "ずっとSNSにイラストを投稿していたけど、反応はほとんどなくて。描くのは好きなのに、誰にも届いていない感じが辛かったです。\n\nパッソに来て最初に驚いたのは、企業から本当に仕事として依頼が来ていること。自分が描いたイラストが、実際に企業の広告として使われたとき、初めて「届いた」という実感がありました。",
                 credit: "Aさん（在籍クリエイター）",
               },
               {
                 label: "STORY B",
-                heading: "ひとりでは越えられなかった壁を、パッソで越えました。",
-                body: "動画編集でお金を稼ぎたいと思い、無料ソフトでひとりで試行錯誤しながら始めました。\n\nでも思うように収入には繋がらなくて。そんな時にパッソを知りました。\n\n来てからはPremiere Proでの編集に移りましたが、これまでとは違うソフトで最初の数週間は戸惑いの連続でした。それでもスタッフが丁寧に教えてくれたおかげで、気づいたら楽しくなっていて、企業案件を任せてもらえるようになっていました。\n\n今では毎日制作に向き合えています。",
+                heading: "「スタイルを変えなくていい」と言われて、安心した。",
+                body: "企業案件と聞いて、最初は自分の絵柄を無理やり変えさせられるんじゃないかと思っていました。\n\nでも実際はディレクターが私のタッチに合った案件を選んで持ってきてくれて。「この人のスタイルでお願いしたい」という形で仕事が来るんです。\n\n自分の絵のまま、仕事ができている。それが一番驚いたことでした。",
                 credit: "Bさん（在籍クリエイター）",
               },
               {
                 label: "STORY C",
-                heading: "パッソでの仕事が、フリーランス独立へ繋がった。",
-                body: "パッソに通うリズムができたことで、昼夜逆転していた生活が自然と整っていきました。\n\n企業案件に関わることで、仕事の進め方やチームでの動き方を覚え、いつの間にか自信がついていきました。ここで手がけた企業案件がそのまま自分のポートフォリオになったことで、独立してからも仕事が取りやすくなりました。",
+                heading: "パッソで描いた実績が、独立への自信になった。",
+                body: "ひとりで在宅で描いていた頃は、自分の実力が客観的にわからなくて不安でした。\n\nパッソで企業案件をこなすうちに、「自分の絵は仕事になる」という確信が少しずつ育っていきました。ここで積んだ実績をポートフォリオにまとめたら、フリーランスとして独立してからも継続的に仕事が来るようになりました。",
                 credit: "Cさん（フリーランス独立）",
               },
             ].map((story, i) => (
@@ -319,16 +311,17 @@ export default function MovieLP() {
           </div>
           <div className="faq-list">
             {[
-              { q: "ここは動画編集のスクールですか？", a: "いいえ、当スタジオは「学校」ではなく企業案件を手がける「制作スタジオ」です。関わった案件がそのままあなたの実績として積み上がります。パッソアニメーションスタジオは働くことに障がいのある方のための就労継続支援B型事業所です。" },
+              { q: "ここはイラストのスクールですか？", a: "いいえ、当スタジオは「学校」ではなく企業案件を手がける「制作スタジオ」です。関わった案件がそのままあなたの実績として積み上がります。パッソアニメーションスタジオは働くことに障がいのある方のための就労継続支援B型事業所です。" },
+              { q: "自分のイラストスタイルを変えなければいけませんか？", a: "いいえ。ディレクターがあなたのタッチや得意なスタイルを把握したうえで、それに合った案件を選んでお声がけします。あなたの絵柄を活かすことがチームの制作力につながると考えているからです。" },
               { q: "就労継続支援B型とは何ですか？", a: "制作活動を通して職業スキルを向上させることを目的とし、フリーランスや一般就労といった「次のステップ」を目指していくための福祉サービスです。" },
               { q: "利用するための条件はありますか？", a: "精神・知的・身体障がい・難病があり、原則として「障がい者手帳」をお持ちの方、あるいは医師の診断や意見書がある方にご利用いただけます。ご利用にあたっては「受給者証」という証明書の取得が必要です（詳しくは下記をご覧ください）。" },
               { q: "「受給者証」とは何ですか？持っていなくても利用できますか？", a: "受給者証とは、障害福祉サービスを利用するために必要な証明書で、お住まいの市区町村の窓口で申請します。障がい者手帳をお持ちでない方でも、主治医の意見書があれば申請できる場合があります。手続きが不安という方も、ディレクターが一緒に確認しますので、まずはLINEよりご連絡ください。" },
               { q: "利用するのにお金はかかりますか？", a: "前年度の世帯収入に応じて自己負担額が決定されますが、多くの方が自己負担なくご利用されています。詳細な負担額については、お住まいの市区町村の窓口にてご確認ください。" },
               { q: "制作に対する報酬は支払われますか？", a: "はい。作業時間に応じた基本工賃に加え、企業案件に携わった成果や貢献度に応じた『生産活動ボーナス』を上乗せしてお支払いしています。頑張りがしっかり評価される仕組みです。" },
-              { q: "動画編集が全くの未経験なのですが、利用できますか？", a: "はい、パソコンの基本操作ができれば問題ありません。最初はディレクターが一緒に進めますが、おおむね1ヶ月ほどで企業案件に携わり始める方がほとんどです。" },
+              { q: "デジタルイラストが未経験でも大丈夫ですか？", a: "はい。アナログで絵を描いてきた方も、ディレクターが一緒にClip Studio Paintの操作から丁寧にサポートします。「絵を描くことが好き」という気持ちがあれば大丈夫です。" },
               { q: "週に何日から利用できますか？", a: "経験の有無に関わらず、当スタジオでは「週3日・1日4時間以上」からのご利用を推奨しています。企業案件の納期を守り、安定した制作リズムを作るためには、継続的な時間が不可欠だと考えているからです。" },
-              { q: "在宅での制作（リモートワーク）は可能ですか？", a: "当スタジオでは、原則としてスタジオへお越しいただいての制作をお願いしております。ディレクターやチームのメンバーと同じ空間でコミュニケーションを取りながら進めることが、企業案件のクオリティを高め、クリエイターとしてのスムーズな成長に繋がると考えているからです。" },
-              { q: "この先どんな働き方に繋がっていきますか？", a: "ここで制作するメンバーが描く将来は本当にさまざまです。「フリーランスとして自分で案件を受けたい」という方もいれば、「動画編集で月に数万円の収入を得たい」という方、「企業のSNS担当として就職したい」という方もいます。多彩な企業案件に携わり、制作を重ねる中で自然とポートフォリオが充実していくため、どの道に進むにしてもその実績があなたの強みになります。" },
+              { q: "在宅での制作（リモートワーク）は可能ですか？", a: "当スタジオでは、原則としてスタジオへお越しいただいての制作をお願いしております。ディレクターやチームのメンバーと同じ空間でコミュニケーションを取りながら進めることが、制作のクオリティを高め、成長につながると考えているからです。" },
+              { q: "この先どんな働き方に繋がっていきますか？", a: "「フリーランスのイラストレーターとして独立したい」という方もいれば、「副業として収入を得たい」「企業のデザイン部門に就職したい」という方もいます。ここで積んだ企業案件の実績は、どの道に進むにしても、あなたの絵が仕事になるという確かな証明になります。" },
             ].map((faq, i) => (
               <details className={`faq-item glass reveal reveal-d${Math.min(i + 1, 3)}`} key={i}>
                 <summary className="faq-question">
@@ -343,14 +336,14 @@ export default function MovieLP() {
         </div>
       </section>
 
-      {/* ── CTA（見学誘導メッセージ + LINEボタン） ── */}
+      {/* ── CTA ── */}
       <section className="final-cta" id="final-cta">
         <div className="container">
           <div className="cta-message reveal">
             <h2 className="cta-message-heading">まずは、LINEから。</h2>
             <div className="cta-message-body">
               <p>ご質問や見学のご相談など、<br />LINEからいつでもメッセージを送ってみてください。</p>
-              <p>これからのことについて、ここからお話ししましょう。</p>
+              <p>あなたの絵のこと、ここからお話ししましょう。</p>
             </div>
           </div>
           <div className="reveal">
@@ -433,7 +426,7 @@ export default function MovieLP() {
 
       {/* ── FOOTER ── */}
       <footer className="site-footer" id="footer">
-        <p className="footer-supplement">※イラストレーターも同時募集しています。所属クリエイターが描いたイラストを動画で動かすなどチームでの制作も行っています。</p>
+        <p className="footer-supplement">※動画編集クリエイターも同時募集しています。所属クリエイターが描いたイラストを動画で動かすなど、チームでの制作も行っています。</p>
         <div className="footer-logo">
           <img src="/images/logo-passo.png" alt="パッソアニメーションスタジオ" className="footer-logo-img" />
         </div>
