@@ -38,7 +38,10 @@ export default function Home() {
               </p>
               <div className="top-office-card-actions">
                 <Link href="/movie" className="top-btn top-btn--primary">
-                  クリエイターとして加わりたい方
+                  動画編集クリエイターとして加わりたい方
+                </Link>
+                <Link href="/illust" className="top-btn top-btn--primary">
+                  イラストクリエイターとして加わりたい方
                 </Link>
                 <span className="top-btn top-btn--disabled" aria-disabled="true">
                   制作を依頼したい企業様
