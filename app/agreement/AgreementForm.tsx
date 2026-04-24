@@ -90,10 +90,10 @@ export function AgreementForm({ intake, loadError, queryIntakeId }: Props) {
             <p>
               体験利用の誓約書は、見学時に登録された面談票と紐付けて作成します。
               <br />
-              スタッフ画面の一覧から該当の方を選んで開いてください。
+              スタッフ画面のダッシュボードから該当の方を選んで開いてください。
             </p>
-            <Link href="/staff/intake" className="agreement-notice-link">
-              面談票一覧へ
+            <Link href="/staff" className="agreement-notice-link">
+              ダッシュボードへ
             </Link>
           </div>
         </main>
@@ -110,8 +110,8 @@ export function AgreementForm({ intake, loadError, queryIntakeId }: Props) {
             <div className="agreement-notice-mark">!</div>
             <h1>面談票を読み込めませんでした</h1>
             <p>{loadError ?? "該当する面談票が見つかりません。"}</p>
-            <Link href="/staff/intake" className="agreement-notice-link">
-              面談票一覧へ戻る
+            <Link href="/staff" className="agreement-notice-link">
+              ダッシュボードへ戻る
             </Link>
           </div>
         </main>
@@ -119,11 +119,11 @@ export function AgreementForm({ intake, loadError, queryIntakeId }: Props) {
     );
   }
 
-  // ----- 完了画面 -----
+  // ----- 完了画面（下部の PIN フォームで遷移するので、トップバーに戻るリンクは置かない） -----
   if (submitted) {
     return (
       <>
-        <AgreementTopbar backHref={intake ? `/staff/intake/${intake.id}` : undefined} />
+        <AgreementTopbar />
         <main className="agreement-stage">
           <div className="agreement-done">
             <div className="agreement-done-mark">
@@ -174,10 +174,10 @@ export function AgreementForm({ intake, loadError, queryIntakeId }: Props) {
     );
   }
 
-  // ----- メインフォーム -----
+  // ----- メインフォーム（利用者が署名する画面・スタッフ用リンクは見せない）-----
   return (
     <>
-      <AgreementTopbar backHref={`/staff/intake/${intake.id}`} />
+      <AgreementTopbar />
       <main className="agreement-stage">
         <header className="agreement-head">
           <div className="agreement-label">
