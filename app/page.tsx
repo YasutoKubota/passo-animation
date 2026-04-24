@@ -75,10 +75,9 @@ export default function Home() {
                 自己理解・コミュニケーションスキル向上を<br />軸としたジョブマッチングサービス
               </p>
               <div className="top-office-card-actions">
-                <span className="top-btn top-btn--disabled" aria-disabled="true">
+                <Link href="/start" className="top-btn top-btn--primary">
                   詳しくはこちら
-                  <span className="top-btn-badge">Coming Soon</span>
-                </span>
+                </Link>
               </div>
             </div>
           </div>
