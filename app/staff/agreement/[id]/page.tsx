@@ -82,14 +82,14 @@ export default async function AgreementViewPage({
     if (intakeData) intake = intakeData as IntakeLite;
   }
 
-  // 戻り先の決定
+  // 戻り先の決定（誓約書一覧は廃止されたのでダッシュボードに戻す）
   const backTo =
     from === "intake" && (intake_id || ag.intake_id)
       ? {
           href: `/staff/intake/${intake_id ?? ag.intake_id}`,
           label: "← 面談票の詳細に戻る",
         }
-      : { href: "/staff/agreement", label: "← 誓約書一覧に戻る" };
+      : { href: "/staff", label: "← ダッシュボードに戻る" };
 
   return (
     <div className="staff-root">

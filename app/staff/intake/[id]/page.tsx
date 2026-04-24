@@ -101,9 +101,10 @@ export default async function IntakeDetailPage({
 }) {
   const { id } = await params;
   const { from } = await searchParams;
-  const backTo = from === "agreement"
-    ? { href: "/staff/agreement", label: "← 誓約書一覧に戻る" }
-    : { href: "/staff/intake", label: "← 面談票一覧に戻る" };
+  // 一覧ページは廃止されたのでダッシュボード（/staff）に戻す
+  const backTo = { href: "/staff", label: "← ダッシュボードに戻る" };
+  // from パラメータは互換性のため受け取るが、遷移先は常に /staff
+  void from;
 
   const [intakeResult, agreementsResult] = await Promise.all([
     supabaseAdmin.from("intake_forms").select("*").eq("id", id).maybeSingle(),

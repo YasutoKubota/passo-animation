@@ -51,8 +51,8 @@ export async function deleteIntake(formData: FormData): Promise<void> {
     throw new Error(`削除に失敗しました: ${error.message}`);
   }
 
-  revalidatePath("/staff/intake");
-  redirect("/staff/intake");
+  revalidatePath("/staff");
+  redirect("/staff");
 }
 
 // 誓約書を 1 件削除する。
@@ -66,7 +66,7 @@ export async function deleteAgreement(formData: FormData): Promise<void> {
     throw new Error(`削除に失敗しました: ${error.message}`);
   }
 
-  // 面談票詳細・誓約書一覧の双方を再検証
+  // 面談票詳細とダッシュボードの双方を再検証
   if (intakeId) revalidatePath(`/staff/intake/${intakeId}`);
-  revalidatePath("/staff/agreement");
+  revalidatePath("/staff");
 }

@@ -900,6 +900,130 @@
   border-color: var(--border-subtle);
 }
 
+/* --- Intake Dashboard 行 --- */
+.dash-row {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.dash-row:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+.dash-row-body {
+  flex: 1;
+  min-width: 0;
+  padding: 16px 18px;
+  text-decoration: none;
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.dash-row-body:hover {
+  background: var(--bg-accent);
+}
+.dash-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.dash-row-furigana {
+  margin-left: 10px;
+  font-size: 12px;
+  color: var(--text-light);
+}
+.dash-row-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-light);
+  flex-shrink: 0;
+}
+.dash-row-sub {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  align-items: center;
+}
+.dash-row-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.dash-row-badge--done {
+  background: rgba(120, 160, 120, 0.15);
+  color: #4a7a4a;
+}
+.dash-row-badge--todo {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.dash-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-left: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+.dash-row-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all var(--t-fast);
+  white-space: nowrap;
+}
+.dash-row-btn--issue {
+  background: var(--accent);
+  color: var(--white);
+  box-shadow: 0 2px 8px var(--accent-glow);
+}
+.dash-row-btn--issue:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+.dash-row-btn--view {
+  background: var(--white);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.dash-row-btn--view:hover {
+  background: var(--accent-soft);
+}
+
+@media (max-width: 720px) {
+  .dash-row {
+    flex-direction: column;
+  }
+  .dash-row-actions {
+    border-left: none;
+    border-top: 1px solid var(--border-light);
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+}
+
 /* --- ダッシュボードの Quick Actions（当日の受付アクション） --- */
 .staff-quick-actions {
   margin-bottom: 40px;

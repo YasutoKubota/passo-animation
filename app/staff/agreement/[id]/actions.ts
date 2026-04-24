@@ -16,11 +16,11 @@ export async function deleteAgreementFromView(formData: FormData): Promise<void>
     throw new Error(`削除に失敗しました: ${error.message}`);
   }
 
-  revalidatePath("/staff/agreement");
+  revalidatePath("/staff");
   if (intakeId) revalidatePath(`/staff/intake/${intakeId}`);
 
   if (from === "intake" && intakeId) {
     redirect(`/staff/intake/${intakeId}`);
   }
-  redirect("/staff/agreement");
+  redirect("/staff");
 }

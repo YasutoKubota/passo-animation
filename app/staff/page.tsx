@@ -1,17 +1,60 @@
 import Link from "next/link";
 import { StaffTopbar } from "./components/Topbar";
 import { supabaseAdmin } from "@/lib/supabase";
+import { STUDIO_OPTIONS, studioLabel } from "@/lib/intake-schema";
+import { DeleteIntakeButton } from "./intake/[id]/DeleteButtons";
 
 export const dynamic = "force-dynamic";
 
-export default async function StaffDashboard() {
-  const [intakeResult, agreementResult] = await Promise.all([
-    supabaseAdmin.from("intake_forms").select("*", { count: "exact", head: true }),
-    supabaseAdmin.from("trial_agreements").select("*", { count: "exact", head: true }),
-  ]);
+type AgreementLite = {
+  id: string;
+  created_at: string;
+};
 
-  const intakeCount = intakeResult.count;
-  const agreementCount = agreementResult.count;
+type IntakeRow = {
+  id: string;
+  submitted_at: string;
+  studio_location: string | null;
+  name: string;
+  furigana: string;
+  phone: string | null;
+  birth_date: string | null;
+  trial_agreements: AgreementLite[];
+};
+
+function formatDate(iso: string) {
+  const d = new Date(iso);
+  return d.toLocaleString("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+export default async function StaffDashboard({
+  searchParams,
+}: {
+  searchParams: Promise<{ studio?: string }>;
+}) {
+  const { studio } = await searchParams;
+
+  const validCodes = STUDIO_OPTIONS.map((o) => o.value) as string[];
+  let query = supabaseAdmin
+    .from("intake_forms")
+    .select(
+      "id, submitted_at, studio_location, name, furigana, phone, birth_date, trial_agreements(id, created_at)"
+    )
+    .order("submitted_at", { ascending: false })
+    .limit(200);
+
+  if (studio && validCodes.includes(studio)) {
+    query = query.eq("studio_location", studio);
+  }
+
+  const { data, error } = await query;
+  const rows = (data ?? []) as IntakeRow[];
 
   return (
     <div className="staff-root">
@@ -20,71 +63,130 @@ export default async function StaffDashboard() {
         <div className="staff-page-head">
           <div className="staff-page-label">
             <span className="dot" />
-            <span>Dashboard</span>
+            <span>Intake Dashboard</span>
           </div>
-          <h1 className="staff-page-title">スタッフ管理</h1>
+          <h1 className="staff-page-title">見学・体験利用 管理</h1>
           <p className="staff-page-sub">
-            見学・体験の記録を確認したり、今後追加されるツールをここから開きます。
+            見学者の面談票の発行・閲覧と、体験利用誓約書の発行・閲覧をここから行います。
           </p>
+
+          <div className="staff-detail-actions">
+            <Link
+              href="/intake"
+              className="staff-action-btn staff-action-btn--primary"
+            >
+              + 新規 面談票を発行
+            </Link>
+            <span className="staff-action-note">
+              見学者が来所したとき、タブレットやパソコンをお渡しするためのボタンです。
+            </span>
+          </div>
         </div>
 
-        {/* 当日の受付アクション */}
-        <section className="staff-quick-actions">
-          <div className="staff-quick-actions-head">TODAY · 受付アクション</div>
-          <div className="staff-quick-grid">
-            <Link href="/intake" className="staff-quick-card staff-quick-card--primary">
-              <div className="staff-quick-label">新規 見学者が来訪</div>
-              <div className="staff-quick-title">面談票を発行</div>
-              <div className="staff-quick-desc">
-                事業所のパソコンで、ご本人に入力していただきます。
-                <br />
-                入力の様子はタイピング評価の参考にもなります。
-              </div>
-              <div className="staff-quick-arrow">面談票を開く →</div>
-            </Link>
-
+        <div className="staff-list-controls">
+          <Link
+            href="/staff"
+            className={`staff-filter-chip ${!studio ? "staff-filter-chip--active" : ""}`}
+          >
+            すべて
+          </Link>
+          {STUDIO_OPTIONS.map((opt) => (
             <Link
-              href="/staff/intake"
-              className="staff-quick-card staff-quick-card--secondary"
+              key={opt.value}
+              href={`/staff?studio=${opt.value}`}
+              className={`staff-filter-chip ${studio === opt.value ? "staff-filter-chip--active" : ""}`}
             >
-              <div className="staff-quick-label">体験開始する人がいる</div>
-              <div className="staff-quick-title">誓約書を発行</div>
-              <div className="staff-quick-desc">
-                面談票一覧から該当の方を開き、「体験利用開始」ボタンを押してください。
-              </div>
-              <div className="staff-quick-arrow">面談票一覧へ →</div>
+              {opt.label}
             </Link>
-          </div>
-        </section>
+          ))}
+          <span className="staff-count">{rows.length} 件</span>
+        </div>
 
-        <section className="staff-records-section">
-          <div className="staff-records-head">RECORDS · 記録を見る</div>
-          <div className="staff-tools">
-            <Link href="/staff/intake" className="staff-tool-card">
-              <div className="staff-tool-label">Intake</div>
-              <div className="staff-tool-title">見学・体験 面談票</div>
-              <div className="staff-tool-desc">
-                これまでに提出された面談票の一覧と詳細。
-                {typeof intakeCount === "number" && `（現在 ${intakeCount} 件）`}
-              </div>
-            </Link>
-
-            <Link href="/staff/agreement" className="staff-tool-card">
-              <div className="staff-tool-label">Agreement</div>
-              <div className="staff-tool-title">体験利用 誓約書</div>
-              <div className="staff-tool-desc">
-                これまでに受領した誓約書の一覧。
-                {typeof agreementCount === "number" && `（現在 ${agreementCount} 件）`}
-              </div>
-            </Link>
-
-            <div className="staff-tool-card staff-tool-card--disabled">
-              <div className="staff-tool-label">Coming soon</div>
-              <div className="staff-tool-title">その他のツール</div>
-              <div className="staff-tool-desc">今後追加される管理ツールが並びます。</div>
+        <div className="staff-list">
+          {error && (
+            <div className="staff-list-empty">
+              読み込みに失敗しました: {error.message}
             </div>
-          </div>
-        </section>
+          )}
+          {!error && rows.length === 0 && (
+            <div className="staff-list-empty">
+              まだ面談票はありません。上の「新規 面談票を発行」から追加できます。
+            </div>
+          )}
+          {!error &&
+            rows.map((row) => {
+              const agreements = (row.trial_agreements ?? []).slice().sort(
+                (a, b) =>
+                  new Date(b.created_at).getTime() -
+                  new Date(a.created_at).getTime()
+              );
+              const latestAgreement = agreements[0];
+              const hasAgreement = !!latestAgreement;
+
+              return (
+                <div key={row.id} className="dash-row">
+                  <Link
+                    href={`/staff/intake/${row.id}`}
+                    className="dash-row-body"
+                  >
+                    <div className="dash-row-top">
+                      <div>
+                        <span className="staff-list-name">{row.name}</span>
+                        <span className="dash-row-furigana">
+                          {row.furigana}
+                        </span>
+                      </div>
+                      <div className="dash-row-meta">
+                        {row.studio_location && (
+                          <span className="staff-list-studio">
+                            {studioLabel(row.studio_location)}
+                          </span>
+                        )}
+                        <span>{formatDate(row.submitted_at)}</span>
+                      </div>
+                    </div>
+                    <div className="dash-row-sub">
+                      {row.phone && <span>TEL: {row.phone}</span>}
+                      {row.birth_date && <span>生年月日: {row.birth_date}</span>}
+                      {hasAgreement ? (
+                        <span className="dash-row-badge dash-row-badge--done">
+                          ✓ 誓約書 署名済み
+                          {agreements.length > 1 && ` (${agreements.length}件)`}
+                        </span>
+                      ) : (
+                        <span className="dash-row-badge dash-row-badge--todo">
+                          誓約書 未発行
+                        </span>
+                      )}
+                    </div>
+                  </Link>
+
+                  <div className="dash-row-actions">
+                    {hasAgreement ? (
+                      <Link
+                        href={`/staff/agreement/${latestAgreement.id}?from=intake&intake_id=${row.id}`}
+                        className="dash-row-btn dash-row-btn--view"
+                      >
+                        誓約書を表示
+                      </Link>
+                    ) : (
+                      <Link
+                        href={`/agreement?intake_id=${row.id}`}
+                        className="dash-row-btn dash-row-btn--issue"
+                      >
+                        誓約書を発行
+                      </Link>
+                    )}
+                    <DeleteIntakeButton
+                      id={row.id}
+                      name={row.name}
+                      agreementCount={agreements.length}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+        </div>
       </main>
     </div>
   );
