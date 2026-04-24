@@ -833,6 +833,29 @@
   gap: 4px;
   min-width: 0;
 }
+.staff-agreement-row-link {
+  text-decoration: none;
+  color: inherit;
+  padding: 4px 0;
+  border-radius: 6px;
+  transition: background var(--t-fast);
+}
+.staff-agreement-row-link:hover {
+  background: var(--accent-soft);
+}
+.staff-agreement-row-view {
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-left: 10px;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  transition: opacity var(--t-fast);
+}
+.staff-agreement-row-link:hover .staff-agreement-row-view {
+  opacity: 1;
+}
 .staff-agreement-delete-btn {
   flex-shrink: 0;
   width: 28px;
@@ -1284,6 +1307,175 @@
   font-size: 11px;
   color: var(--text-light);
   line-height: 1.8;
+}
+
+/* ============================================
+   Agreement View（誓約書詳細ページ）
+   ============================================ */
+.staff-agreement-view {
+  max-width: 720px;
+}
+
+.agreement-view-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.agreement-view-meta-row {
+  display: flex;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border-light);
+  font-size: 14px;
+}
+.agreement-view-meta-row:last-child {
+  border-bottom: none;
+}
+.agreement-view-meta-label {
+  flex: 0 0 90px;
+  color: var(--text-light);
+  font-size: 12px;
+  padding-top: 2px;
+}
+.agreement-view-meta-value {
+  flex: 1;
+  color: var(--text-primary);
+  font-weight: 500;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.agreement-view-furigana {
+  font-size: 12px;
+  color: var(--text-light);
+  font-weight: 400;
+}
+.agreement-view-signature {
+  flex: 1;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+  padding: 6px 0;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+  max-width: 320px;
+}
+.agreement-view-intake-link {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-light);
+  font-size: 12.5px;
+}
+.agreement-view-intake-link a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity var(--t-fast);
+}
+.agreement-view-intake-link a:hover {
+  opacity: 0.7;
+}
+
+.agreement-view-preamble {
+  font-size: 13.5px;
+  line-height: 2;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.agreement-view-section {
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  background: var(--bg-offwhite);
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+}
+.agreement-view-section:last-of-type {
+  margin-bottom: 0;
+}
+.agreement-view-section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.agreement-view-section-num {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: var(--white);
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 50%;
+}
+.agreement-view-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.agreement-view-section-preamble {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 8px;
+}
+.agreement-view-section-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.agreement-view-section-list li {
+  position: relative;
+  padding: 4px 0 4px 20px;
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--text-primary);
+}
+.agreement-view-section-list:not(.agreement-view-section-list--ol) li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.agreement-view-section-list--ol {
+  counter-reset: view-item;
+}
+.agreement-view-section-list--ol li {
+  counter-increment: view-item;
+  padding-left: 26px;
+}
+.agreement-view-section-list--ol li::before {
+  content: counter(view-item) ".";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  font-family: var(--font-en);
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 12px;
+}
+
+.agreement-view-closing {
+  margin-top: 20px;
+  padding: 14px 18px;
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.9;
 }
 
 /* ============================================

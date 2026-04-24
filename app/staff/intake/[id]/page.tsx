@@ -170,11 +170,11 @@ export default async function IntakeDetailPage({
               href={`/agreement?intake_id=${data.id}`}
               className="staff-action-btn staff-action-btn--primary"
             >
-              体験利用開始（誓約書を発行）
+              誓約書に署名してもらう
             </Link>
             {agreements.length > 0 && (
               <span className="staff-action-note">
-                既に {agreements.length} 件の誓約書あり（最新: {formatDate(agreements[0].created_at)}）
+                発行済み {agreements.length} 件（最新: {formatDate(agreements[0].created_at)}）— 下の一覧から表示できます
               </span>
             )}
           </div>
@@ -299,14 +299,20 @@ export default async function IntakeDetailPage({
                 <div className="staff-agreement-list">
                   {agreements.map((ag) => (
                     <div key={ag.id} className="staff-agreement-row">
-                      <div className="staff-agreement-row-body">
+                      <Link
+                        href={`/staff/agreement/${ag.id}?from=intake&intake_id=${data.id}`}
+                        className="staff-agreement-row-body staff-agreement-row-link"
+                      >
                         <div className="staff-agreement-date">
                           {formatDate(ag.created_at)}
                         </div>
                         <div className="staff-agreement-name">
                           署名: {ag.signed_name}
+                          <span className="staff-agreement-row-view">
+                            表示 →
+                          </span>
                         </div>
-                      </div>
+                      </Link>
                       <DeleteAgreementButton
                         id={ag.id}
                         intakeId={data.id}

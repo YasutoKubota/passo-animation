@@ -114,17 +114,12 @@ export default async function AgreementListPage({
             agreements?.map((row: AgreementRow) => {
               const intake = row.intake_id ? intakeMap[row.intake_id] : null;
               const displayName = intake?.name ?? row.signed_name;
-              const target = row.intake_id
-                ? `/staff/intake/${row.intake_id}?from=agreement`
-                : "#";
-
-              const ItemTag: "a" | "div" = row.intake_id ? "a" : "div";
-              const commonProps = {
-                className: `staff-list-item ${!row.intake_id ? "staff-list-item--static" : ""}`,
-              };
-
-              const inner = (
-                <>
+              return (
+                <Link
+                  key={row.id}
+                  href={`/staff/agreement/${row.id}?from=list`}
+                  className="staff-list-item"
+                >
                   <div className="staff-list-top">
                     <div>
                       <span className="staff-list-name">{displayName}</span>
@@ -151,20 +146,7 @@ export default async function AgreementListPage({
                     <span>署名: {row.signed_name}</span>
                     {!row.intake_id && <span>（面談票とのリンクなし）</span>}
                   </div>
-                </>
-              );
-
-              if (ItemTag === "a") {
-                return (
-                  <Link key={row.id} href={target} className={commonProps.className}>
-                    {inner}
-                  </Link>
-                );
-              }
-              return (
-                <div key={row.id} className={commonProps.className}>
-                  {inner}
-                </div>
+                </Link>
               );
             })}
         </div>
