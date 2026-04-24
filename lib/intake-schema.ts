@@ -65,6 +65,20 @@ export const PC_TYPE_OPTIONS = [
   { value: "other", label: "その他・分からない" },
 ] as const;
 
+// 体験利用スケジュール（1 日単位のレコード）
+// 原則 3 日。1 日ずつ「午前 / 午後」のどちらを使うかを選ぶ。
+export const TRIAL_SLOT_OPTIONS = [
+  { value: "morning", label: "午前" },
+  { value: "afternoon", label: "午後" },
+] as const;
+
+export type TrialSlot = (typeof TRIAL_SLOT_OPTIONS)[number]["value"];
+
+export type TrialSession = {
+  date: string; // YYYY-MM-DD
+  slot: TrialSlot;
+};
+
 export type StudioValue = (typeof STUDIO_OPTIONS)[number]["value"];
 export type GenderValue = (typeof GENDER_OPTIONS)[number];
 export type TransportValue = (typeof TRANSPORT_OPTIONS)[number]["value"];
