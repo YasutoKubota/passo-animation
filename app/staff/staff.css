@@ -601,3 +601,86 @@
 .staff-back-link:hover {
   color: var(--accent);
 }
+
+/* --- 体験利用開始ボタン（詳細ページ） --- */
+.staff-detail-actions {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.staff-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-family: var(--font-jp);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all var(--t-fast);
+  cursor: pointer;
+  border: none;
+}
+.staff-action-btn--primary {
+  background: var(--accent);
+  color: var(--white);
+  box-shadow: 0 3px 14px var(--accent-glow);
+}
+.staff-action-btn--primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px var(--accent-glow);
+}
+.staff-action-note {
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* --- 誓約書履歴（詳細ページ右カラム） --- */
+.staff-empty-note {
+  padding: 14px 16px;
+  background: var(--bg-accent);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.9;
+}
+.staff-agreement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.staff-agreement-row {
+  padding: 12px 14px;
+  background: var(--white);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.staff-agreement-date {
+  font-family: var(--font-en);
+  font-size: 12px;
+  color: var(--text-light);
+  letter-spacing: 0.04em;
+}
+.staff-agreement-name {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* --- 誓約書一覧の intake なし項目用 --- */
+.staff-list-item--static {
+  cursor: default;
+}
+.staff-list-item--static:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--border-subtle);
+}

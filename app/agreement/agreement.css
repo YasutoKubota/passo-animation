@@ -1,0 +1,605 @@
+/* ============================================
+   /agreement — 体験利用 誓約書
+   Japandi Premium scoped to agreement flow
+   ============================================ */
+
+.agreement-root {
+  min-height: 100vh;
+  min-height: 100svh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-jp);
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Topbar --- */
+.agreement-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(247, 247, 245, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.agreement-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+.agreement-brand .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* --- Stage --- */
+.agreement-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 24px 160px;
+}
+
+/* --- Header --- */
+.agreement-head {
+  width: 100%;
+  max-width: 680px;
+  margin-bottom: 32px;
+}
+
+.agreement-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+.agreement-label .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.agreement-title {
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.agreement-sub {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.9;
+  margin-bottom: 28px;
+}
+
+.agreement-meta {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 18px 22px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.agreement-meta-row {
+  display: flex;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border-light);
+  font-size: 14px;
+}
+.agreement-meta-row:last-child {
+  border-bottom: none;
+}
+
+.agreement-meta-label {
+  flex: 0 0 80px;
+  color: var(--text-light);
+  font-size: 12px;
+  padding-top: 2px;
+}
+
+.agreement-meta-value {
+  flex: 1;
+  color: var(--text-primary);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.agreement-meta-furigana {
+  font-size: 12px;
+  color: var(--text-light);
+  font-weight: 400;
+}
+
+/* --- Body --- */
+.agreement-body {
+  width: 100%;
+  max-width: 680px;
+}
+
+.agreement-preamble {
+  font-size: 14px;
+  line-height: 2;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+  padding: 0 4px;
+}
+
+/* --- Section card --- */
+.agreement-section {
+  background: var(--white);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 24px 22px 20px;
+  margin-bottom: 16px;
+  position: relative;
+  transition: border-color var(--t-norm), box-shadow var(--t-norm);
+}
+.agreement-section.is-confirmed {
+  border-color: var(--accent);
+  box-shadow: 0 2px 14px rgba(184, 120, 104, 0.08);
+}
+
+.agreement-section-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.agreement-section-num {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: var(--white);
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px var(--accent-glow);
+}
+
+.agreement-section-title {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.agreement-section-preamble {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 10px;
+}
+
+.agreement-section-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  counter-reset: agreement-item;
+}
+
+.agreement-section-list li {
+  position: relative;
+  padding: 6px 0 6px 20px;
+  font-size: 14px;
+  line-height: 2;
+  color: var(--text-primary);
+}
+
+.agreement-section-list:not(.agreement-section-list--ol) li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 17px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.agreement-section-list--ol {
+  counter-reset: agreement-item;
+}
+.agreement-section-list--ol li {
+  counter-increment: agreement-item;
+  padding-left: 28px;
+}
+.agreement-section-list--ol li::before {
+  content: counter(agreement-item) ".";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  font-family: var(--font-en);
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 13px;
+}
+
+/* --- Per-section confirm checkbox --- */
+.agreement-confirm {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--bg-accent);
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--t-fast);
+}
+.agreement-confirm:hover {
+  background: var(--bg-secondary);
+}
+.agreement-section.is-confirmed .agreement-confirm {
+  background: var(--accent-soft);
+}
+
+.agreement-confirm input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.agreement-confirm-box {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  border: 1.5px solid var(--border-section);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--t-fast);
+  position: relative;
+}
+.agreement-confirm-box::after {
+  content: "";
+  width: 11px;
+  height: 6px;
+  border-left: 2px solid var(--white);
+  border-bottom: 2px solid var(--white);
+  transform: rotate(-45deg) translate(1px, -1px);
+  opacity: 0;
+  transition: opacity var(--t-fast);
+}
+.agreement-section.is-confirmed .agreement-confirm-box {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.agreement-section.is-confirmed .agreement-confirm-box::after {
+  opacity: 1;
+}
+
+.agreement-confirm-text {
+  font-size: 13.5px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* --- Closing line --- */
+.agreement-closing {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.9;
+  margin: 28px 0 24px;
+  padding: 16px 20px;
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* --- Signature --- */
+.agreement-signature-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 24px 22px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.agreement-signature-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+.agreement-signature-label .required {
+  display: inline-block;
+  font-family: var(--font-en);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.agreement-signature-hint {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.agreement-signature-hint strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.agreement-signature-input {
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--text-primary);
+  font-family: var(--font-jp);
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.agreement-signature-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.agreement-signature-input.is-mismatch {
+  border-color: #c9603a;
+  box-shadow: 0 0 0 3px rgba(201, 96, 58, 0.08);
+}
+
+.agreement-signature-error {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #a5361e;
+  line-height: 1.7;
+}
+
+/* --- Nav / submit --- */
+.agreement-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 24px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  background: rgba(245, 240, 232, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border-subtle);
+  z-index: 20;
+}
+.agreement-nav-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.agreement-nav-status {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.agreement-nav-checks {
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-light);
+}
+.agreement-nav-hint {
+  font-size: 11px;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+.nav-btn {
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-family: var(--font-jp);
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all var(--t-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-shrink: 0;
+  min-width: 180px;
+}
+.nav-btn--primary {
+  background: var(--accent);
+  color: var(--white);
+  box-shadow: 0 4px 16px var(--accent-glow);
+}
+.nav-btn--primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
+.nav-btn--primary:disabled {
+  background: var(--bg-dark);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.nav-error {
+  margin-top: 10px;
+  color: #a5361e;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* --- Notice (no intake_id / error) --- */
+.agreement-notice {
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+  padding-top: 40px;
+}
+.agreement-notice-mark {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-en);
+  font-size: 26px;
+  font-weight: 700;
+}
+.agreement-notice h1 {
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1.55;
+  margin-bottom: 14px;
+  color: var(--text-primary);
+}
+.agreement-notice p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 2;
+  margin-bottom: 24px;
+}
+.agreement-notice-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 24px;
+  background: var(--accent);
+  color: var(--white);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all var(--t-fast);
+}
+.agreement-notice-link:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+/* --- Done --- */
+.agreement-done {
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+  padding-top: 40px;
+  animation: agreementIn 0.6s var(--ease-out);
+}
+.agreement-done-mark {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 28px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
+.agreement-done-mark svg {
+  width: 32px;
+  height: 32px;
+}
+.agreement-done h1 {
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.5;
+  margin-bottom: 14px;
+  color: var(--text-primary);
+}
+.agreement-done p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 2;
+  margin-bottom: 28px;
+}
+
+@keyframes agreementIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Responsive --- */
+@media (min-width: 768px) {
+  .agreement-title {
+    font-size: 34px;
+  }
+  .agreement-section-title {
+    font-size: 18px;
+  }
+  .agreement-section {
+    padding: 28px 26px 22px;
+  }
+  .agreement-stage {
+    padding-top: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agreement-done {
+    animation: none;
+  }
+}

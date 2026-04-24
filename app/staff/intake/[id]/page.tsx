@@ -76,17 +76,30 @@ function DetailRow({ label, value }: { label: string; value: React.ReactNode }) 
   );
 }
 
+type AgreementLite = {
+  id: string;
+  created_at: string;
+  signed_name: string;
+};
+
 export default async function IntakeDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const { data, error } = await supabaseAdmin
-    .from("intake_forms")
-    .select("*")
-    .eq("id", id)
-    .maybeSingle();
+
+  const [intakeResult, agreementsResult] = await Promise.all([
+    supabaseAdmin.from("intake_forms").select("*").eq("id", id).maybeSingle(),
+    supabaseAdmin
+      .from("trial_agreements")
+      .select("id, created_at, signed_name")
+      .eq("intake_id", id)
+      .order("created_at", { ascending: false }),
+  ]);
+
+  const { data, error } = intakeResult;
+  const agreements = (agreementsResult.data ?? []) as AgreementLite[];
 
   if (error) {
     return (
@@ -125,6 +138,20 @@ export default async function IntakeDetailPage({
             )}
             提出: {formatDate(data.submitted_at)}
           </p>
+
+          <div className="staff-detail-actions">
+            <Link
+              href={`/agreement?intake_id=${data.id}`}
+              className="staff-action-btn staff-action-btn--primary"
+            >
+              体験利用開始（誓約書を発行）
+            </Link>
+            {agreements.length > 0 && (
+              <span className="staff-action-note">
+                既に {agreements.length} 件の誓約書あり（最新: {formatDate(agreements[0].created_at)}）
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="staff-detail-grid">
@@ -187,7 +214,7 @@ export default async function IntakeDetailPage({
             </div>
           </div>
 
-          {/* --- Right: staff notes + typing metrics --- */}
+          {/* --- Right: staff notes + agreements + typing metrics --- */}
           <div>
             <div className="staff-card">
               <div className="staff-card-label">Staff Notes</div>
@@ -199,6 +226,30 @@ export default async function IntakeDetailPage({
                   staff_notes: data.staff_notes ?? "",
                 }}
               />
+            </div>
+
+            <div className="staff-card">
+              <div className="staff-card-label">Trial Agreements</div>
+              {agreements.length === 0 ? (
+                <div className="staff-empty-note">
+                  まだ誓約書は発行されていません。
+                  <br />
+                  体験利用開始時に上部の「体験利用開始」ボタンから発行してください。
+                </div>
+              ) : (
+                <div className="staff-agreement-list">
+                  {agreements.map((ag) => (
+                    <div key={ag.id} className="staff-agreement-row">
+                      <div className="staff-agreement-date">
+                        {formatDate(ag.created_at)}
+                      </div>
+                      <div className="staff-agreement-name">
+                        署名: {ag.signed_name}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="staff-card">

@@ -5,9 +5,13 @@ import { supabaseAdmin } from "@/lib/supabase";
 export const dynamic = "force-dynamic";
 
 export default async function StaffDashboard() {
-  const { count } = await supabaseAdmin
-    .from("intake_forms")
-    .select("*", { count: "exact", head: true });
+  const [intakeResult, agreementResult] = await Promise.all([
+    supabaseAdmin.from("intake_forms").select("*", { count: "exact", head: true }),
+    supabaseAdmin.from("trial_agreements").select("*", { count: "exact", head: true }),
+  ]);
+
+  const intakeCount = intakeResult.count;
+  const agreementCount = agreementResult.count;
 
   return (
     <div className="staff-root">
@@ -30,15 +34,18 @@ export default async function StaffDashboard() {
             <div className="staff-tool-title">見学・体験 面談票</div>
             <div className="staff-tool-desc">
               見学者が入力した面談票の一覧と詳細を確認できます。
-              {typeof count === "number" && `（現在 ${count} 件）`}
+              {typeof intakeCount === "number" && `（現在 ${intakeCount} 件）`}
             </div>
           </Link>
 
-          <div className="staff-tool-card staff-tool-card--disabled">
+          <Link href="/staff/agreement" className="staff-tool-card">
             <div className="staff-tool-label">Agreement</div>
             <div className="staff-tool-title">体験利用 誓約書</div>
-            <div className="staff-tool-desc">体験日に入力する誓約書（準備中）。</div>
-          </div>
+            <div className="staff-tool-desc">
+              体験日に入力された誓約書の一覧。発行は各面談票の詳細から。
+              {typeof agreementCount === "number" && `（現在 ${agreementCount} 件）`}
+            </div>
+          </Link>
 
           <div className="staff-tool-card staff-tool-card--disabled">
             <div className="staff-tool-label">Coming soon</div>
