@@ -28,31 +28,63 @@ export default async function StaffDashboard() {
           </p>
         </div>
 
-        <div className="staff-tools">
-          <Link href="/staff/intake" className="staff-tool-card">
-            <div className="staff-tool-label">Intake</div>
-            <div className="staff-tool-title">見学・体験 面談票</div>
-            <div className="staff-tool-desc">
-              見学者が入力した面談票の一覧と詳細を確認できます。
-              {typeof intakeCount === "number" && `（現在 ${intakeCount} 件）`}
-            </div>
-          </Link>
+        {/* 当日の受付アクション */}
+        <section className="staff-quick-actions">
+          <div className="staff-quick-actions-head">TODAY · 受付アクション</div>
+          <div className="staff-quick-grid">
+            <Link href="/intake" className="staff-quick-card staff-quick-card--primary">
+              <div className="staff-quick-label">新規 見学者が来訪</div>
+              <div className="staff-quick-title">面談票を発行</div>
+              <div className="staff-quick-desc">
+                タブレットを渡して、ご本人に入力していただきます。
+                <br />
+                提出後は下の一覧に追加されます。
+              </div>
+              <div className="staff-quick-arrow">面談票を開く →</div>
+            </Link>
 
-          <Link href="/staff/agreement" className="staff-tool-card">
-            <div className="staff-tool-label">Agreement</div>
-            <div className="staff-tool-title">体験利用 誓約書</div>
-            <div className="staff-tool-desc">
-              体験日に入力された誓約書の一覧。発行は各面談票の詳細から。
-              {typeof agreementCount === "number" && `（現在 ${agreementCount} 件）`}
-            </div>
-          </Link>
-
-          <div className="staff-tool-card staff-tool-card--disabled">
-            <div className="staff-tool-label">Coming soon</div>
-            <div className="staff-tool-title">その他のツール</div>
-            <div className="staff-tool-desc">今後追加される管理ツールが並びます。</div>
+            <Link
+              href="/staff/intake"
+              className="staff-quick-card staff-quick-card--secondary"
+            >
+              <div className="staff-quick-label">体験開始する人がいる</div>
+              <div className="staff-quick-title">誓約書を発行</div>
+              <div className="staff-quick-desc">
+                面談票一覧から該当の方を開き、「体験利用開始」ボタンを押してください。
+              </div>
+              <div className="staff-quick-arrow">面談票一覧へ →</div>
+            </Link>
           </div>
-        </div>
+        </section>
+
+        <section className="staff-records-section">
+          <div className="staff-records-head">RECORDS · 記録を見る</div>
+          <div className="staff-tools">
+            <Link href="/staff/intake" className="staff-tool-card">
+              <div className="staff-tool-label">Intake</div>
+              <div className="staff-tool-title">見学・体験 面談票</div>
+              <div className="staff-tool-desc">
+                これまでに提出された面談票の一覧と詳細。
+                {typeof intakeCount === "number" && `（現在 ${intakeCount} 件）`}
+              </div>
+            </Link>
+
+            <Link href="/staff/agreement" className="staff-tool-card">
+              <div className="staff-tool-label">Agreement</div>
+              <div className="staff-tool-title">体験利用 誓約書</div>
+              <div className="staff-tool-desc">
+                これまでに受領した誓約書の一覧。
+                {typeof agreementCount === "number" && `（現在 ${agreementCount} 件）`}
+              </div>
+            </Link>
+
+            <div className="staff-tool-card staff-tool-card--disabled">
+              <div className="staff-tool-label">Coming soon</div>
+              <div className="staff-tool-title">その他のツール</div>
+              <div className="staff-tool-desc">今後追加される管理ツールが並びます。</div>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );

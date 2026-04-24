@@ -56,6 +56,15 @@ export default async function IntakeListPage({
           </div>
           <h1 className="staff-page-title">面談票 一覧</h1>
           <p className="staff-page-sub">新しい順に表示。項目をクリックすると詳細が開きます。</p>
+
+          <div className="staff-detail-actions">
+            <Link
+              href="/intake"
+              className="staff-action-btn staff-action-btn--primary"
+            >
+              新規 面談票を発行（見学者が来訪したとき）
+            </Link>
+          </div>
         </div>
 
         <div className="staff-list-controls">

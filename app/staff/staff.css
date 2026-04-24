@@ -684,3 +684,107 @@
   box-shadow: none;
   border-color: var(--border-subtle);
 }
+
+/* --- ダッシュボードの Quick Actions（当日の受付アクション） --- */
+.staff-quick-actions {
+  margin-bottom: 40px;
+}
+.staff-quick-actions-head,
+.staff-records-head {
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 16px;
+}
+
+.staff-quick-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 720px) {
+  .staff-quick-grid {
+    grid-template-columns: 1.4fr 1fr;
+  }
+}
+
+.staff-quick-card {
+  padding: 28px 28px;
+  border-radius: 18px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: all var(--t-norm);
+  position: relative;
+  overflow: hidden;
+}
+.staff-quick-card--primary {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+  color: var(--white);
+  box-shadow: 0 6px 24px var(--accent-glow);
+}
+.staff-quick-card--primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px var(--accent-glow);
+}
+.staff-quick-card--secondary {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.staff-quick-card--secondary:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent);
+}
+
+.staff-quick-label {
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-bottom: 6px;
+}
+
+.staff-quick-title {
+  font-family: var(--font-jp);
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+}
+
+.staff-quick-desc {
+  font-size: 13px;
+  line-height: 1.9;
+  opacity: 0.92;
+  margin-bottom: 18px;
+}
+
+.staff-quick-arrow {
+  font-family: var(--font-jp);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.95;
+  transition: transform var(--t-fast);
+}
+.staff-quick-card:hover .staff-quick-arrow {
+  transform: translateX(4px);
+}
+
+.staff-records-section {
+  margin-top: 16px;
+}
