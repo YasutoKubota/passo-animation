@@ -47,11 +47,11 @@ export function StaffNotesEditor({ id, initial }: Props) {
         />
       </div>
       <div className="staff-notes-field">
-        <label className="staff-notes-label" htmlFor="notes">備考</label>
+        <label className="staff-notes-label" htmlFor="notes">聞き取り内容 / 備考</label>
         <textarea
           id="notes"
           className="staff-notes-textarea"
-          placeholder="聞き取った内容・その他メモ"
+          placeholder="ご本人から聞き取った内容、気になった点、今後の方針など。長く書いても大丈夫です。"
           value={values.staff_notes}
           onChange={(e) => setValues({ ...values, staff_notes: e.target.value })}
         />

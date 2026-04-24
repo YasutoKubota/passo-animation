@@ -522,20 +522,29 @@
   font-weight: 600;
 }
 
-/* Staff notes editor */
+/* Staff notes editor — スタッフが聞き取り内容を入力する欄。書く量が多いので広めに。 */
 .staff-notes-field {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 .staff-notes-field:last-of-type {
   margin-bottom: 0;
 }
 .staff-notes-label {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.staff-notes-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border-light);
 }
 .staff-notes-input,
 .staff-notes-textarea {
@@ -549,8 +558,16 @@
   line-height: 1.6;
 }
 .staff-notes-textarea {
-  min-height: 80px;
+  min-height: 280px;
   resize: vertical;
+  font-size: 15px;
+  line-height: 1.9;
+  padding: 16px 18px;
+}
+/* 聞き取り入力中の focus を強調（見ながら喋るとき手元が迷子にならないよう） */
+.staff-notes-textarea:focus {
+  min-height: 340px;
+  transition: min-height var(--t-norm);
 }
 .staff-notes-input:focus,
 .staff-notes-textarea:focus {
