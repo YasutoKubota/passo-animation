@@ -273,8 +273,8 @@ export default function StartLP() {
               <span className="sp-section-head__eyebrow">STEP 3 — Passo a Passo の答え</span>
               <h2 className="sp-section-head__title">長く働くためには、<br /><em>3つの準備</em>が要ります。</h2>
               <p className="sp-section-head__lead">
-                「200種類のプログラムから選んでください」ではなく、<br />
-                土台から順に、<strong>3つの層を整える</strong>。それがPassoのやり方です。
+                土台から順に、<strong>3つの層を整えていく</strong>。<br />
+                これが、Passoが大切にしている支援のかたちです。
               </p>
             </div>
 
@@ -316,7 +316,7 @@ export default function StartLP() {
                 <strong>なぜ3つの層なのか？</strong>
                 STEP 1〜5を飛ばしても、就職自体はできます。ただ、<strong>長くは続きません</strong>。
                 一度就職して辞めてしまった方の多くは、この土台のどこかに課題が残っていました。
-                だからPassoは、<strong>「就職させる」のではなく「長く働けるよう送り出す」</strong>ことを大切にしています。
+                だからPassoは、<strong>就職した後も長く続けられること</strong>を、一番大切にしています。
               </p>
             </figure>
 
@@ -347,8 +347,7 @@ export default function StartLP() {
           <div className="sp-container">
             <div className="sp-section-head">
               <span className="sp-section-head__eyebrow">Passo a Passo だからできること</span>
-              <h2 className="sp-section-head__title">他の事業所と違う、<em>5つのこと</em>。</h2>
-              <p className="sp-section-head__lead">他社との比較ではなく、「Passoが大事にしていること」として読んでください。</p>
+              <h2 className="sp-section-head__title">Passoが大事にしている、<em>5つのこと</em>。</h2>
             </div>
 
             <div className="sp-diff__grid">
@@ -361,8 +360,8 @@ export default function StartLP() {
                 },
                 {
                   num: 2,
-                  title: <><em>出席率 91%以上</em>が続いている</>,
-                  text: "業界の平均は 70〜80%と言われる中で、Passo は 91%（2026年4月時点では 97.8%）。これは「毎日通い続けたい場所だ」と利用者さんが感じている結果です。",
+                  title: <><em>通所率 91%以上</em>が続いている</>,
+                  text: "Passoの通所率は91%、2026年4月時点は97.8%です。毎日きちんと通えている、その積み重ねの結果です。",
                   foot: "※ 企業側も、採用時に通所率を見ることがあります。",
                 },
                 {
@@ -402,7 +401,7 @@ export default function StartLP() {
               <span className="sp-section-head__eyebrow">数字で見るPasso</span>
               <h2 className="sp-section-head__title">就職の数より、<br /><em>「続いた数」</em>を大事にしています。</h2>
               <p className="sp-section-head__lead">
-                就職させることより、続けられる状態で送り出すこと。<br />
+                Passoが大切にしているのは、就職した後も長く続くこと。<br />
                 その姿勢が、数字に表れています。
               </p>
             </div>
