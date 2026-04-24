@@ -115,7 +115,7 @@ export default async function AgreementListPage({
               const intake = row.intake_id ? intakeMap[row.intake_id] : null;
               const displayName = intake?.name ?? row.signed_name;
               const target = row.intake_id
-                ? `/staff/intake/${row.intake_id}`
+                ? `/staff/intake/${row.intake_id}?from=agreement`
                 : "#";
 
               const ItemTag: "a" | "div" = row.intake_id ? "a" : "div";

@@ -121,7 +121,7 @@ export function AgreementForm({ intake, loadError, queryIntakeId }: Props) {
   if (submitted) {
     return (
       <>
-        <AgreementTopbar />
+        <AgreementTopbar backHref={intake ? `/staff/intake/${intake.id}` : undefined} />
         <main className="agreement-stage">
           <div className="agreement-done">
             <div className="agreement-done-mark">
@@ -154,7 +154,7 @@ export function AgreementForm({ intake, loadError, queryIntakeId }: Props) {
   // ----- メインフォーム -----
   return (
     <>
-      <AgreementTopbar />
+      <AgreementTopbar backHref={`/staff/intake/${intake.id}`} />
       <main className="agreement-stage">
         <header className="agreement-head">
           <div className="agreement-label">
@@ -320,13 +320,18 @@ export function AgreementForm({ intake, loadError, queryIntakeId }: Props) {
   );
 }
 
-function AgreementTopbar() {
+function AgreementTopbar({ backHref }: { backHref?: string }) {
   return (
     <header className="agreement-topbar">
       <div className="agreement-brand">
         <span className="dot" />
         <span>Passo · Agreement</span>
       </div>
+      {backHref && (
+        <Link href={backHref} className="agreement-back-link">
+          ← 面談票の詳細に戻る
+        </Link>
+      )}
     </header>
   );
 }

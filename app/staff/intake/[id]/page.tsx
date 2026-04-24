@@ -93,10 +93,16 @@ type AgreementLite = {
 
 export default async function IntakeDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ from?: string }>;
 }) {
   const { id } = await params;
+  const { from } = await searchParams;
+  const backTo = from === "agreement"
+    ? { href: "/staff/agreement", label: "← 誓約書一覧に戻る" }
+    : { href: "/staff/intake", label: "← 面談票一覧に戻る" };
 
   const [intakeResult, agreementsResult] = await Promise.all([
     supabaseAdmin.from("intake_forms").select("*").eq("id", id).maybeSingle(),
@@ -142,7 +148,7 @@ export default async function IntakeDetailPage({
     <div className="staff-root">
       <StaffTopbar section="詳細" />
       <main className="staff-main">
-        <Link href="/staff/intake" className="staff-back-link">← 一覧に戻る</Link>
+        <Link href={backTo.href} className="staff-back-link">{backTo.label}</Link>
 
         <div className="staff-page-head">
           <div className="staff-page-label">

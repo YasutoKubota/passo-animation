@@ -46,6 +46,24 @@
   background: var(--accent);
 }
 
+.agreement-back-link {
+  font-family: var(--font-jp);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  transition: all var(--t-fast);
+}
+.agreement-back-link:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
 /* --- Stage --- */
 .agreement-stage {
   flex: 1;
