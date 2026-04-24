@@ -214,37 +214,6 @@ export default function StartLP() {
           </div>
         </section>
 
-        {/* 04. 管理者メッセージ */}
-        <section className="sp-section sp-manager-message">
-          <div className="sp-container">
-            <div className="sp-section-head">
-              <span className="sp-section-head__eyebrow">管理者からのメッセージ</span>
-              <h2 className="sp-section-head__title">お電話、少し怖いですよね。<br /><em>でも、大丈夫です。</em></h2>
-            </div>
-
-            <div className="sp-manager-message__card">
-              <div className="sp-manager-message__avatar">
-                <svg viewBox="0 0 100 100" aria-hidden="true">
-                  <circle cx="50" cy="38" r="18" fill="#5A9CB8" />
-                  <path d="M20 90 Q20 60 50 60 Q80 60 80 90 Z" fill="#5A9CB8" />
-                  <circle cx="42" cy="36" r="2" fill="#FFFFFF" />
-                  <circle cx="58" cy="36" r="2" fill="#FFFFFF" />
-                  <path d="M44 46 Q50 50 56 46" stroke="#FFFFFF" strokeWidth="2" fill="none" strokeLinecap="round" />
-                </svg>
-                <span className="sp-manager-message__avatar-note">※ イラスト差替え予定</span>
-              </div>
-              <div>
-                <div className="sp-manager-message__role">SERVICE MANAGER</div>
-                <div className="sp-manager-message__name">加藤 法子</div>
-                <div className="sp-manager-message__title">サービス管理者／介護福祉士／就労移行支援 10年</div>
-                <p className="sp-manager-message__quote">
-                  今は不安な気持ちがあっても大丈夫です。私たちと一緒に、自分に合った仕事を探していきましょう。
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* 05. 理想と現状のギャップ */}
         <section className="sp-section sp-gap">
           <div className="sp-container">
@@ -637,9 +606,30 @@ export default function StartLP() {
               <p className="sp-section-head__lead">「相談しやすそうなスタッフが多かった」。通所を決めた方が、一番の理由として挙げてくれた声です。</p>
             </div>
 
+            {/* 管理者（featured card） */}
+            <div className="sp-manager-message__card" style={{ marginBottom: 48 }}>
+              <div className="sp-manager-message__avatar">
+                <svg viewBox="0 0 100 100" aria-hidden="true">
+                  <circle cx="50" cy="38" r="18" fill="#5A9CB8" />
+                  <path d="M20 90 Q20 60 50 60 Q80 60 80 90 Z" fill="#5A9CB8" />
+                  <circle cx="42" cy="36" r="2" fill="#FFFFFF" />
+                  <circle cx="58" cy="36" r="2" fill="#FFFFFF" />
+                  <path d="M44 46 Q50 50 56 46" stroke="#FFFFFF" strokeWidth="2" fill="none" strokeLinecap="round" />
+                </svg>
+                <span className="sp-manager-message__avatar-note">※ イラスト差替え予定</span>
+              </div>
+              <div>
+                <div className="sp-manager-message__role">SERVICE MANAGER</div>
+                <div className="sp-manager-message__name">加藤 法子</div>
+                <div className="sp-manager-message__title">サービス管理者／介護福祉士／就労移行支援 10年</div>
+                <p className="sp-manager-message__quote">
+                  今は不安な気持ちがあっても大丈夫です。私たちと一緒に、自分に合った仕事を探していきましょう。
+                </p>
+              </div>
+            </div>
+
             <div className="sp-staff__grid">
               {[
-                { name: "加藤 法子", role: "サービス管理者", msg: "一緒に、あなたに合った仕事を。" },
                 { name: "白井", role: "支援員", msg: "※ 写真差替え予定" },
                 { name: "埋田", role: "支援員", msg: "※ 写真差替え予定" },
                 { name: "戸叶", role: "支援員", msg: "※ 写真差替え予定" },
