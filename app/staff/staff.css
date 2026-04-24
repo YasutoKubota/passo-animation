@@ -660,8 +660,37 @@
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
   display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.staff-agreement-row-body {
+  flex: 1;
+  display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
+}
+.staff-agreement-delete-btn {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-light);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--t-fast);
+  padding: 0;
+}
+.staff-agreement-delete-btn:hover {
+  background: rgba(201, 96, 58, 0.1);
+  border-color: #c9603a;
+  color: #c9603a;
 }
 .staff-agreement-date {
   font-family: var(--font-en);
@@ -1092,4 +1121,70 @@
   font-size: 11px;
   color: var(--text-light);
   line-height: 1.8;
+}
+
+/* ============================================
+   Danger Zone (面談票削除)
+   ============================================ */
+.staff-danger-zone {
+  margin-top: 40px;
+  padding: 20px 22px;
+  border: 1px solid rgba(201, 96, 58, 0.25);
+  border-radius: 12px;
+  background: rgba(201, 96, 58, 0.03);
+}
+.staff-danger-head {
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #c9603a;
+  margin-bottom: 12px;
+}
+.staff-danger-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.staff-danger-text {
+  flex: 1;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.staff-danger-text strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.staff-danger-text span {
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 1.7;
+}
+.staff-danger-btn {
+  background: #c9603a;
+  color: var(--white);
+  border: none;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-family: var(--font-jp);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--t-fast);
+  box-shadow: 0 3px 10px rgba(201, 96, 58, 0.2);
+}
+.staff-danger-btn:hover {
+  background: #a5361e;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(201, 96, 58, 0.3);
+}
+.staff-danger-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

@@ -7,7 +7,6 @@ type Props = {
   id: string;
   initial: {
     staff_trial_use: string;
-    staff_city_office_meeting: string;
     staff_notes: string;
   };
 };
@@ -24,7 +23,6 @@ export function StaffNotesEditor({ id, initial }: Props) {
       const result = await updateStaffNotes({
         id,
         staff_trial_use: values.staff_trial_use,
-        staff_city_office_meeting: values.staff_city_office_meeting,
         staff_notes: values.staff_notes,
       });
       if (result.success) {
@@ -49,22 +47,11 @@ export function StaffNotesEditor({ id, initial }: Props) {
         />
       </div>
       <div className="staff-notes-field">
-        <label className="staff-notes-label" htmlFor="city_office_meeting">市役所面談</label>
-        <input
-          id="city_office_meeting"
-          className="staff-notes-input"
-          type="text"
-          placeholder="日程・結果など"
-          value={values.staff_city_office_meeting}
-          onChange={(e) => setValues({ ...values, staff_city_office_meeting: e.target.value })}
-        />
-      </div>
-      <div className="staff-notes-field">
         <label className="staff-notes-label" htmlFor="notes">備考</label>
         <textarea
           id="notes"
           className="staff-notes-textarea"
-          placeholder="スタッフメモ"
+          placeholder="聞き取った内容・その他メモ"
           value={values.staff_notes}
           onChange={(e) => setValues({ ...values, staff_notes: e.target.value })}
         />

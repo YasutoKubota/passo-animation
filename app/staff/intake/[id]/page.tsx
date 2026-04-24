@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { StaffTopbar } from "../../components/Topbar";
 import { StaffNotesEditor } from "./StaffNotesEditor";
+import { DeleteIntakeButton, DeleteAgreementButton } from "./DeleteButtons";
 import { supabaseAdmin } from "@/lib/supabase";
 import {
   SOURCE_OPTIONS,
@@ -272,7 +273,6 @@ export default async function IntakeDetailPage({
                 id={data.id}
                 initial={{
                   staff_trial_use: data.staff_trial_use ?? "",
-                  staff_city_office_meeting: data.staff_city_office_meeting ?? "",
                   staff_notes: data.staff_notes ?? "",
                 }}
               />
@@ -290,12 +290,19 @@ export default async function IntakeDetailPage({
                 <div className="staff-agreement-list">
                   {agreements.map((ag) => (
                     <div key={ag.id} className="staff-agreement-row">
-                      <div className="staff-agreement-date">
-                        {formatDate(ag.created_at)}
+                      <div className="staff-agreement-row-body">
+                        <div className="staff-agreement-date">
+                          {formatDate(ag.created_at)}
+                        </div>
+                        <div className="staff-agreement-name">
+                          署名: {ag.signed_name}
+                        </div>
                       </div>
-                      <div className="staff-agreement-name">
-                        署名: {ag.signed_name}
-                      </div>
+                      <DeleteAgreementButton
+                        id={ag.id}
+                        intakeId={data.id}
+                        signedName={ag.signed_name}
+                      />
                     </div>
                   ))}
                 </div>
@@ -439,6 +446,26 @@ export default async function IntakeDetailPage({
             </div>
           </div>
         </div>
+
+        {/* 危険な操作 — ページ最下部 */}
+        <section className="staff-danger-zone">
+          <div className="staff-danger-head">Danger Zone · 危険な操作</div>
+          <div className="staff-danger-body">
+            <div className="staff-danger-text">
+              <strong>面談票を削除</strong>
+              <span>
+                この面談票のレコードをデータベースから完全に削除します。元に戻せません。
+                {agreements.length > 0 &&
+                  `紐付けされている誓約書 ${agreements.length} 件は「面談票リンクなし」状態で残ります。`}
+              </span>
+            </div>
+            <DeleteIntakeButton
+              id={data.id}
+              name={data.name}
+              agreementCount={agreements.length}
+            />
+          </div>
+        </section>
       </main>
     </div>
   );
