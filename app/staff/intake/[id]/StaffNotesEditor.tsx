@@ -1,0 +1,79 @@
+"use client";
+
+import { useState, useTransition } from "react";
+import { updateStaffNotes } from "./actions";
+
+type Props = {
+  id: string;
+  initial: {
+    staff_trial_use: string;
+    staff_city_office_meeting: string;
+    staff_notes: string;
+  };
+};
+
+export function StaffNotesEditor({ id, initial }: Props) {
+  const [values, setValues] = useState(initial);
+  const [isPending, startTransition] = useTransition();
+  const [savedAt, setSavedAt] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const save = () => {
+    setError(null);
+    startTransition(async () => {
+      const result = await updateStaffNotes({
+        id,
+        staff_trial_use: values.staff_trial_use,
+        staff_city_office_meeting: values.staff_city_office_meeting,
+        staff_notes: values.staff_notes,
+      });
+      if (result.success) {
+        setSavedAt(new Date().toLocaleTimeString("ja-JP"));
+      } else {
+        setError(result.error);
+      }
+    });
+  };
+
+  return (
+    <>
+      <div className="staff-notes-field">
+        <label className="staff-notes-label" htmlFor="trial_use">体験利用</label>
+        <input
+          id="trial_use"
+          className="staff-notes-input"
+          type="text"
+          placeholder="日程・予定など"
+          value={values.staff_trial_use}
+          onChange={(e) => setValues({ ...values, staff_trial_use: e.target.value })}
+        />
+      </div>
+      <div className="staff-notes-field">
+        <label className="staff-notes-label" htmlFor="city_office_meeting">市役所面談</label>
+        <input
+          id="city_office_meeting"
+          className="staff-notes-input"
+          type="text"
+          placeholder="日程・結果など"
+          value={values.staff_city_office_meeting}
+          onChange={(e) => setValues({ ...values, staff_city_office_meeting: e.target.value })}
+        />
+      </div>
+      <div className="staff-notes-field">
+        <label className="staff-notes-label" htmlFor="notes">備考</label>
+        <textarea
+          id="notes"
+          className="staff-notes-textarea"
+          placeholder="スタッフメモ"
+          value={values.staff_notes}
+          onChange={(e) => setValues({ ...values, staff_notes: e.target.value })}
+        />
+      </div>
+      <button type="button" className="staff-notes-save" onClick={save} disabled={isPending}>
+        {isPending ? "保存中..." : "保存"}
+      </button>
+      {savedAt && <span className="staff-notes-saved">Saved {savedAt}</span>}
+      {error && <div style={{ color: "#a5361e", fontSize: 12, marginTop: 8 }}>{error}</div>}
+    </>
+  );
+}

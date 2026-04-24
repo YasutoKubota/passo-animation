@@ -1,0 +1,591 @@
+/* ============================================
+   /intake — 見学・体験利用面談票
+   Japandi Premium scoped to intake flow
+   ============================================ */
+
+.intake-root {
+  min-height: 100vh;
+  min-height: 100svh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-jp);
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Topbar: progress + studio badge --- */
+.intake-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(247, 247, 245, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.intake-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+.intake-brand .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.intake-progress {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.intake-progress-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border-section);
+  transition: all var(--t-norm);
+}
+.intake-progress-dot.is-current {
+  background: var(--accent);
+  transform: scale(1.4);
+}
+.intake-progress-dot.is-done {
+  background: var(--accent);
+  opacity: 0.4;
+}
+
+/* --- Stage: the step content area --- */
+.intake-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 24px 120px;
+}
+
+.intake-step {
+  width: 100%;
+  max-width: 560px;
+  animation: stepIn 0.45s var(--ease-out);
+}
+
+@keyframes stepIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.step-label .num {
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.step-title {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.step-help {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.9;
+  margin-bottom: 32px;
+}
+
+.step-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* --- Field basics --- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.field-label .required {
+  display: inline-block;
+  font-family: var(--font-en);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.field-hint {
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.field-input,
+.field-textarea,
+.field-select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--text-primary);
+  font-family: var(--font-jp);
+  font-size: 16px;
+  line-height: 1.6;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.field-input:focus,
+.field-textarea:focus,
+.field-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.field-textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-family: var(--font-jp);
+}
+.field-select {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%23706560' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px;
+  padding-right: 40px;
+}
+
+.field-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.field-row > .field {
+  flex: 1;
+  min-width: 140px;
+}
+
+/* --- Choice chips (radio/checkbox styled as cards) --- */
+.choice-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+@media (min-width: 540px) {
+  .choice-grid--two {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.choice-chip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all var(--t-fast);
+  font-size: 15px;
+  color: var(--text-primary);
+}
+.choice-chip:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.choice-chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.choice-chip .checkbox-box {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1.5px solid var(--border-section);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  transition: all var(--t-fast);
+}
+.choice-chip .checkbox-box::after {
+  content: "";
+  width: 10px;
+  height: 5px;
+  border-left: 2px solid var(--white);
+  border-bottom: 2px solid var(--white);
+  transform: rotate(-45deg) translate(1px, -1px);
+  opacity: 0;
+  transition: opacity var(--t-fast);
+}
+.choice-chip .radio-box {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-section);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  transition: all var(--t-fast);
+}
+.choice-chip .radio-box::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--white);
+  opacity: 0;
+  transition: opacity var(--t-fast);
+}
+.choice-chip.is-selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: 0 2px 8px rgba(184, 120, 104, 0.08);
+}
+.choice-chip.is-selected .checkbox-box,
+.choice-chip.is-selected .radio-box {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.choice-chip.is-selected .checkbox-box::after,
+.choice-chip.is-selected .radio-box::after {
+  opacity: 1;
+}
+
+.choice-detail {
+  margin-top: 8px;
+  padding: 12px 14px 14px;
+  background: var(--bg-accent);
+  border-radius: 8px;
+  border-left: 2px solid var(--accent);
+}
+.choice-detail .field-label {
+  font-size: 12px;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+}
+
+/* --- Welcome / Studio selection --- */
+.intake-welcome {
+  width: 100%;
+  max-width: 640px;
+  text-align: center;
+  animation: stepIn 0.6s var(--ease-out);
+}
+.intake-welcome-label {
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.intake-welcome h1 {
+  font-size: 34px;
+  font-weight: 900;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+.intake-welcome-sub {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 2;
+  margin-bottom: 48px;
+}
+
+.studio-choice {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+@media (min-width: 540px) {
+  .studio-choice {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.studio-card {
+  padding: 32px 24px 28px;
+  background: var(--white);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--t-norm);
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-jp);
+}
+.studio-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease-out);
+}
+.studio-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent);
+}
+.studio-card:hover::after {
+  transform: scaleX(1);
+}
+.studio-card-label {
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.studio-card-name {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.studio-card-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+/* --- Summary (confirm step) --- */
+.summary-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.summary-block + .summary-block {
+  margin-top: 14px;
+}
+.summary-block-title {
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+.summary-row {
+  display: flex;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border-light);
+  font-size: 14px;
+}
+.summary-row:last-child {
+  border-bottom: none;
+}
+.summary-row-label {
+  flex: 0 0 120px;
+  color: var(--text-light);
+  font-size: 12px;
+  line-height: 1.7;
+  padding-top: 2px;
+}
+.summary-row-value {
+  flex: 1;
+  color: var(--text-primary);
+  line-height: 1.8;
+  word-break: break-word;
+}
+.summary-row-empty {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 13px;
+}
+
+/* --- Navigation bar (back/next buttons) --- */
+.intake-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 24px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  background: rgba(245, 240, 232, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border-subtle);
+  z-index: 20;
+}
+.intake-nav-inner {
+  max-width: 560px;
+  margin: 0 auto;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 14px 24px;
+  border-radius: 999px;
+  font-family: var(--font-jp);
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all var(--t-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.nav-btn--primary {
+  background: var(--accent);
+  color: var(--white);
+  box-shadow: 0 4px 16px var(--accent-glow);
+}
+.nav-btn--primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
+.nav-btn--primary:disabled {
+  background: var(--bg-dark);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.nav-btn--ghost {
+  flex: 0 0 auto;
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 14px 20px;
+}
+.nav-btn--ghost:hover {
+  color: var(--text-primary);
+}
+
+.nav-error {
+  margin-top: 10px;
+  color: #a5361e;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* --- Done screen --- */
+.intake-done {
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+  padding-top: 40px;
+  animation: stepIn 0.6s var(--ease-out);
+}
+.intake-done-mark {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 32px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
+.intake-done-mark svg {
+  width: 28px;
+  height: 28px;
+}
+.intake-done h1 {
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.55;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+.intake-done p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 2;
+}
+
+@media (min-width: 768px) {
+  .intake-welcome h1 {
+    font-size: 42px;
+  }
+  .step-title {
+    font-size: 28px;
+  }
+  .intake-stage {
+    padding-top: 64px;
+  }
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .intake-step,
+  .intake-welcome,
+  .intake-done {
+    animation: none;
+  }
+}
