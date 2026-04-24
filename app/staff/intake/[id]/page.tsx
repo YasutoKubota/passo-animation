@@ -8,8 +8,16 @@ import {
   EXPERIENCE_OPTIONS,
   TRANSPORT_OPTIONS,
   INTERESTED_WORK_OPTIONS,
+  PC_USAGE_OPTIONS,
+  PC_TYPE_OPTIONS,
   type TypingFieldMetrics,
 } from "@/lib/intake-schema";
+import {
+  cpmToRank,
+  evaluateBackspaceRatio,
+  detectIdentityPaste,
+  RANK_REFERENCE,
+} from "@/lib/typing-rank";
 
 export const dynamic = "force-dynamic";
 
@@ -118,6 +126,17 @@ export default async function IntakeDetailPage({
     ([, a], [, b]) => (b?.keystrokes ?? 0) - (a?.keystrokes ?? 0)
   );
 
+  const rankInfo = cpmToRank(data.typing_avg_cpm);
+  const bsInfo = evaluateBackspaceRatio(
+    data.typing_total_keystrokes,
+    data.typing_backspace_count
+  );
+  const identityPastes = detectIdentityPaste(perField);
+  const usualPcUsageLabel =
+    PC_USAGE_OPTIONS.find((o) => o.value === data.usual_pc_usage)?.label ?? null;
+  const usualPcTypeLabel =
+    PC_TYPE_OPTIONS.find((o) => o.value === data.usual_pc_type)?.label ?? null;
+
   return (
     <div className="staff-root">
       <StaffTopbar section="詳細" />
@@ -153,6 +172,37 @@ export default async function IntakeDetailPage({
             )}
           </div>
         </div>
+
+        {/* C ランク時の大きい警告（スタッフ判断用） */}
+        {rankInfo.rank === "C" && (
+          <div className="staff-alert staff-alert--warning">
+            <div className="staff-alert-head">
+              <span className="staff-alert-icon">⚠</span>
+              <span className="staff-alert-title">タイピング練習を推奨</span>
+            </div>
+            <div className="staff-alert-body">
+              {rankInfo.message}
+              <br />
+              <span className="staff-alert-hint">
+                （本人には表示されていません。最終判断はスタッフにお任せします）
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* お名前・ふりがなに貼り付け検出があった場合の警告 */}
+        {identityPastes.length > 0 && (
+          <div className="staff-alert staff-alert--info">
+            <div className="staff-alert-head">
+              <span className="staff-alert-icon">!</span>
+              <span className="staff-alert-title">本人入力か要確認</span>
+            </div>
+            <div className="staff-alert-body">
+              {identityPastes.join("・")}
+              に貼り付け操作の形跡があります。ご本人ではなく代理入力の可能性があります。
+            </div>
+          </div>
+        )}
 
         <div className="staff-detail-grid">
           {/* --- Left: intake details --- */}
@@ -253,7 +303,56 @@ export default async function IntakeDetailPage({
             </div>
 
             <div className="staff-card">
-              <div className="staff-card-label">Typing Metrics</div>
+              <div className="staff-card-label">Typing Evaluation</div>
+
+              {/* ABC ランクバッジ（メイン評価） */}
+              <div className={`typing-rank typing-rank--${rankInfo.cssClass}`}>
+                <div className="typing-rank-badge">{rankInfo.rank}</div>
+                <div className="typing-rank-body">
+                  <div className="typing-rank-label">{rankInfo.label}</div>
+                  <div className="typing-rank-range">{rankInfo.cpmRange}</div>
+                  <div className="typing-rank-message">{rankInfo.message}</div>
+                </div>
+              </div>
+
+              {/* PC 環境併記（評価の解釈材料） */}
+              <div className="typing-context">
+                <div className="typing-context-label">PC 環境</div>
+                {usualPcUsageLabel ? (
+                  <div className="typing-context-value">
+                    普段: {usualPcUsageLabel}
+                    {usualPcTypeLabel && <> ／ {usualPcTypeLabel}</>}
+                  </div>
+                ) : (
+                  <div className="typing-context-empty">未入力</div>
+                )}
+                <div className="typing-context-note">
+                  ※ 普段と違う OS／キーボードでは、実力より低めに出やすいです。
+                </div>
+              </div>
+
+              {/* 補助指標: Backspace 率 + 貼り付け */}
+              <div className="typing-secondary-grid">
+                <div className="typing-secondary">
+                  <div className="typing-secondary-label">Backspace 率</div>
+                  {bsInfo ? (
+                    <div className={`typing-secondary-value ${bsInfo.cssClass}`}>
+                      {bsInfo.ratioPercent}%
+                      <span className="typing-secondary-tag">{bsInfo.label}</span>
+                    </div>
+                  ) : (
+                    <div className="typing-secondary-value">—</div>
+                  )}
+                </div>
+                <div className="typing-secondary">
+                  <div className="typing-secondary-label">Paste 回数</div>
+                  <div className={`typing-secondary-value ${(data.typing_paste_count ?? 0) > 0 ? "bs-heavy" : ""}`}>
+                    {data.typing_paste_count ?? 0}
+                  </div>
+                </div>
+              </div>
+
+              {/* 生データ（参考） */}
               <div className="typing-metrics-grid">
                 <div className="typing-metric">
                   <div className="typing-metric-label">Total</div>
@@ -274,11 +373,42 @@ export default async function IntakeDetailPage({
                   <div className="typing-metric-label">Backspaces</div>
                   <div className="typing-metric-value">{data.typing_backspace_count ?? 0}</div>
                 </div>
-                <div className="typing-metric">
-                  <div className="typing-metric-label">Pastes</div>
-                  <div className="typing-metric-value">{data.typing_paste_count ?? 0}</div>
-                </div>
               </div>
+
+              {/* 基準表（畳めるパネル） */}
+              <details className="typing-reference">
+                <summary>▶ 評価基準を開く</summary>
+                <table className="typing-reference-table">
+                  <thead>
+                    <tr>
+                      <th>ランク</th>
+                      <th>CPM</th>
+                      <th>目安</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {RANK_REFERENCE.map((r) => (
+                      <tr key={r.rank}>
+                        <td>
+                          <span className={`typing-ref-dot rank-${r.rank.toLowerCase()}`}>
+                            {r.rank}
+                          </span>
+                        </td>
+                        <td>{r.range}</td>
+                        <td>
+                          <div>{r.label}</div>
+                          <div className="typing-reference-hint">{r.hint}</div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p className="typing-reference-disclaimer">
+                  ※ 住所・症状など「考えながら書く」項目も含むため、実効入力速度（思考時間込み）を測っています。
+                  <br />
+                  ※ 普段と違う OS／キーボード（Mac ⇔ Windows、ノート⇔デスクトップ）では数値が変動します。
+                </p>
+              </details>
 
               {fieldEntries.length > 0 && (
                 <>

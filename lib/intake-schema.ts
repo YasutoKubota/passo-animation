@@ -49,10 +49,28 @@ export const INTERESTED_WORK_OPTIONS = [
 
 export const NOTEBOOK_STATUS_OPTIONS = ["無", "精神", "療育", "身体"] as const;
 
+// 普段のパソコン利用状況。タイピング評価の解釈材料としてスタッフ画面に併記。
+export const PC_USAGE_OPTIONS = [
+  { value: "daily", label: "毎日使っている（仕事・学校・趣味で）" },
+  { value: "sometimes", label: "時々使う" },
+  { value: "rarely", label: "ほとんど使わない（スマホ中心）" },
+  { value: "none", label: "持っていない" },
+] as const;
+
+export const PC_TYPE_OPTIONS = [
+  { value: "windows_desktop", label: "Windows デスクトップ" },
+  { value: "windows_laptop", label: "Windows ノート" },
+  { value: "mac_desktop", label: "Mac デスクトップ" },
+  { value: "mac_laptop", label: "Mac ノート" },
+  { value: "other", label: "その他・分からない" },
+] as const;
+
 export type StudioValue = (typeof STUDIO_OPTIONS)[number]["value"];
 export type GenderValue = (typeof GENDER_OPTIONS)[number];
 export type TransportValue = (typeof TRANSPORT_OPTIONS)[number]["value"];
 export type NotebookStatusValue = (typeof NOTEBOOK_STATUS_OPTIONS)[number];
+export type PcUsageValue = (typeof PC_USAGE_OPTIONS)[number]["value"];
+export type PcTypeValue = (typeof PC_TYPE_OPTIONS)[number]["value"];
 
 export type TypingFieldMetrics = {
   firstKeyAt: number | null;

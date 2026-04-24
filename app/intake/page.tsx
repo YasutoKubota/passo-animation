@@ -9,6 +9,8 @@ import {
   TRANSPORT_OPTIONS,
   INTERESTED_WORK_OPTIONS,
   NOTEBOOK_STATUS_OPTIONS,
+  PC_USAGE_OPTIONS,
+  PC_TYPE_OPTIONS,
 } from "@/lib/intake-schema";
 import { useTypingTracker } from "@/lib/typing-tracker";
 import { submitIntake } from "./actions";
@@ -41,6 +43,8 @@ type FormState = {
   support_office_name: string;
   support_office_contact: string;
   symptom_detail: string;
+  usual_pc_usage: string;
+  usual_pc_type: string;
 };
 
 const initialState: FormState = {
@@ -71,9 +75,11 @@ const initialState: FormState = {
   support_office_name: "",
   support_office_contact: "",
   symptom_detail: "",
+  usual_pc_usage: "",
+  usual_pc_type: "",
 };
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 7;
 
 export default function IntakePage() {
   const [step, setStep] = useState(0); // 0 = welcome/studio, 1..6 = form steps, 7 = done
@@ -149,6 +155,8 @@ export default function IntakePage() {
         support_office_name: data.support_office_name,
         support_office_contact: data.support_office_contact,
         symptom_detail: data.symptom_detail,
+        usual_pc_usage: data.usual_pc_usage,
+        usual_pc_type: data.usual_pc_type,
         typing_metrics: metrics,
       });
       if (result.success) {
@@ -654,7 +662,79 @@ export default function IntakePage() {
           {step === 6 && (
             <>
               <div className="step-label">
-                <span className="num">Step 06 / {TOTAL_STEPS}</span> · 内容の確認
+                <span className="num">Step 06 / {TOTAL_STEPS}</span> · パソコンの利用状況
+              </div>
+              <h2 className="step-title">普段のパソコン環境を教えてください</h2>
+              <p className="step-help">
+                この情報は、スタッフが「普段のリズムでの入力かどうか」を判断するために使います。成績や評価には直接使いません。
+              </p>
+              <div className="step-fields">
+                <div className="field">
+                  <label className="field-label">
+                    普段、パソコンをどのくらい使っていますか？
+                  </label>
+                  <div className="choice-grid">
+                    {PC_USAGE_OPTIONS.map((opt) => (
+                      <label
+                        key={opt.value}
+                        className={`choice-chip ${data.usual_pc_usage === opt.value ? "is-selected" : ""}`}
+                      >
+                        <input
+                          type="radio"
+                          name="usual_pc_usage"
+                          value={opt.value}
+                          checked={data.usual_pc_usage === opt.value}
+                          onChange={() => {
+                            updateField("usual_pc_usage", opt.value);
+                            // 「持っていない」を選んだら PC 種別はクリア
+                            if (opt.value === "none") {
+                              updateField("usual_pc_type", "");
+                            }
+                          }}
+                        />
+                        <span className="radio-box" aria-hidden />
+                        <span>{opt.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {data.usual_pc_usage && data.usual_pc_usage !== "none" && (
+                  <div className="field">
+                    <label className="field-label">
+                      普段、どんなパソコンを使っていますか？
+                    </label>
+                    <div className="field-hint">
+                      OS と形状（デスクトップ / ノート）をお選びください。
+                    </div>
+                    <div className="choice-grid choice-grid--two">
+                      {PC_TYPE_OPTIONS.map((opt) => (
+                        <label
+                          key={opt.value}
+                          className={`choice-chip ${data.usual_pc_type === opt.value ? "is-selected" : ""}`}
+                        >
+                          <input
+                            type="radio"
+                            name="usual_pc_type"
+                            value={opt.value}
+                            checked={data.usual_pc_type === opt.value}
+                            onChange={() => updateField("usual_pc_type", opt.value)}
+                          />
+                          <span className="radio-box" aria-hidden />
+                          <span>{opt.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+
+          {step === 7 && (
+            <>
+              <div className="step-label">
+                <span className="num">Step 07 / {TOTAL_STEPS}</span> · 内容の確認
               </div>
               <h2 className="step-title">入力内容をご確認ください</h2>
               <p className="step-help">修正したい場合は「戻る」で前の画面に戻れます。</p>
@@ -769,6 +849,13 @@ function Summary({ data }: { data: FormState }) {
         {row("主治医", data.doctor_name)}
         {row("相談支援事業所", data.support_office_used === true ? `${data.support_office_name}${data.support_office_contact ? `（${data.support_office_contact}）` : ""}` : data.support_office_used === false ? "無し" : "")}
         {row("症状", data.symptom_detail)}
+      </div>
+
+      <div className="summary-block">
+        <div className="summary-block-title">PC</div>
+        {row("普段の利用", labelFor(PC_USAGE_OPTIONS, data.usual_pc_usage))}
+        {data.usual_pc_usage !== "none" &&
+          row("普段の機種", labelFor(PC_TYPE_OPTIONS, data.usual_pc_type))}
       </div>
     </div>
   );

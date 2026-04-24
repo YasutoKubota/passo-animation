@@ -36,9 +36,9 @@ export default async function StaffDashboard() {
               <div className="staff-quick-label">新規 見学者が来訪</div>
               <div className="staff-quick-title">面談票を発行</div>
               <div className="staff-quick-desc">
-                タブレットを渡して、ご本人に入力していただきます。
+                事業所のパソコンで、ご本人に入力していただきます。
                 <br />
-                提出後は下の一覧に追加されます。
+                入力の様子はタイピング評価の参考にもなります。
               </div>
               <div className="staff-quick-arrow">面談票を開く →</div>
             </Link>

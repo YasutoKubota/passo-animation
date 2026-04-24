@@ -788,3 +788,308 @@
 .staff-records-section {
   margin-top: 16px;
 }
+
+/* ============================================
+   Typing Evaluation (ABC rank + warnings)
+   スタッフ専用の判断材料。本人には見せない。
+   ============================================ */
+
+/* 大きな警告ブロック（C ランク時・貼り付け検出時） */
+.staff-alert {
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 20px;
+  border: 1px solid;
+}
+.staff-alert--warning {
+  background: rgba(201, 96, 58, 0.08);
+  border-color: rgba(201, 96, 58, 0.3);
+  color: #863515;
+}
+.staff-alert--info {
+  background: rgba(184, 120, 104, 0.06);
+  border-color: rgba(184, 120, 104, 0.25);
+  color: var(--text-primary);
+}
+.staff-alert-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.staff-alert-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: currentColor;
+  color: var(--white);
+  font-family: var(--font-en);
+  font-size: 14px;
+  font-weight: 800;
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+.staff-alert--warning .staff-alert-icon {
+  background: #c9603a;
+}
+.staff-alert-title {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+.staff-alert-body {
+  font-size: 13.5px;
+  line-height: 1.9;
+}
+.staff-alert-hint {
+  font-size: 12px;
+  color: var(--text-light);
+  font-weight: 400;
+}
+
+/* ABC ランクバッジ */
+.typing-rank {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 16px 18px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-subtle);
+  background: var(--white);
+}
+.typing-rank--rank-a {
+  background: linear-gradient(135deg, rgba(120, 160, 120, 0.08), var(--white));
+  border-color: rgba(120, 160, 120, 0.35);
+}
+.typing-rank--rank-b {
+  background: linear-gradient(135deg, rgba(200, 160, 90, 0.08), var(--white));
+  border-color: rgba(200, 160, 90, 0.35);
+}
+.typing-rank--rank-c {
+  background: linear-gradient(135deg, rgba(201, 96, 58, 0.08), var(--white));
+  border-color: rgba(201, 96, 58, 0.35);
+}
+
+.typing-rank-badge {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  font-family: var(--font-en);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.02em;
+}
+.typing-rank--rank-a .typing-rank-badge {
+  background: #5d8a5d;
+}
+.typing-rank--rank-b .typing-rank-badge {
+  background: #c89040;
+}
+.typing-rank--rank-c .typing-rank-badge {
+  background: #c9603a;
+}
+
+.typing-rank-body {
+  flex: 1;
+  min-width: 0;
+}
+.typing-rank-label {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+  line-height: 1.4;
+}
+.typing-rank-range {
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-light);
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+.typing-rank-message {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+/* PC 環境併記 */
+.typing-context {
+  padding: 12px 14px;
+  background: var(--bg-accent);
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+.typing-context-label {
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.typing-context-value {
+  font-size: 13px;
+  color: var(--text-primary);
+  font-weight: 600;
+  line-height: 1.7;
+  margin-bottom: 6px;
+}
+.typing-context-empty {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 6px;
+}
+.typing-context-note {
+  font-size: 11px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* 補助指標 */
+.typing-secondary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.typing-secondary {
+  padding: 10px 12px;
+  background: var(--bg-offwhite);
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+}
+.typing-secondary-label {
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+.typing-secondary-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.typing-secondary-tag {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-light);
+  letter-spacing: 0.04em;
+}
+.typing-secondary-value.bs-clean {
+  color: #5d8a5d;
+}
+.typing-secondary-value.bs-moderate {
+  color: #c89040;
+}
+.typing-secondary-value.bs-heavy {
+  color: #c9603a;
+}
+
+/* 基準表（畳めるパネル） */
+.typing-reference {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: var(--bg-offwhite);
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+}
+.typing-reference summary {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  list-style: none;
+  padding: 2px 0;
+  transition: color var(--t-fast);
+}
+.typing-reference summary::-webkit-details-marker {
+  display: none;
+}
+.typing-reference summary::marker {
+  display: none;
+  content: "";
+}
+.typing-reference summary:hover {
+  color: var(--accent);
+}
+.typing-reference[open] summary {
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+.typing-reference-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  margin-bottom: 10px;
+}
+.typing-reference-table th,
+.typing-reference-table td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-light);
+}
+.typing-reference-table th {
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+.typing-reference-table td:first-child {
+  width: 44px;
+}
+.typing-reference-table td {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+.typing-reference-hint {
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 400;
+  margin-top: 2px;
+}
+.typing-ref-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+}
+.typing-ref-dot.rank-a {
+  background: #5d8a5d;
+}
+.typing-ref-dot.rank-b {
+  background: #c89040;
+}
+.typing-ref-dot.rank-c {
+  background: #c9603a;
+}
+.typing-reference-disclaimer {
+  font-size: 11px;
+  color: var(--text-light);
+  line-height: 1.8;
+}

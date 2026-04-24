@@ -31,6 +31,8 @@ export type IntakePayload = {
   support_office_name?: string;
   support_office_contact?: string;
   symptom_detail?: string;
+  usual_pc_usage?: string;
+  usual_pc_type?: string;
   typing_metrics: TypingMetrics;
 };
 
@@ -84,6 +86,8 @@ export async function submitIntake(payload: IntakePayload): Promise<SubmitResult
       support_office_name: clean(payload.support_office_name),
       support_office_contact: clean(payload.support_office_contact),
       symptom_detail: clean(payload.symptom_detail),
+      usual_pc_usage: clean(payload.usual_pc_usage),
+      usual_pc_type: clean(payload.usual_pc_type),
       typing_total_duration_ms: metrics.totalDurationMs,
       typing_total_keystrokes: metrics.totalKeystrokes,
       typing_backspace_count: metrics.totalBackspaces,
