@@ -129,27 +129,23 @@ export default function StartLP() {
             <div>
               <span className="sp-hero__badge">就労移行支援 / 岡崎駅 徒歩7分</span>
               <h1 className="sp-hero__title">
-                長く働き続けるための、<br />
+                長く働くための、<br />
                 <em>最短距離</em>。
               </h1>
               <p className="sp-hero__lead">
-                あなた自身が決める「一歩ずつ」を、私たちと。<br />
-                Passo a Passo（パッソ ア パッソ）はイタリア語で「一歩ずつ」。失業保険の期間内（半年〜1年）で就職を目指す、<strong>短期集中</strong>の就労移行支援です。
+                就職よりも、「続けられる働き方」を一緒に。<br />
+                半年〜1年の集中プログラムで、就職を目指します。
               </p>
-              <p className="sp-hero__place">愛知県岡崎市柱・JR岡崎駅徒歩7分 ／ 平日 9:50〜15:00</p>
+              <p className="sp-hero__place">岡崎駅 徒歩7分 ／ 平日 9:50〜15:00</p>
 
               <div className="sp-hero__stats">
                 <div className="sp-stat-card">
-                  <div className="sp-stat-card__value">91<small>%</small></div>
-                  <div className="sp-stat-card__label">通所率<br />（直近6ヶ月平均）</div>
-                </div>
-                <div className="sp-stat-card">
                   <div className="sp-stat-card__value">100<small>%</small></div>
-                  <div className="sp-stat-card__label">定着率<br />（就職後6ヶ月）</div>
+                  <div className="sp-stat-card__label">半年後も、<br />働き続けています</div>
                 </div>
                 <div className="sp-stat-card">
-                  <div className="sp-stat-card__value">約80<small>%</small></div>
-                  <div className="sp-stat-card__label">地元就職率<br />（岡崎・幸田）</div>
+                  <div className="sp-stat-card__value">91<small>%</small></div>
+                  <div className="sp-stat-card__label">毎日、<br />通えています</div>
                 </div>
               </div>
 
@@ -305,11 +301,11 @@ export default function StartLP() {
         <section className="sp-section sp-pyramid-wrap">
           <div className="sp-container">
             <div className="sp-section-head">
-              <span className="sp-section-head__eyebrow">STEP 3 — Passo a Passo の解決方法</span>
-              <h2 className="sp-section-head__title">「長く働き続ける」を<br /><em>3つの層</em>で準備する。</h2>
+              <span className="sp-section-head__eyebrow">STEP 3 — Passo a Passo の答え</span>
+              <h2 className="sp-section-head__title">長く働くためには、<br /><em>3つの準備</em>が要ります。</h2>
               <p className="sp-section-head__lead">
-                Passo a Passo の支援は、「200種類のプログラム」を並べるのではなく、<br />
-                1つの設計思想に基づいた<strong>3層構造</strong>で組み立てられています。
+                「200種類のプログラムから選んでください」ではなく、<br />
+                土台から順に、<strong>3つの層を整える</strong>。それがPassoのやり方です。
               </p>
             </div>
 
@@ -348,10 +344,10 @@ export default function StartLP() {
               </div>
 
               <p className="sp-pyramid__note">
-                <strong>なぜ3層構造なのか？</strong> ――
-                STEP 1〜5 を飛ばしても、就職自体はできます。でも、<strong>長くは続かない</strong>。
-                一度就職して離職した方のほとんどは、このSTEP 1〜5のどこかに課題があったから続かなかった。
-                <strong>Passo a Passo に通う意味は「就職させること」ではなく、「長く働き続けられるようになること」</strong>です。
+                <strong>なぜ3つの層なのか？</strong>
+                STEP 1〜5を飛ばしても、就職自体はできます。ただ、<strong>長くは続きません</strong>。
+                一度就職して辞めてしまった方の多くは、この土台のどこかに課題が残っていました。
+                だからPassoは、<strong>「就職させる」のではなく「長く働けるよう送り出す」</strong>ことを大切にしています。
               </p>
             </figure>
 
@@ -434,21 +430,19 @@ export default function StartLP() {
         <section className="sp-section sp-numbers">
           <div className="sp-container">
             <div className="sp-section-head">
-              <span className="sp-section-head__eyebrow">数字で見る Passo a Passo</span>
-              <h2 className="sp-section-head__title">大事なのは、就職の数より<br /><em>「続いた数」</em>です。</h2>
+              <span className="sp-section-head__eyebrow">数字で見るPasso</span>
+              <h2 className="sp-section-head__title">就職の数より、<br /><em>「続いた数」</em>を大事にしています。</h2>
               <p className="sp-section-head__lead">
-                失業保険期間内（半年〜1年）で就職を目指す、<strong>短期集中</strong>の設計。<br />
-                だからこそ、定着率として結果に表れます。
+                就職させることより、続けられる状態で送り出すこと。<br />
+                その姿勢が、数字に表れています。
               </p>
             </div>
 
             <div className="sp-numbers__grid">
               {[
-                { label: "定着率", value: "100", unit: "%", desc: "就職後6ヶ月 / 令和6〜7年末", accent: false },
-                { label: "定着率", value: "87", unit: "%", desc: "就職後1年 / 令和6〜7年末", accent: false },
-                { label: "累計就職者数", value: "111", unit: "名", desc: "10年間 ／ 直近5年では44名", accent: true },
-                { label: "通所率（直近6ヶ月平均）", value: "91", unit: "%", desc: "2026年4月時点 97.8%", accent: false },
-                { label: "利用者満足度", value: "80", unit: "%", desc: "通所中の方へのアンケート結果", accent: true },
+                { label: "定着率（6ヶ月後）", value: "100", unit: "%", desc: "就職した方が、半年経っても働き続けています。", accent: true },
+                { label: "通所率", value: "91", unit: "%", desc: "直近6ヶ月の平均。2026年4月時点は97.8%。", accent: false },
+                { label: "地元就職率", value: "約80", unit: "%", desc: "約8割が、岡崎・幸田エリア内で就職しています。", accent: true },
               ].map((n, i) => (
                 <div key={i} className={`sp-number-card${n.accent ? " sp-number-card--accent" : ""}`}>
                   <div className="sp-number-card__label">{n.label}</div>
@@ -490,7 +484,7 @@ export default function StartLP() {
               <h2 className="sp-section-head__title">「来る前」と「今」の、<br />一人ひとりの<em>小さな変化</em>を聞きました。</h2>
             </div>
             <p className="sp-voices__intro">
-              通所中の3名と、卒業して働いている2名の声を紹介します。<br />
+              通所中の3名と、卒業して働いている2名から、お話を伺いました。<br />
               ※ 写真は差し替え予定／本人の許可の範囲でシルエット・イラストを使用しています。
             </p>
 
@@ -639,8 +633,8 @@ export default function StartLP() {
           <div className="sp-container">
             <div className="sp-section-head">
               <span className="sp-section-head__eyebrow">スタッフ紹介</span>
-              <h2 className="sp-section-head__title">毎日一緒に過ごすのは、<br /><em>この6名</em>です。</h2>
-              <p className="sp-section-head__lead">「相談しやすそうなスタッフが多かった」――実際に通ってくださっている方が通所を決めた、一番の理由です。</p>
+              <h2 className="sp-section-head__title">お会いするのは、<br /><em>この6名</em>のスタッフです。</h2>
+              <p className="sp-section-head__lead">「相談しやすそうなスタッフが多かった」。通所を決めた方が、一番の理由として挙げてくれた声です。</p>
             </div>
 
             <div className="sp-staff__grid">
