@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { StaffTopbar } from "../components/Topbar";
 import { supabaseAdmin } from "@/lib/supabase";
+import { STUDIO_OPTIONS, studioLabel } from "@/lib/intake-schema";
 
 export const dynamic = "force-dynamic";
 
@@ -42,7 +43,8 @@ export default async function AgreementListPage({
     .order("created_at", { ascending: false })
     .limit(200);
 
-  if (studio === "岡崎" || studio === "豊田") {
+  const validStudioCodes = STUDIO_OPTIONS.map((o) => o.value) as string[];
+  if (studio && validStudioCodes.includes(studio)) {
     query = query.eq("studio_location", studio);
   }
 
@@ -88,18 +90,15 @@ export default async function AgreementListPage({
           >
             すべて
           </Link>
-          <Link
-            href="/staff/agreement?studio=岡崎"
-            className={`staff-filter-chip ${studio === "岡崎" ? "staff-filter-chip--active" : ""}`}
-          >
-            岡崎
-          </Link>
-          <Link
-            href="/staff/agreement?studio=豊田"
-            className={`staff-filter-chip ${studio === "豊田" ? "staff-filter-chip--active" : ""}`}
-          >
-            豊田
-          </Link>
+          {STUDIO_OPTIONS.map((opt) => (
+            <Link
+              key={opt.value}
+              href={`/staff/agreement?studio=${opt.value}`}
+              className={`staff-filter-chip ${studio === opt.value ? "staff-filter-chip--active" : ""}`}
+            >
+              {opt.label}
+            </Link>
+          ))}
           {agreements && <span className="staff-count">{agreements.length} 件</span>}
         </div>
 
@@ -137,7 +136,9 @@ export default async function AgreementListPage({
                     </div>
                     <div className="staff-list-meta">
                       {row.studio_location && (
-                        <span className="staff-list-studio">{row.studio_location}</span>
+                        <span className="staff-list-studio">
+                          {studioLabel(row.studio_location)}
+                        </span>
                       )}
                       <span>{formatDate(row.created_at)}</span>
                     </div>

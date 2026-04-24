@@ -38,7 +38,7 @@ export async function submitAgreement(
 
   if (
     payload.studio_location &&
-    !["岡崎", "豊田"].includes(payload.studio_location)
+    !["pas_okazaki", "pas_toyota", "sozo", "shushoku"].includes(payload.studio_location)
   ) {
     return { success: false, error: "事業所の値が不正です" };
   }

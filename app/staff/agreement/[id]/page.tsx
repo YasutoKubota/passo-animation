@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { StaffTopbar } from "../../components/Topbar";
 import { supabaseAdmin } from "@/lib/supabase";
+import { studioLabel } from "@/lib/intake-schema";
 import { DeleteAgreementFromView } from "./DeleteAgreementFromView";
 
 export const dynamic = "force-dynamic";
@@ -107,7 +108,7 @@ export default async function AgreementViewPage({
           <p className="staff-page-sub">
             {ag.studio_location && (
               <span className="staff-list-studio" style={{ marginRight: 10 }}>
-                {ag.studio_location}
+                {studioLabel(ag.studio_location)}
               </span>
             )}
             署名日時: {formatDateTime(ag.agreement_accepted_at)}
@@ -138,7 +139,7 @@ export default async function AgreementViewPage({
                 <div className="agreement-view-meta-row">
                   <span className="agreement-view-meta-label">事業所</span>
                   <span className="agreement-view-meta-value">
-                    {ag.studio_location}
+                    {studioLabel(ag.studio_location)}
                   </span>
                 </div>
               )}

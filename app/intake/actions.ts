@@ -50,7 +50,10 @@ export async function submitIntake(payload: IntakePayload): Promise<SubmitResult
   if (!payload.name?.trim() || !payload.furigana?.trim()) {
     return { success: false, error: "お名前とふりがなは必須です" };
   }
-  if (!payload.studio_location || !["岡崎", "豊田"].includes(payload.studio_location)) {
+  if (
+    !payload.studio_location ||
+    !["pas_okazaki", "pas_toyota", "sozo", "shushoku"].includes(payload.studio_location)
+  ) {
     return { success: false, error: "事業所が選択されていません" };
   }
 

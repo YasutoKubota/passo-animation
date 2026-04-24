@@ -1,7 +1,41 @@
+// 事業所コード → 表示ラベル + 住所（ウェルカム画面のカード用）+ 事業所種別
+// value: DB の studio_location に保存される短い英字コード
+// label: 画面に表示する正式名称
+// address: ウェルカムカードに表示する所在地
+// type: 就労継続支援 B 型 or 就労移行支援
 export const STUDIO_OPTIONS = [
-  { value: "岡崎", label: "岡崎事業所", description: "愛知県岡崎市" },
-  { value: "豊田", label: "豊田事業所", description: "愛知県豊田市御幸本町" },
+  {
+    value: "pas_okazaki",
+    label: "パッソアニメーションスタジオ",
+    description: "愛知県岡崎市康生通東",
+    type: "B型",
+  },
+  {
+    value: "pas_toyota",
+    label: "パッソアニメーションスタジオ豊田",
+    description: "愛知県豊田市御幸本町",
+    type: "B型",
+  },
+  {
+    value: "sozo",
+    label: "創造空間 Passo a Passo",
+    description: "愛知県岡崎市本町通",
+    type: "B型",
+  },
+  {
+    value: "shushoku",
+    label: "就職ゼミナール Passo a Passo",
+    description: "愛知県岡崎市柱",
+    type: "就労移行",
+  },
 ] as const;
+
+// DB の studio_location コードを人間可読なラベルに変換する
+export function studioLabel(value: string | null | undefined): string {
+  if (!value) return "";
+  const found = STUDIO_OPTIONS.find((o) => o.value === value);
+  return found?.label ?? value;
+}
 
 export const GENDER_OPTIONS = ["男", "女", "回答しない"] as const;
 

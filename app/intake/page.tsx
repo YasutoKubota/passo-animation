@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useTransition } from "react";
 import {
   STUDIO_OPTIONS,
@@ -13,6 +14,7 @@ import {
   PC_TYPE_OPTIONS,
 } from "@/lib/intake-schema";
 import { useTypingTracker } from "@/lib/typing-tracker";
+import { verifyPin } from "@/app/staff/login/actions";
 import { submitIntake } from "./actions";
 
 type FormState = {
@@ -187,7 +189,7 @@ export default function IntakePage() {
     }
   };
 
-  // --- Done screen ---
+  // --- Done screen（ご本人向け + スタッフ PIN ゲート） ---
   if (done) {
     return (
       <>
@@ -200,27 +202,65 @@ export default function IntakePage() {
               </svg>
             </div>
             <h1>ありがとうございました</h1>
-            <p>入力いただいた内容はスタッフに共有されました。<br />このままお待ちください。</p>
+            <p>
+              入力いただいた内容はスタッフに共有されました。
+              <br />
+              <strong>このパソコンをスタッフにお返しください。</strong>
+            </p>
+
+            <div className="intake-staff-gate">
+              <div className="intake-staff-gate-label">スタッフの方へ</div>
+              <form action={verifyPin} className="intake-staff-gate-form">
+                <input type="hidden" name="next" value="/staff" />
+                <input
+                  type="password"
+                  name="pin"
+                  inputMode="numeric"
+                  autoComplete="off"
+                  required
+                  placeholder="PINコード"
+                  className="intake-staff-gate-input"
+                  aria-label="スタッフPIN"
+                />
+                <button type="submit" className="intake-staff-gate-btn">
+                  確認
+                </button>
+              </form>
+              <p className="intake-staff-gate-hint">
+                PIN を入力すると、スタッフダッシュボードに戻ります。
+              </p>
+            </div>
           </div>
         </main>
       </>
     );
   }
 
-  // --- Welcome + Studio selection ---
+  // --- Welcome + Studio selection（スタッフ操作ゾーン） ---
   if (step === 0) {
     return (
       <>
         <Topbar step={null} />
         <main className="intake-stage">
           <div className="intake-welcome">
+            <div className="intake-staff-note">
+              <div className="intake-staff-note-label">スタッフの方へ</div>
+              <p>
+                ご本人が来所する事業所を選択してから、<br />
+                このパソコンをご本人にお渡しください。
+              </p>
+              <Link href="/staff" className="intake-staff-note-link">
+                ← ダッシュボードに戻る
+              </Link>
+            </div>
+
             <div className="intake-welcome-label">Welcome</div>
             <h1>ようこそ、パッソへ。</h1>
             <p className="intake-welcome-sub">
               はじめに、いくつかの質問にお答えください。<br />
               ゆっくりで大丈夫です。
             </p>
-            <div className="studio-choice">
+            <div className="studio-choice studio-choice--four">
               {STUDIO_OPTIONS.map((option) => (
                 <button
                   key={option.value}
@@ -228,7 +268,12 @@ export default function IntakePage() {
                   className="studio-card"
                   onClick={() => handleStudioSelect(option.value)}
                 >
-                  <div className="studio-card-label">Studio</div>
+                  <div className="studio-card-label">
+                    Studio
+                    <span className={`studio-card-type studio-card-type--${option.type === "B型" ? "btype" : "ikou"}`}>
+                      {option.type}
+                    </span>
+                  </div>
                   <div className="studio-card-name">{option.label}</div>
                   <div className="studio-card-desc">{option.description}</div>
                 </button>
@@ -746,7 +791,7 @@ export default function IntakePage() {
 
       <nav className="intake-nav">
         <div className="intake-nav-inner">
-          {step >= 1 && (
+          {step >= 2 && (
             <button type="button" className="nav-btn nav-btn--ghost" onClick={goBack} disabled={isPending}>
               戻る
             </button>

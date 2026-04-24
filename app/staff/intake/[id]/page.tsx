@@ -11,6 +11,7 @@ import {
   INTERESTED_WORK_OPTIONS,
   PC_USAGE_OPTIONS,
   PC_TYPE_OPTIONS,
+  studioLabel,
   type TypingFieldMetrics,
 } from "@/lib/intake-schema";
 import {
@@ -160,7 +161,9 @@ export default async function IntakeDetailPage({
           </h1>
           <p className="staff-page-sub">
             {data.studio_location && (
-              <span className="staff-list-studio" style={{ marginRight: 10 }}>{data.studio_location}</span>
+              <span className="staff-list-studio" style={{ marginRight: 10 }}>
+                {studioLabel(data.studio_location)}
+              </span>
             )}
             提出: {formatDate(data.submitted_at)}
           </p>
@@ -216,7 +219,7 @@ export default async function IntakeDetailPage({
           <div>
             <div className="staff-card">
               <div className="staff-card-label">Basic</div>
-              <DetailRow label="事業所" value={data.studio_location} />
+              <DetailRow label="事業所" value={studioLabel(data.studio_location)} />
               <DetailRow label="ふりがな" value={data.furigana} />
               <DetailRow label="お名前" value={data.name} />
               <DetailRow label="電話" value={data.phone} />

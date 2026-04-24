@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useMemo, useState, useTransition } from "react";
 import { useTypingTracker } from "@/lib/typing-tracker";
+import { studioLabel } from "@/lib/intake-schema";
+import { verifyPin } from "@/app/staff/login/actions";
 import { submitAgreement } from "./actions";
 
 type IntakeLite = {
@@ -137,14 +139,35 @@ export function AgreementForm({ intake, loadError, queryIntakeId }: Props) {
             <p>
               ありがとうございました。
               <br />
-              本日の体験利用、どうぞよろしくお願いいたします。
+              <strong>このパソコンをスタッフにお返しください。</strong>
             </p>
-            <Link
-              href={`/staff/intake/${intake.id}`}
-              className="agreement-notice-link"
-            >
-              面談票の詳細へ
-            </Link>
+
+            <div className="agreement-staff-gate">
+              <div className="agreement-staff-gate-label">スタッフの方へ</div>
+              <form action={verifyPin} className="agreement-staff-gate-form">
+                <input
+                  type="hidden"
+                  name="next"
+                  value={`/staff/intake/${intake.id}`}
+                />
+                <input
+                  type="password"
+                  name="pin"
+                  inputMode="numeric"
+                  autoComplete="off"
+                  required
+                  placeholder="PINコード"
+                  className="agreement-staff-gate-input"
+                  aria-label="スタッフPIN"
+                />
+                <button type="submit" className="agreement-staff-gate-btn">
+                  確認
+                </button>
+              </form>
+              <p className="agreement-staff-gate-hint">
+                PIN を入力すると、面談票の詳細ページに戻ります。
+              </p>
+            </div>
           </div>
         </main>
       </>
@@ -177,7 +200,9 @@ export function AgreementForm({ intake, loadError, queryIntakeId }: Props) {
             {intake.studio_location && (
               <div className="agreement-meta-row">
                 <span className="agreement-meta-label">事業所</span>
-                <span className="agreement-meta-value">{intake.studio_location}</span>
+                <span className="agreement-meta-value">
+                  {studioLabel(intake.studio_location)}
+                </span>
               </div>
             )}
             <div className="agreement-meta-row">
