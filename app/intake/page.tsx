@@ -19,8 +19,10 @@ import { submitIntake } from "./actions";
 
 type FormState = {
   studio_location: string;
-  furigana: string;
-  name: string;
+  last_name_kana: string;
+  first_name_kana: string;
+  last_name: string;
+  first_name: string;
   phone: string;
   birth_date: string;
   gender: string;
@@ -51,8 +53,10 @@ type FormState = {
 
 const initialState: FormState = {
   studio_location: "",
-  furigana: "",
-  name: "",
+  last_name_kana: "",
+  first_name_kana: "",
+  last_name: "",
+  first_name: "",
   phone: "",
   birth_date: "",
   gender: "",
@@ -117,8 +121,13 @@ export default function IntakePage() {
     setError(null);
     // Validate current step
     if (step === 1) {
-      if (!data.furigana.trim() || !data.name.trim()) {
-        setError("ふりがなとお名前を入力してください");
+      if (
+        !data.last_name_kana.trim() ||
+        !data.first_name_kana.trim() ||
+        !data.last_name.trim() ||
+        !data.first_name.trim()
+      ) {
+        setError("ふりがな（姓・名）とお名前（姓・名）をすべて入力してください");
         return;
       }
     }
@@ -128,11 +137,14 @@ export default function IntakePage() {
   const handleSubmit = () => {
     setError(null);
     const metrics = finalize();
+    // 苗字と名前を半角スペース 1 つで連結（DB 上は従来通り name / furigana 1 列で保存）
+    const composedFurigana = `${data.last_name_kana.trim()} ${data.first_name_kana.trim()}`;
+    const composedName = `${data.last_name.trim()} ${data.first_name.trim()}`;
     startTransition(async () => {
       const result = await submitIntake({
         studio_location: data.studio_location,
-        furigana: data.furigana,
-        name: data.name,
+        furigana: composedFurigana,
+        name: composedName,
         phone: data.phone,
         birth_date: data.birth_date,
         gender: data.gender,
@@ -293,35 +305,69 @@ export default function IntakePage() {
               <h2 className="step-title">お名前と連絡先を教えてください</h2>
               <p className="step-help">ここは正確にご記入ください（スタッフから後日ご連絡する場合があります）。</p>
               <div className="step-fields">
-                <div className="field">
-                  <label className="field-label" htmlFor="furigana">
-                    ふりがな <span className="required">必須</span>
-                  </label>
-                  <input
-                    id="furigana"
-                    className="field-input"
-                    type="text"
-                    autoComplete="off"
-                    placeholder="やまだ はなこ"
-                    value={data.furigana}
-                    onChange={(e) => updateField("furigana", e.target.value)}
-                    {...trackField("furigana")}
-                  />
+                <div className="field-row">
+                  <div className="field">
+                    <label className="field-label" htmlFor="last_name_kana">
+                      ふりがな（姓） <span className="required">必須</span>
+                    </label>
+                    <input
+                      id="last_name_kana"
+                      className="field-input"
+                      type="text"
+                      autoComplete="off"
+                      placeholder="やまだ"
+                      value={data.last_name_kana}
+                      onChange={(e) => updateField("last_name_kana", e.target.value)}
+                      {...trackField("last_name_kana")}
+                    />
+                  </div>
+                  <div className="field">
+                    <label className="field-label" htmlFor="first_name_kana">
+                      ふりがな（名） <span className="required">必須</span>
+                    </label>
+                    <input
+                      id="first_name_kana"
+                      className="field-input"
+                      type="text"
+                      autoComplete="off"
+                      placeholder="はなこ"
+                      value={data.first_name_kana}
+                      onChange={(e) => updateField("first_name_kana", e.target.value)}
+                      {...trackField("first_name_kana")}
+                    />
+                  </div>
                 </div>
-                <div className="field">
-                  <label className="field-label" htmlFor="name">
-                    お名前 <span className="required">必須</span>
-                  </label>
-                  <input
-                    id="name"
-                    className="field-input"
-                    type="text"
-                    autoComplete="name"
-                    placeholder="山田 花子"
-                    value={data.name}
-                    onChange={(e) => updateField("name", e.target.value)}
-                    {...trackField("name")}
-                  />
+                <div className="field-row">
+                  <div className="field">
+                    <label className="field-label" htmlFor="last_name">
+                      お名前（姓） <span className="required">必須</span>
+                    </label>
+                    <input
+                      id="last_name"
+                      className="field-input"
+                      type="text"
+                      autoComplete="family-name"
+                      placeholder="山田"
+                      value={data.last_name}
+                      onChange={(e) => updateField("last_name", e.target.value)}
+                      {...trackField("last_name")}
+                    />
+                  </div>
+                  <div className="field">
+                    <label className="field-label" htmlFor="first_name">
+                      お名前（名） <span className="required">必須</span>
+                    </label>
+                    <input
+                      id="first_name"
+                      className="field-input"
+                      type="text"
+                      autoComplete="given-name"
+                      placeholder="花子"
+                      value={data.first_name}
+                      onChange={(e) => updateField("first_name", e.target.value)}
+                      {...trackField("first_name")}
+                    />
+                  </div>
                 </div>
                 <div className="field">
                   <label className="field-label" htmlFor="phone">電話番号</label>
@@ -853,8 +899,8 @@ function Summary({ data }: { data: FormState }) {
       <div className="summary-block">
         <div className="summary-block-title">Basic</div>
         {row("事業所", data.studio_location)}
-        {row("ふりがな", data.furigana)}
-        {row("お名前", data.name)}
+        {row("ふりがな", `${data.last_name_kana} ${data.first_name_kana}`.trim())}
+        {row("お名前", `${data.last_name} ${data.first_name}`.trim())}
         {row("電話", data.phone)}
         {row("生年月日", data.birth_date)}
         {row("性別", data.gender)}

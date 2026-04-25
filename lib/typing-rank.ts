@@ -94,6 +94,12 @@ export function detectIdentityPaste(
   if (!perField) return [];
   const flagged: string[] = [];
   const identityFields: Record<string, string> = {
+    // 新形式（姓・名 を分けて記録）
+    last_name: "お名前(姓)",
+    first_name: "お名前(名)",
+    last_name_kana: "ふりがな(姓)",
+    first_name_kana: "ふりがな(名)",
+    // 旧形式（互換用）
     name: "お名前",
     furigana: "ふりがな",
   };

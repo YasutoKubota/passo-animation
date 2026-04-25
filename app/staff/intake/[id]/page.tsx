@@ -24,6 +24,11 @@ import {
 export const dynamic = "force-dynamic";
 
 const FIELD_LABEL_MAP: Record<string, string> = {
+  last_name_kana: "ふりがな(姓)",
+  first_name_kana: "ふりがな(名)",
+  last_name: "お名前(姓)",
+  first_name: "お名前(名)",
+  // 旧データ互換（過去レコードで furigana / name フィールドにまとめて記録されていたもの）
   furigana: "ふりがな",
   name: "お名前",
   phone: "電話",
