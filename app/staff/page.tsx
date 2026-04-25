@@ -2,7 +2,6 @@ import Link from "next/link";
 import { StaffTopbar } from "./components/Topbar";
 import { supabaseAdmin } from "@/lib/supabase";
 import { STUDIO_OPTIONS, studioLabel } from "@/lib/intake-schema";
-import { DeleteIntakeButton } from "./intake/[id]/DeleteButtons";
 
 export const dynamic = "force-dynamic";
 
@@ -17,19 +16,16 @@ type IntakeRow = {
   studio_location: string | null;
   name: string;
   furigana: string;
-  phone: string | null;
-  birth_date: string | null;
   trial_agreements: AgreementLite[];
 };
 
-function formatDate(iso: string) {
+// 一覧ではいつ来たかが分かれば十分。時刻は詳細ページで見る。
+function formatDateOnly(iso: string) {
   const d = new Date(iso);
-  return d.toLocaleString("ja-JP", {
+  return d.toLocaleDateString("ja-JP", {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
   });
 }
 
@@ -44,7 +40,7 @@ export default async function StaffDashboard({
   let query = supabaseAdmin
     .from("intake_forms")
     .select(
-      "id, submitted_at, studio_location, name, furigana, phone, birth_date, trial_agreements(id, created_at)"
+      "id, submitted_at, studio_location, name, furigana, trial_agreements(id, created_at)"
     )
     .order("submitted_at", { ascending: false })
     .limit(200);
@@ -125,63 +121,44 @@ export default async function StaffDashboard({
 
               return (
                 <div key={row.id} className="dash-row">
-                  <Link
-                    href={`/staff/intake/${row.id}`}
-                    className="dash-row-body"
-                  >
-                    <div className="dash-row-top">
-                      <div>
-                        <span className="staff-list-name">{row.name}</span>
-                        <span className="dash-row-furigana">
-                          {row.furigana}
-                        </span>
-                      </div>
-                      <div className="dash-row-meta">
-                        {row.studio_location && (
-                          <span className="staff-list-studio">
-                            {studioLabel(row.studio_location)}
-                          </span>
-                        )}
-                        <span>{formatDate(row.submitted_at)}</span>
-                      </div>
-                    </div>
-                    <div className="dash-row-sub">
-                      {row.phone && <span>TEL: {row.phone}</span>}
-                      {row.birth_date && <span>生年月日: {row.birth_date}</span>}
-                      {hasAgreement ? (
-                        <span className="dash-row-badge dash-row-badge--done">
-                          ✓ 誓約書 署名済み
-                          {agreements.length > 1 && ` (${agreements.length}件)`}
-                        </span>
-                      ) : (
-                        <span className="dash-row-badge dash-row-badge--todo">
-                          誓約書 未発行
-                        </span>
-                      )}
-                    </div>
-                  </Link>
+                  <span className="dash-row-date">
+                    {formatDateOnly(row.submitted_at)}
+                  </span>
+                  <span className="dash-row-studio">
+                    {row.studio_location ? studioLabel(row.studio_location) : "—"}
+                  </span>
+                  <span className="dash-row-name">
+                    {row.name}
+                    <span className="dash-row-furigana">{row.furigana}</span>
+                  </span>
 
                   <div className="dash-row-actions">
+                    <Link
+                      href={`/staff/intake/${row.id}`}
+                      className="dash-row-btn dash-row-btn--secondary"
+                    >
+                      面談票を表示
+                    </Link>
                     {hasAgreement ? (
                       <Link
                         href={`/staff/agreement/${latestAgreement.id}?from=intake&intake_id=${row.id}`}
-                        className="dash-row-btn dash-row-btn--view"
+                        className="dash-row-btn dash-row-btn--secondary"
                       >
                         誓約書を表示
+                        {agreements.length > 1 && (
+                          <span className="dash-row-btn-count">
+                            ({agreements.length})
+                          </span>
+                        )}
                       </Link>
                     ) : (
                       <Link
                         href={`/agreement?intake_id=${row.id}`}
-                        className="dash-row-btn dash-row-btn--issue"
+                        className="dash-row-btn dash-row-btn--primary"
                       >
                         誓約書を発行
                       </Link>
                     )}
-                    <DeleteIntakeButton
-                      id={row.id}
-                      name={row.name}
-                      agreementCount={agreements.length}
-                    />
                   </div>
                 </div>
               );
