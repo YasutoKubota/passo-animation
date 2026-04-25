@@ -236,7 +236,7 @@ export default function IntakePage() {
     );
   }
 
-  // --- Welcome + Studio selection（スタッフ操作ゾーン） ---
+  // --- Step 0: 事業所選択（スタッフのみが操作する画面）---
   if (step === 0) {
     return (
       <>
@@ -254,12 +254,6 @@ export default function IntakePage() {
               </Link>
             </div>
 
-            <div className="intake-welcome-label">Welcome</div>
-            <h1>ようこそ、パッソへ。</h1>
-            <p className="intake-welcome-sub">
-              はじめに、いくつかの質問にお答えください。<br />
-              ゆっくりで大丈夫です。
-            </p>
             <div className="studio-choice studio-choice--four">
               {STUDIO_OPTIONS.map((option) => (
                 <button
