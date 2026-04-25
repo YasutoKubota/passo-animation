@@ -53,6 +53,7 @@ export const SOURCE_OPTIONS = [
 ] as const;
 
 export const EXPERIENCE_OPTIONS = [
+  { value: "none", label: "経験なし（初めて）" },
   { value: "type_a", label: "A型事業所" },
   { value: "type_b", label: "B型事業所" },
   { value: "transition", label: "移行支援事業所" },

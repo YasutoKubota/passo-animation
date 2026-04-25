@@ -117,9 +117,7 @@ export default function IntakePage() {
     setStep((s) => Math.max(0, s - 1));
   };
 
-  const goNext = () => {
-    setError(null);
-    // Validate current step
+  const validateCurrentStep = (): string | null => {
     if (step === 1) {
       if (
         !data.last_name_kana.trim() ||
@@ -127,9 +125,74 @@ export default function IntakePage() {
         !data.last_name.trim() ||
         !data.first_name.trim()
       ) {
-        setError("ふりがな（姓・名）とお名前（姓・名）をすべて入力してください");
-        return;
+        return "ふりがな（姓・名）とお名前（姓・名）をすべて入力してください";
       }
+      if (!data.phone.trim()) return "電話番号を入力してください";
+      if (!data.birth_date) return "生年月日を入力してください";
+      if (!data.gender) return "性別を選択してください";
+      if (!data.postal_code.trim()) return "郵便番号を入力してください";
+      if (!data.address.trim()) return "住所を入力してください";
+    }
+    if (step === 2) {
+      if (data.source_choices.length === 0)
+        return "見学を知ったきっかけを 1 つ以上選択してください";
+      if (data.source_choices.includes("sns") && !data.source_sns_name.trim())
+        return "SNS 名（Instagram・TikTok など）を入力してください";
+      if (data.source_choices.includes("support_office") && !data.source_facility_name.trim())
+        return "相談支援事業所名を入力してください";
+      if (data.source_choices.includes("hospital") && !data.source_hospital_name.trim())
+        return "病院名を入力してください";
+      if (data.source_choices.includes("other") && !data.source_other.trim())
+        return "きっかけ「その他」の詳細を入力してください";
+    }
+    if (step === 3) {
+      if (data.experience_choices.length === 0)
+        return "ご経験のあるサービスを 1 つ以上選んでください（「経験なし」も含む）";
+      if (data.experience_choices.includes("other") && !data.experience_other.trim())
+        return "経験「その他」の詳細を入力してください";
+    }
+    if (step === 4) {
+      if (!data.transport) return "通う手段を選択してください";
+      if (data.interested_work.length === 0)
+        return "興味のある業務を 1 つ以上選んでください（「特にない」でも可）";
+      if (data.interested_work.includes("other") && !data.interested_work_other.trim())
+        return "興味「その他」の詳細を入力してください";
+    }
+    if (step === 5) {
+      if (!data.illness_name.trim())
+        return "病名を入力してください（無い場合は「なし」と入力してください）";
+      if (!data.notebook_status) return "障害者手帳の有無を選択してください";
+      if (data.notebook_status !== "無" && !data.notebook_grade.trim())
+        return "手帳の等級を入力してください";
+      if (!data.hospital_name.trim())
+        return "通院先を入力してください（無い場合は「なし」と入力してください）";
+      if (!data.doctor_name.trim())
+        return "主治医を入力してください（無い場合は「なし」と入力してください）";
+      if (data.support_office_used === null)
+        return "相談支援事業所の利用有無を選択してください";
+      if (data.support_office_used === true) {
+        if (!data.support_office_name.trim())
+          return "相談支援事業所名を入力してください";
+        if (!data.support_office_contact.trim())
+          return "担当者の方の名前を入力してください";
+      }
+      if (!data.symptom_detail.trim())
+        return "症状・配慮事項を入力してください（特に無い場合は「特になし」と入力してください）";
+    }
+    if (step === 6) {
+      if (!data.usual_pc_usage) return "普段のパソコン利用頻度を選択してください";
+      if (data.usual_pc_usage !== "none" && !data.usual_pc_type)
+        return "普段使うパソコンの種類を選択してください";
+    }
+    return null;
+  };
+
+  const goNext = () => {
+    setError(null);
+    const err = validateCurrentStep();
+    if (err) {
+      setError(err);
+      return;
     }
     setStep((s) => s + 1);
   };
@@ -370,7 +433,9 @@ export default function IntakePage() {
                   </div>
                 </div>
                 <div className="field">
-                  <label className="field-label" htmlFor="phone">電話番号</label>
+                  <label className="field-label" htmlFor="phone">
+                    電話番号 <span className="required">必須</span>
+                  </label>
                   <input
                     id="phone"
                     className="field-input"
@@ -384,7 +449,9 @@ export default function IntakePage() {
                 </div>
                 <div className="field-row">
                   <div className="field">
-                    <label className="field-label" htmlFor="birth_date">生年月日</label>
+                    <label className="field-label" htmlFor="birth_date">
+                      生年月日 <span className="required">必須</span>
+                    </label>
                     <input
                       id="birth_date"
                       className="field-input"
@@ -394,7 +461,9 @@ export default function IntakePage() {
                     />
                   </div>
                   <div className="field">
-                    <label className="field-label" htmlFor="gender">性別</label>
+                    <label className="field-label" htmlFor="gender">
+                      性別 <span className="required">必須</span>
+                    </label>
                     <select
                       id="gender"
                       className="field-select"
@@ -409,7 +478,9 @@ export default function IntakePage() {
                   </div>
                 </div>
                 <div className="field">
-                  <label className="field-label" htmlFor="postal_code">郵便番号</label>
+                  <label className="field-label" htmlFor="postal_code">
+                    郵便番号 <span className="required">必須</span>
+                  </label>
                   <p className="field-hint">7桁を入力すると住所が自動で入ります</p>
                   <input
                     id="postal_code"
@@ -425,7 +496,9 @@ export default function IntakePage() {
                   />
                 </div>
                 <div className="field">
-                  <label className="field-label" htmlFor="address">住所</label>
+                  <label className="field-label" htmlFor="address">
+                    住所 <span className="required">必須</span>
+                  </label>
                   <input
                     id="address"
                     className="field-input"
@@ -598,14 +671,17 @@ export default function IntakePage() {
                 <span className="num">Step 05 / {TOTAL_STEPS}</span> · 健康・医療
               </div>
               <h2 className="step-title">健康面について教えてください</h2>
-              <p className="step-help">書ける範囲で大丈夫です。わかる部分だけで問題ありません。</p>
+              <p className="step-help">無い場合は「なし」「特になし」と入力してください。</p>
               <div className="step-fields">
                 <div className="field">
-                  <label className="field-label" htmlFor="illness_name">病名</label>
+                  <label className="field-label" htmlFor="illness_name">
+                    病名 <span className="required">必須</span>
+                  </label>
                   <input
                     id="illness_name"
                     className="field-input"
                     type="text"
+                    placeholder="無い場合は「なし」"
                     value={data.illness_name}
                     onChange={(e) => updateField("illness_name", e.target.value)}
                     {...trackField("illness_name")}
@@ -613,7 +689,9 @@ export default function IntakePage() {
                 </div>
 
                 <div className="field">
-                  <label className="field-label">手帳の有無</label>
+                  <label className="field-label">
+                    手帳の有無 <span className="required">必須</span>
+                  </label>
                   <div className="choice-grid choice-grid--two">
                     {NOTEBOOK_STATUS_OPTIONS.map((option) => {
                       const isSelected = data.notebook_status === option;
@@ -639,7 +717,9 @@ export default function IntakePage() {
 
                 {data.notebook_status && data.notebook_status !== "無" && (
                   <div className="field">
-                    <label className="field-label" htmlFor="notebook_grade">等級</label>
+                    <label className="field-label" htmlFor="notebook_grade">
+                      等級 <span className="required">必須</span>
+                    </label>
                     <input
                       id="notebook_grade"
                       className="field-input"
@@ -653,11 +733,14 @@ export default function IntakePage() {
                 )}
 
                 <div className="field">
-                  <label className="field-label" htmlFor="hospital_name">現在通っている病院</label>
+                  <label className="field-label" htmlFor="hospital_name">
+                    現在通っている病院 <span className="required">必須</span>
+                  </label>
                   <input
                     id="hospital_name"
                     className="field-input"
                     type="text"
+                    placeholder="無い場合は「なし」"
                     value={data.hospital_name}
                     onChange={(e) => updateField("hospital_name", e.target.value)}
                     {...trackField("hospital_name")}
@@ -665,11 +748,14 @@ export default function IntakePage() {
                 </div>
 
                 <div className="field">
-                  <label className="field-label" htmlFor="doctor_name">主治医</label>
+                  <label className="field-label" htmlFor="doctor_name">
+                    主治医 <span className="required">必須</span>
+                  </label>
                   <input
                     id="doctor_name"
                     className="field-input"
                     type="text"
+                    placeholder="無い場合は「なし」"
                     value={data.doctor_name}
                     onChange={(e) => updateField("doctor_name", e.target.value)}
                     {...trackField("doctor_name")}
@@ -677,7 +763,9 @@ export default function IntakePage() {
                 </div>
 
                 <div className="field">
-                  <label className="field-label">相談支援事業所の利用</label>
+                  <label className="field-label">
+                    相談支援事業所の利用 <span className="required">必須</span>
+                  </label>
                   <div className="choice-grid choice-grid--two">
                     <label className={`choice-chip ${data.support_office_used === false ? "is-selected" : ""}`}>
                       <input
@@ -705,7 +793,9 @@ export default function IntakePage() {
                 {data.support_office_used === true && (
                   <>
                     <div className="field">
-                      <label className="field-label" htmlFor="support_office_name">事業所名</label>
+                      <label className="field-label" htmlFor="support_office_name">
+                        事業所名 <span className="required">必須</span>
+                      </label>
                       <input
                         id="support_office_name"
                         className="field-input"
@@ -716,7 +806,9 @@ export default function IntakePage() {
                       />
                     </div>
                     <div className="field">
-                      <label className="field-label" htmlFor="support_office_contact">担当者</label>
+                      <label className="field-label" htmlFor="support_office_contact">
+                        担当者 <span className="required">必須</span>
+                      </label>
                       <input
                         id="support_office_contact"
                         className="field-input"
@@ -730,11 +822,14 @@ export default function IntakePage() {
                 )}
 
                 <div className="field">
-                  <label className="field-label" htmlFor="symptom_detail">症状について詳しく</label>
-                  <p className="field-hint">書ける範囲で、体調・困りごとなどを教えてください。</p>
+                  <label className="field-label" htmlFor="symptom_detail">
+                    症状・配慮してほしいこと <span className="required">必須</span>
+                  </label>
+                  <p className="field-hint">体調・困りごと・配慮事項などを教えてください。特に無い場合は「特になし」と入力してください。</p>
                   <textarea
                     id="symptom_detail"
                     className="field-textarea"
+                    placeholder="特に無い場合は「特になし」"
                     value={data.symptom_detail}
                     onChange={(e) => updateField("symptom_detail", e.target.value)}
                     {...trackField("symptom_detail")}
@@ -756,7 +851,7 @@ export default function IntakePage() {
               <div className="step-fields">
                 <div className="field">
                   <label className="field-label">
-                    普段、パソコンをどのくらい使っていますか？
+                    普段、パソコンをどのくらい使っていますか？ <span className="required">必須</span>
                   </label>
                   <div className="choice-grid">
                     {PC_USAGE_OPTIONS.map((opt) => (
@@ -787,7 +882,7 @@ export default function IntakePage() {
                 {data.usual_pc_usage && data.usual_pc_usage !== "none" && (
                   <div className="field">
                     <label className="field-label">
-                      普段、どんなパソコンを使っていますか？
+                      普段、どんなパソコンを使っていますか？ <span className="required">必須</span>
                     </label>
                     <div className="field-hint">
                       OS と形状（デスクトップ / ノート）をお選びください。

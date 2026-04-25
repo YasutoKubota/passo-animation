@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { STUDIO_OPTIONS, studioLabel } from "@/lib/intake-schema";
+import { STUDIO_OPTIONS, studioLabel, type TrialSession } from "@/lib/intake-schema";
 
 type AgreementLite = {
   id: string;
@@ -15,6 +15,8 @@ export type IntakeRow = {
   studio_location: string | null;
   name: string;
   furigana: string;
+  trial_sessions: TrialSession[] | null;
+  city_office_meeting_at: string | null;
   trial_agreements: AgreementLite[];
 };
 
@@ -25,6 +27,12 @@ function formatDateOnly(iso: string) {
     month: "2-digit",
     day: "2-digit",
   });
+}
+
+// 月日だけの簡易表示（5/13 など）— ダッシュボードの市役所面談バッジ用
+function formatMonthDay(iso: string) {
+  const d = new Date(iso);
+  return `${d.getMonth() + 1}/${d.getDate()}`;
 }
 
 export function IntakeDashboardClient({
@@ -86,6 +94,8 @@ export function IntakeDashboardClient({
             );
             const latestAgreement = agreements[0];
             const hasAgreement = !!latestAgreement;
+            const trialDays = row.trial_sessions?.length ?? 0;
+            const cityMeeting = row.city_office_meeting_at ?? null;
 
             return (
               <div key={row.id} className="dash-row">
@@ -99,6 +109,24 @@ export function IntakeDashboardClient({
                   {row.name}
                   <span className="dash-row-furigana">{row.furigana}</span>
                 </span>
+
+                <div className="dash-row-status-group">
+                  {trialDays > 0 && (
+                    <span className="dash-status dash-status--trial">
+                      体験 {trialDays}日
+                    </span>
+                  )}
+                  {cityMeeting && (
+                    <span className="dash-status dash-status--meeting">
+                      市役所 {formatMonthDay(cityMeeting)}
+                    </span>
+                  )}
+                  {hasAgreement && (
+                    <span className="dash-status dash-status--agreement">
+                      ✓ 誓約{agreements.length > 1 ? `(${agreements.length})` : ""}
+                    </span>
+                  )}
+                </div>
 
                 <div className="dash-row-actions">
                   <Link
