@@ -13,9 +13,20 @@ export async function createInquiryStub(formData: FormData) {
   const name = String(formData.get("name") ?? "").trim();
   const furigana = String(formData.get("furigana") ?? "").trim();
   const gender = String(formData.get("gender") ?? "").trim();
-  const birth_date = String(formData.get("birth_date") ?? "").trim();
+  let birth_date = String(formData.get("birth_date") ?? "").trim();
+  const approxAge = String(formData.get("approx_age") ?? "").trim();
   const phone = String(formData.get("phone") ?? "").trim();
   const address = String(formData.get("address") ?? "").trim();
+
+  // 「だいたい年齢」しか入力がない場合は今年から逆算した 1/1 を birth_date に入れる。
+  // 分析画面の年齢層集計（10代/20代…）はこの近似でも機能する。
+  if (!birth_date && approxAge) {
+    const ageNum = parseInt(approxAge, 10);
+    if (Number.isFinite(ageNum) && ageNum >= 1 && ageNum <= 99) {
+      const year = new Date().getFullYear() - ageNum;
+      birth_date = `${year}-01-01`;
+    }
+  }
   const source_choices = formData
     .getAll("source_choices")
     .map((v) => String(v))

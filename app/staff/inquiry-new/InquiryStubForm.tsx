@@ -33,6 +33,16 @@ export function InquiryStubForm() {
 
   return (
     <form action={createInquiryStub} className="inquiry-stub-form">
+      {/* 電話受け時のヒント（任意項目は空欄 OK） */}
+      <div className="inquiry-stub-info">
+        <strong>📞 電話で受けた場合のヒント</strong>
+        <span>
+          性別・生年月日・電話番号・住所などは、聞けなかった・教えてもらえなかった場合は
+          <strong>空欄のまま登録</strong>して構いません。
+          性別は「不明（聞いていない）」を選んでください。後で詳細ページから追記できます。
+        </span>
+      </div>
+
       {/* 事業所選択（必須） */}
       <div className="inquiry-stub-field">
         <label className="inquiry-stub-label">
@@ -95,7 +105,7 @@ export function InquiryStubForm() {
         </div>
         <div className="inquiry-stub-field">
           <label className="inquiry-stub-label" htmlFor="furigana">
-            ふりがな（任意）
+            ふりがな（任意・不明なら空欄）
           </label>
           <input
             id="furigana"
@@ -107,23 +117,25 @@ export function InquiryStubForm() {
         </div>
       </div>
 
-      {/* 性別・生年月日 */}
-      <div className="inquiry-stub-row">
-        <div className="inquiry-stub-field">
-          <label className="inquiry-stub-label">性別（任意）</label>
-          <div className="inquiry-stub-radio-inline">
-            {GENDER_OPTIONS.map((g) => (
-              <label key={g} className="inquiry-stub-radio inquiry-stub-radio--inline">
-                <input type="radio" name="gender" value={g} />
-                <span>{g}</span>
-              </label>
-            ))}
-            <label className="inquiry-stub-radio inquiry-stub-radio--inline">
-              <input type="radio" name="gender" value="" defaultChecked />
-              <span>未記入</span>
+      {/* 性別 */}
+      <div className="inquiry-stub-field">
+        <label className="inquiry-stub-label">性別（任意）</label>
+        <div className="inquiry-stub-radio-inline">
+          {GENDER_OPTIONS.map((g) => (
+            <label key={g} className="inquiry-stub-radio inquiry-stub-radio--inline">
+              <input type="radio" name="gender" value={g} />
+              <span>{g}</span>
             </label>
-          </div>
+          ))}
+          <label className="inquiry-stub-radio inquiry-stub-radio--inline">
+            <input type="radio" name="gender" value="" defaultChecked />
+            <span>不明（聞いていない）</span>
+          </label>
         </div>
+      </div>
+
+      {/* 生年月日 / 年齢（電話受けで生年月日が分からない場合は年齢のみで OK） */}
+      <div className="inquiry-stub-row">
         <div className="inquiry-stub-field">
           <label className="inquiry-stub-label" htmlFor="birth_date">
             生年月日（任意）
@@ -135,13 +147,30 @@ export function InquiryStubForm() {
             className="inquiry-stub-input"
           />
         </div>
+        <div className="inquiry-stub-field">
+          <label className="inquiry-stub-label" htmlFor="approx_age">
+            または 年齢（だいたい・任意）
+          </label>
+          <input
+            id="approx_age"
+            name="approx_age"
+            type="number"
+            min={1}
+            max={99}
+            placeholder="例: 25"
+            className="inquiry-stub-input"
+          />
+          <p className="inquiry-stub-hint">
+            電話で「だいたい 20 代」など、年齢しか分からない時はこちらに数字だけ入れてください
+          </p>
+        </div>
       </div>
 
       {/* 電話・住所 */}
       <div className="inquiry-stub-row">
         <div className="inquiry-stub-field">
           <label className="inquiry-stub-label" htmlFor="phone">
-            電話番号（任意）
+            電話番号（任意・不明なら空欄）
           </label>
           <input
             id="phone"

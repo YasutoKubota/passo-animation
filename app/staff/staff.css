@@ -2171,6 +2171,28 @@
   flex-direction: column;
   gap: 18px;
 }
+
+/* 電話受け時のヒントブロック */
+.inquiry-stub-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 16px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(184, 120, 104, 0.25);
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+.inquiry-stub-info strong {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 13px;
+}
+.inquiry-stub-info span {
+  color: var(--text-secondary);
+}
 .inquiry-stub-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
