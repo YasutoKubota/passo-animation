@@ -1,0 +1,5 @@
+# 個人情報を含むため git に入れない
+*.xlsx
+*.xls
+import-fy7.sql
+import-fy7-preview.json
