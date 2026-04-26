@@ -45,6 +45,11 @@
   border-radius: 50%;
   background: var(--accent);
 }
+.intake-brand-logo {
+  height: 28px;
+  width: auto;
+  display: block;
+}
 
 .intake-progress {
   display: flex;

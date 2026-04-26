@@ -45,6 +45,11 @@
   border-radius: 50%;
   background: var(--accent);
 }
+.agreement-brand-logo {
+  height: 28px;
+  width: auto;
+  display: block;
+}
 
 .agreement-back-link {
   font-family: var(--font-jp);

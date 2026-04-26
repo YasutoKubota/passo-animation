@@ -48,6 +48,11 @@
   border-radius: 50%;
   background: var(--accent);
 }
+.staff-brand-logo {
+  height: 28px;
+  width: auto;
+  display: block;
+}
 .staff-section-label {
   font-family: var(--font-jp);
   font-size: 13px;
