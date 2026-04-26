@@ -110,21 +110,28 @@ export function IntakeDashboardClient({
                   <span className="dash-row-furigana">{row.furigana}</span>
                 </span>
 
+                {/* 業務フロー: 見学 → 誓約書 → 体験 → 市役所 の順で進捗を表示 */}
                 <div className="dash-row-status-group">
-                  {trialDays > 0 && (
-                    <span className="dash-status dash-status--trial">
-                      体験 {trialDays}日
-                    </span>
-                  )}
-                  {cityMeeting && (
-                    <span className="dash-status dash-status--meeting">
-                      市役所 {formatMonthDay(cityMeeting)}
-                    </span>
-                  )}
-                  {hasAgreement && (
+                  {hasAgreement ? (
                     <span className="dash-status dash-status--agreement">
                       ✓ 誓約{agreements.length > 1 ? `(${agreements.length})` : ""}
                     </span>
+                  ) : (
+                    <span className="dash-status dash-status--empty">誓約 未</span>
+                  )}
+                  {trialDays > 0 ? (
+                    <span className="dash-status dash-status--trial">
+                      体験 {trialDays}日
+                    </span>
+                  ) : (
+                    <span className="dash-status dash-status--empty">体験 未</span>
+                  )}
+                  {cityMeeting ? (
+                    <span className="dash-status dash-status--meeting">
+                      市役所 {formatMonthDay(cityMeeting)}
+                    </span>
+                  ) : (
+                    <span className="dash-status dash-status--empty">市役所 未</span>
                   )}
                 </div>
 

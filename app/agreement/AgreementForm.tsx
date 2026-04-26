@@ -349,8 +349,11 @@ function AgreementTopbar({ backHref }: { backHref?: string }) {
   return (
     <header className="agreement-topbar">
       <div className="agreement-brand">
-        <span className="dot" />
-        <span>Passo · Agreement</span>
+        <img
+          src="/images/logo-passo.png"
+          alt="Passo a Passo"
+          className="agreement-brand-logo"
+        />
       </div>
       {backHref && (
         <Link href={backHref} className="agreement-back-link">

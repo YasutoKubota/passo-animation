@@ -936,9 +936,7 @@
   padding: 4px 10px;
   border-radius: 6px;
   white-space: nowrap;
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* 「パッソアニメーションスタジオ豊田」など全部表示できる幅 */
 }
 
 .dash-row-name {
@@ -987,6 +985,13 @@
 .dash-status--agreement {
   background: rgba(120, 160, 120, 0.15);
   color: #4a7a4a;
+}
+/* 未完了の状態（破線アウトラインで「まだ」が一目で分かる） */
+.dash-status--empty {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px dashed var(--border-section);
+  padding: 2px 8px;
 }
 
 .dash-row-actions {
