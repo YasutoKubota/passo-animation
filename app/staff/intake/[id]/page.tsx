@@ -287,6 +287,9 @@ export default async function IntakeDetailPage({
               <StaffNotesEditor
                 id={data.id}
                 initial={{
+                  inquiry_date: data.inquiry_date ?? null,
+                  scheduled_visit_date: data.scheduled_visit_date ?? null,
+                  service_start_date: data.service_start_date ?? null,
                   trial_sessions: Array.isArray(data.trial_sessions)
                     ? data.trial_sessions
                     : [],

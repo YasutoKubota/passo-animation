@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
   STUDIO_OPTIONS,
+  SOURCE_OPTIONS,
   studioShortLabel,
   type TrialSession,
 } from "@/lib/intake-schema";
@@ -16,13 +17,33 @@ type AgreementLite = {
 export type IntakeRow = {
   id: string;
   submitted_at: string;
+  inquiry_date: string | null;
+  service_start_date: string | null;
   studio_location: string | null;
   name: string;
   furigana: string;
+  source_choices: string[] | null;
   trial_sessions: TrialSession[] | null;
   city_office_meeting_at: string | null;
   trial_agreements: AgreementLite[];
 };
+
+// SOURCE コードから短縮ラベル
+function sourceShortLabel(value: string): string {
+  const map: Record<string, string> = {
+    newspaper: "新聞",
+    posting: "ポスティング",
+    passerby: "通りがかり",
+    homepage: "HP",
+    hello_work: "ハロワ",
+    support_office: "支援所",
+    city_office: "市役所",
+    hospital: "病院",
+    sns: "SNS",
+    other: "その他",
+  };
+  return map[value] ?? value;
+}
 
 function formatDateOnly(iso: string) {
   const d = new Date(iso);
@@ -100,11 +121,16 @@ export function IntakeDashboardClient({
             const hasAgreement = !!latestAgreement;
             const trialDays = row.trial_sessions?.length ?? 0;
             const cityMeeting = row.city_office_meeting_at ?? null;
+            const serviceStarted = !!row.service_start_date;
+            // お問合せ日があればそれを表示、なければ見学日（submitted_at）
+            const primaryDate = row.inquiry_date ?? row.submitted_at;
+            // ルート: 最初の選択肢を短縮表記で表示
+            const primarySource = row.source_choices?.[0] ?? null;
 
             return (
               <div key={row.id} className="dash-row">
                 <span className="dash-row-date">
-                  {formatDateOnly(row.submitted_at)}
+                  {formatDateOnly(primaryDate)}
                 </span>
                 <span className="dash-row-studio">
                   {row.studio_location ? studioShortLabel(row.studio_location) : "—"}
@@ -113,8 +139,14 @@ export function IntakeDashboardClient({
                   {row.name}
                   <span className="dash-row-furigana">{row.furigana}</span>
                 </span>
+                <span className="dash-row-source">
+                  {primarySource ? sourceShortLabel(primarySource) : "—"}
+                  {row.source_choices && row.source_choices.length > 1 && (
+                    <span className="dash-row-source-more">+{row.source_choices.length - 1}</span>
+                  )}
+                </span>
 
-                {/* 業務フロー: 見学 → 誓約書 → 体験 → 市役所 の順で進捗を表示 */}
+                {/* 業務フロー: 誓約書 → 体験 → 市役所 → 利用 の順で進捗を表示 */}
                 <div className="dash-row-status-group">
                   {hasAgreement ? (
                     <span className="dash-status dash-status--agreement">
@@ -136,6 +168,13 @@ export function IntakeDashboardClient({
                     </span>
                   ) : (
                     <span className="dash-status dash-status--empty">市役所 未</span>
+                  )}
+                  {serviceStarted ? (
+                    <span className="dash-status dash-status--service">
+                      ✓ 利用 {formatMonthDay(row.service_start_date!)}
+                    </span>
+                  ) : (
+                    <span className="dash-status dash-status--empty">利用 未</span>
                   )}
                 </div>
 

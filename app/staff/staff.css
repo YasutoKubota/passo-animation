@@ -527,6 +527,24 @@
   font-weight: 600;
 }
 
+/* ファネル日付（お問合せ・来所予定・利用開始）の 3 列グリッド */
+.staff-notes-funnel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.staff-notes-funnel-label {
+  font-size: 11px;
+  color: var(--text-light);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+@media (max-width: 720px) {
+  .staff-notes-funnel-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Staff notes editor — スタッフが聞き取り内容を入力する欄。書く量が多いので広めに。 */
 .staff-notes-field {
   display: flex;
@@ -802,6 +820,243 @@
   transform: translateY(-1px);
   box-shadow: 0 6px 20px var(--accent-glow);
 }
+.staff-action-btn--secondary {
+  background: var(--white);
+  color: var(--text-primary);
+  border: 1px solid var(--border-light);
+}
+.staff-action-btn--secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* --- 広告キャンペーン管理ページ --- */
+.ads-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.ads-form-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 720px) {
+  .ads-form-grid,
+  .ads-form-grid--3 {
+    grid-template-columns: 1fr;
+  }
+}
+.ads-form-error {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: rgba(201, 96, 58, 0.08);
+  border: 1px solid rgba(201, 96, 58, 0.3);
+  border-radius: 6px;
+  color: #863515;
+  font-size: 13px;
+}
+.ads-form-actions {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+.ads-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ads-row {
+  position: relative;
+  padding: 14px 16px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  background: var(--bg-card);
+}
+.ads-row-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+.ads-row-channel {
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background: rgba(120, 140, 200, 0.12);
+  color: #4a6aa0;
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+.ads-row-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.ads-row-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+.ads-row-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-top: 4px;
+}
+.ads-row-desc--note {
+  background: var(--bg-accent);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.ads-row-actions {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+/* --- Analytics ページ --- */
+.analytics-funnel {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+@media (max-width: 720px) {
+  .analytics-funnel {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.analytics-funnel-step {
+  text-align: center;
+  padding: 14px 8px;
+  background: var(--bg-accent);
+  border-radius: 10px;
+  position: relative;
+}
+.analytics-funnel-step-num {
+  font-family: var(--font-en);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+}
+.analytics-funnel-step-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+}
+.analytics-funnel-step-ratio {
+  font-family: var(--font-en);
+  font-size: 11px;
+  color: var(--text-light);
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.analytics-bar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.analytics-bar-row {
+  display: grid;
+  grid-template-columns: 130px 1fr 60px;
+  gap: 12px;
+  align-items: center;
+}
+.analytics-bar-label {
+  font-size: 13px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.analytics-bar-track {
+  height: 16px;
+  background: var(--bg-secondary);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.analytics-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  border-radius: 999px;
+}
+.analytics-bar-value {
+  text-align: right;
+  font-family: var(--font-en);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.analytics-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.analytics-table th,
+.analytics-table td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-light);
+}
+.analytics-table th {
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  background: var(--bg-offwhite);
+}
+.analytics-table-num {
+  text-align: right;
+  font-family: var(--font-en);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.analytics-table-sum {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.analytics-month-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 6px;
+  align-items: end;
+}
+.analytics-month-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.analytics-month-bar-wrap {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: flex-end;
+}
+.analytics-month-bar {
+  width: 100%;
+  background: var(--accent);
+  border-radius: 4px 4px 0 0;
+  min-height: 2px;
+}
+.analytics-month-label {
+  font-size: 10px;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+.analytics-month-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
 .staff-action-note {
   font-size: 12px;
   color: var(--text-light);
@@ -909,12 +1164,13 @@
 .dash-row {
   display: grid;
   grid-template-columns:
-    100px            /* 日付 */
-    130px            /* 事業所（短縮表記）*/
-    minmax(180px, 1fr) /* 名前 */
-    auto             /* 進捗 3 バッジ */
-    auto;            /* アクション 2 ボタン */
-  gap: 14px;
+    96px              /* 日付（お問合せ日 or 見学日）*/
+    130px             /* 事業所（短縮表記）*/
+    minmax(160px, 1fr) /* 名前 */
+    90px              /* ルート（流入経路の短縮）*/
+    auto              /* 進捗 4 バッジ */
+    auto;             /* アクション 2 ボタン */
+  gap: 12px;
   align-items: center;
   padding: 14px 18px;
   background: var(--bg-card);
@@ -967,12 +1223,32 @@
   font-weight: 400;
 }
 
-/* 進捗 3 バッジ: 誓約 / 体験 / 市役所 を等幅で並べる */
+/* 進捗 4 バッジ: 誓約 / 体験 / 市役所 / 利用 を等幅で並べる */
 .dash-row-status-group {
   display: grid;
-  grid-template-columns: repeat(3, 92px);
-  gap: 6px;
+  grid-template-columns: repeat(4, 84px);
+  gap: 4px;
   align-items: center;
+}
+
+/* ルート列（流入経路） */
+.dash-row-source {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dash-row-source-more {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 10px;
+  color: var(--text-light);
+  background: var(--bg-accent);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 500;
 }
 .dash-status {
   display: inline-flex;
@@ -997,6 +1273,12 @@
 .dash-status--agreement {
   background: rgba(120, 160, 120, 0.15);
   color: #4a7a4a;
+}
+/* 利用開始済み（最終ゴール）= 濃い緑のチェックバッジ */
+.dash-status--service {
+  background: rgba(80, 140, 80, 0.2);
+  color: #2c5e2c;
+  font-weight: 700;
 }
 /* 未完了の状態（破線アウトラインで「まだ」が一目で分かる） */
 .dash-status--empty {

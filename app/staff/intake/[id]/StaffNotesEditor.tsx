@@ -7,6 +7,9 @@ import { TRIAL_SLOT_OPTIONS, type TrialSession } from "@/lib/intake-schema";
 type Props = {
   id: string;
   initial: {
+    inquiry_date: string | null; // YYYY-MM-DD
+    scheduled_visit_date: string | null; // YYYY-MM-DD
+    service_start_date: string | null; // YYYY-MM-DD
     trial_sessions: TrialSession[];
     city_office_meeting_at: string | null; // ISO string or null
     staff_notes: string;
@@ -31,6 +34,13 @@ function fromLocalInputValue(v: string): string | null {
 }
 
 export function StaffNotesEditor({ id, initial }: Props) {
+  const [inquiryDate, setInquiryDate] = useState<string>(initial.inquiry_date ?? "");
+  const [scheduledVisitDate, setScheduledVisitDate] = useState<string>(
+    initial.scheduled_visit_date ?? ""
+  );
+  const [serviceStartDate, setServiceStartDate] = useState<string>(
+    initial.service_start_date ?? ""
+  );
   const [sessions, setSessions] = useState<TrialSession[]>(
     initial.trial_sessions.length > 0 ? initial.trial_sessions : []
   );
@@ -63,13 +73,15 @@ export function StaffNotesEditor({ id, initial }: Props) {
     startTransition(async () => {
       const result = await updateStaffNotes({
         id,
+        inquiry_date: inquiryDate || null,
+        scheduled_visit_date: scheduledVisitDate || null,
+        service_start_date: serviceStartDate || null,
         trial_sessions: cleanedSessions,
         city_office_meeting_at: fromLocalInputValue(meetingAt),
         staff_notes: notes,
       });
       if (result.success) {
         setSavedAt(new Date().toLocaleTimeString("ja-JP"));
-        // 無効行を除去した状態を UI にも反映
         setSessions(cleanedSessions);
       } else {
         setError(result.error);
@@ -79,6 +91,40 @@ export function StaffNotesEditor({ id, initial }: Props) {
 
   return (
     <>
+      {/* ファネル日付（お問合せ → 来所予定 → 利用開始） */}
+      <div className="staff-notes-field">
+        <label className="staff-notes-label">利用までの日付</label>
+        <div className="staff-notes-funnel-grid">
+          <div>
+            <div className="staff-notes-funnel-label">お問合せ日</div>
+            <input
+              type="date"
+              className="staff-notes-input"
+              value={inquiryDate}
+              onChange={(e) => setInquiryDate(e.target.value)}
+            />
+          </div>
+          <div>
+            <div className="staff-notes-funnel-label">来所予定日</div>
+            <input
+              type="date"
+              className="staff-notes-input"
+              value={scheduledVisitDate}
+              onChange={(e) => setScheduledVisitDate(e.target.value)}
+            />
+          </div>
+          <div>
+            <div className="staff-notes-funnel-label">利用開始日</div>
+            <input
+              type="date"
+              className="staff-notes-input"
+              value={serviceStartDate}
+              onChange={(e) => setServiceStartDate(e.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+
       {/* 体験利用スケジュール（原則 3 日） */}
       <div className="staff-notes-field">
         <label className="staff-notes-label">

@@ -10,7 +10,7 @@ export default async function StaffDashboard() {
   const { data, error } = await supabaseAdmin
     .from("intake_forms")
     .select(
-      "id, submitted_at, studio_location, name, furigana, trial_sessions, city_office_meeting_at, trial_agreements(id, created_at)"
+      "id, submitted_at, inquiry_date, service_start_date, studio_location, name, furigana, source_choices, trial_sessions, city_office_meeting_at, trial_agreements(id, created_at)"
     )
     .order("submitted_at", { ascending: false })
     .limit(200);
@@ -38,9 +38,12 @@ export default async function StaffDashboard() {
             >
               + 新規 面談票を発行
             </Link>
-            <span className="staff-action-note">
-              見学者が来所したとき、タブレットやパソコンをお渡しするためのボタンです。
-            </span>
+            <Link href="/staff/analytics" className="staff-action-btn staff-action-btn--secondary">
+              📊 分析
+            </Link>
+            <Link href="/staff/ads" className="staff-action-btn staff-action-btn--secondary">
+              📣 広告管理
+            </Link>
           </div>
         </div>
 

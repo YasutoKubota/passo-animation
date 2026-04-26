@@ -7,6 +7,9 @@ import type { TrialSession } from "@/lib/intake-schema";
 
 export type UpdateNotesPayload = {
   id: string;
+  inquiry_date: string | null; // YYYY-MM-DD
+  scheduled_visit_date: string | null;
+  service_start_date: string | null;
   trial_sessions: TrialSession[];
   city_office_meeting_at: string | null; // ISO 8601
   staff_notes: string;
@@ -28,6 +31,9 @@ export async function updateStaffNotes(payload: UpdateNotesPayload): Promise<
   const { error } = await supabaseAdmin
     .from("intake_forms")
     .update({
+      inquiry_date: payload.inquiry_date,
+      scheduled_visit_date: payload.scheduled_visit_date,
+      service_start_date: payload.service_start_date,
       trial_sessions: cleanSessions,
       city_office_meeting_at: payload.city_office_meeting_at,
       staff_notes: payload.staff_notes || null,
