@@ -80,18 +80,21 @@ def cell_str(value) -> str:
 def map_source(route, route_note):
     """ルート文字列 → source_choices と詳細フィールド。
 
-    user 指示:
-      ハピなび / リーフレット / 折込 → newspaper
-      ホームページ / HP / メール / フォーム → homepage
-      天理教○○様 / 紹介 / ○○様より / スタッフから → referral
-      ○○心療内科 / 病院 / クリニック / 医療機関 → hospital
-      市役所 → city_office
-      ハロワ / HW / ハローワーク / 若サポ → hello_work
-      相談支援事業所 → support_office
-      通りがかり / 通りすがり → passerby
-      インスタ / SNS / TikTok → sns
-      ポスティング → posting
-      不明 / 空 → other
+    分類軸（user 指示で「相談支援員と知人紹介は別物」「病院もリーフレット/紹介で別」）:
+      newspaper       折込チラシ・新聞折込（ハピなびを含む）
+      posting         ポスティング
+      passerby        通りすがり
+      homepage        HP・問合せフォーム・メール・LINE
+      sns             Instagram・TikTok など
+      hello_work      ハローワーク・若サポ
+      city_office     市役所・保健所
+      hospital_leaflet 病院（モノを見て）— 「病院においてあるリーフレット・パンフ」
+      hospital_referral 病院（人から聞いて）— 「病院の先生・スタッフからの紹介」
+      support_office  相談支援員からの紹介（事業所スタッフ）
+      school          学校・特支（教師・先生からの紹介）
+      internal        自社の他事業所スタッフ・利用者経由
+      referral        個人紹介（友人・知人・宗教団体・近所など）
+      other           その他（自社開催の利用相談会・「輪輪」など正体不明）
     """
     s = ((route or "") + " " + (route_note or "")).strip()
     detail = {}
@@ -99,66 +102,89 @@ def map_source(route, route_note):
     def has(*keywords):
         return any(k in s for k in keywords)
 
-    # 1. 病院系（医療機関）— 「○○様」検出より先に処理
-    if has("心療内科", "クリニック", "病院", "医療機関", "メンタルクリニック", "メンタル"):
-        detail["source_hospital_name"] = (route_note or route or "").strip()
-        return ["hospital"], detail
+    # 1. 学校・特支 — 「先生」を含む場合、医療系の先生は別系統なので注意
+    is_school_word = has("中学校", "高校", "小学校", "特支", "教諭", "学校")
+    is_teacher_non_medical = (
+        ("先生" in s)
+        and not has("医", "クリニック", "病院", "心療内科", "メンタル")
+    )
+    if is_school_word or is_teacher_non_medical:
+        detail["source_other"] = (route_note or route or "").strip()
+        return ["school"], detail
 
-    # 2. ハロワ / 若サポ（公的就労支援）
+    # 2. 病院系（医療機関）— リーフレット or 紹介を判定
+    if has("心療内科", "クリニック", "病院", "医療機関", "メンタル"):
+        is_leaflet = has("リーフレット", "パンフ", "チラシ", "設置", "置いて")
+        is_via_person = has("先生", "スタッフ", "ナース", "看護", "医師", "より", "から") or "紹介" in s
+        detail["source_hospital_name"] = (route_note or route or "").strip()
+        if is_via_person and not is_leaflet:
+            return ["hospital_referral"], detail
+        # デフォルトはリーフレット（原典に「リーフレット設置分」など多い）
+        return ["hospital_leaflet"], detail
+
+    # 3. ハロワ / 若サポ（公的就労支援）
     if has("ハロワ", "HW", "ハローワーク", "若サポ", "ワカサポ", "サポステ"):
         return ["hello_work"], detail
 
-    # 3. 市役所 / 保健所
+    # 4. 市役所 / 保健所
     if has("市役所", "保健所"):
         return ["city_office"], detail
 
-    # 4. 相談支援事業所
-    if has("相談支援"):
+    # 5. 相談支援員からの紹介（「相談支援」キーワードがあれば優先）
+    if has("相談支援", "相談員"):
         detail["source_facility_name"] = (route_note or route or "").strip()
         return ["support_office"], detail
 
-    # 5. 紹介系（○○様 / ○○さん、スタッフ、教諭、知人、紹介、利用者、出戻り、友人、学校 など）
+    # 6. 自社の他事業所経由（PAS/PAST/創造空間/就職ゼミナール）
+    is_internal_org = has("PAS", "PAST", "創造空間", "就職ゼミナール", "PASK", "駅前")
+    is_internal_kw = has("元利用者", "出戻り") or s.strip() in (
+        "PAS", "PAST", "創造空間", "就職ゼミナール",
+        "/ 創造空間", "/ PAS", "/ PAST", "/ 就職ゼミナール",
+    )
+    if is_internal_org or is_internal_kw:
+        detail["source_other"] = (route_note or route or "").strip()
+        return ["internal"], detail
+
+    # 7. 訪問看護 → 医療系の紹介として hospital_referral
+    if has("訪問看護", "訪看"):
+        detail["source_hospital_name"] = (route_note or route or "").strip()
+        return ["hospital_referral"], detail
+
+    # 8. 個人紹介（○○様・○○さん・知人・友人・紹介）
     has_sama_after_name = bool(re.search(r"[^\s／/]+様", s))
     has_san_after_name = bool(re.search(r"[^\s／/]+さん(より|から|紹介|$|\s)", s))
     if (
-        has("様より", "様紹介", "様から", "から紹介", "より紹介", "の紹介", "ご紹介",
-            "知人", "教師", "教諭", "先生",
-            "スタッフ", "利用者", "出戻り", "友人", "○○様",
-            "中学校", "高校", "小学校", "特支", "学校")
+        has("様より", "様紹介", "様から", "から紹介", "より紹介",
+            "の紹介", "ご紹介", "知人", "友人")
         or has_sama_after_name
         or has_san_after_name
         or "紹介" in s
-        # 自社の他拠点からの紹介（PAS / PAST / 創造空間 / 就職ゼミナール 単体表記）
-        or s.strip() in ("PAS", "PAST", "創造空間", "就職ゼミナール", "/ 創造空間", "/ PAS", "/ PAST")
-        or has("PAS利用者", "PAST利用者", "創造空間利用者", "PAS スタッフ", "PASK", "PAST スタッフ")
-        # 訪問看護 → 医療系の紹介ルート
-        or has("訪問看護", "訪看")
     ):
         detail["source_other"] = (route_note or route or "").strip()
         return ["referral"], detail
 
-    # 6. SNS（インスタ・TikTok）— ホームページより先に
+    # 9. SNS
     if has("インスタ", "Instagram", "TikTok", "ティックトック", "SNS"):
         detail["source_sns_name"] = (route_note or route or "").strip()
         return ["sns"], detail
 
-    # 7. ホームページ / メール / フォーム / LINE
+    # 10. ホームページ / メール / フォーム / LINE
     if has("ホームページ", "HP", "hp", "ＨＰ", "メール", "フォーム", "問合せフォーム", "LINE", "ライン"):
         return ["homepage"], detail
 
-    # 8. 折込 / リーフレット / チラシ / ハピなび
+    # 11. 折込・リーフレット・チラシ・ハピなび
     if has("ハピなび", "ハピナビ", "折込", "折り込み", "折りこみ", "リーフレット", "チラシ"):
         return ["newspaper"], detail
 
-    # 9. ポスティング
+    # 12. ポスティング
     if has("ポスティング"):
         return ["posting"], detail
 
-    # 10. 通りがかり
+    # 13. 通りがかり
     if has("通りがかり", "通りすがり"):
         return ["passerby"], detail
 
-    # その他（詳細を残す）
+    # その他（自社開催イベント・正体不明など）
     if route or route_note:
         detail["source_other"] = (
             (route or "") + (" / " + route_note if route_note else "")
@@ -427,6 +453,17 @@ def main():
     lines.append("-- 自動生成: scripts/excel-import/import-fy7.py")
     lines.append("-- 4 ファイル合計 {} 件\n".format(len(all_records)))
     lines.append("BEGIN;\n")
+    # 冪等性: 既存の取込分を削除して再投入する。
+    # サンプル (山田太郎 / 鈴木花子) と 2026/4/1 以降の手入力分は残す。
+    lines.append(
+        "DELETE FROM public.intake_forms\n"
+        " WHERE submitted_at >= '2025-04-01'\n"
+        "   AND submitted_at <  '2026-04-01'\n"
+        "   AND id NOT IN (\n"
+        "     '11111111-1111-1111-1111-111111111111',\n"
+        "     '22222222-2222-2222-2222-222222222222'\n"
+        "   );\n"
+    )
 
     for r in all_records:
         cols = []

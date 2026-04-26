@@ -6,14 +6,19 @@ import { IntakeDashboardClient, type IntakeRow } from "./IntakeDashboardClient";
 export const dynamic = "force-dynamic";
 
 export default async function StaffDashboard() {
-  // 全件取得（フィルタはクライアント側で JS で行うので、ここでは絞らない）
+  // 過去 3 会計年度分をまとめて取得（年度・月フィルタはクライアント側で）
+  const since = new Date();
+  since.setFullYear(since.getFullYear() - 3);
+  const sinceISO = since.toISOString().split("T")[0];
+
   const { data, error } = await supabaseAdmin
     .from("intake_forms")
     .select(
       "id, submitted_at, inquiry_date, service_start_date, studio_location, name, furigana, source_choices, trial_sessions, city_office_meeting_at, trial_agreements(id, created_at)"
     )
+    .gte("submitted_at", sinceISO)
     .order("submitted_at", { ascending: false })
-    .limit(200);
+    .limit(5000);
 
   const rows = (data ?? []) as IntakeRow[];
 

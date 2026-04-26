@@ -28,7 +28,7 @@ export type IntakeRow = {
   trial_agreements: AgreementLite[];
 };
 
-// SOURCE コードから短縮ラベル
+// SOURCE コードから短縮ラベル（一覧表のチップ用）
 function sourceShortLabel(value: string): string {
   const map: Record<string, string> = {
     newspaper: "新聞",
@@ -36,11 +36,15 @@ function sourceShortLabel(value: string): string {
     passerby: "通りがかり",
     homepage: "HP",
     hello_work: "ハロワ",
-    support_office: "支援所",
     city_office: "市役所",
-    hospital: "病院",
+    hospital_leaflet: "病院リーフ",
+    hospital_referral: "病院紹介",
+    hospital: "病院", // 旧データ互換
+    support_office: "相談員",
+    school: "学校",
+    internal: "自社経由",
     sns: "SNS",
-    referral: "紹介",
+    referral: "個人紹介",
     other: "その他",
   };
   return map[value] ?? value;
@@ -61,6 +65,21 @@ function formatMonthDay(iso: string) {
   return `${d.getMonth() + 1}/${d.getDate()}`;
 }
 
+// 今日の日付から「現在の会計年度」を返す（4月以降ならその年、3月以前なら前年）
+function currentFiscalYear(): number {
+  const now = new Date();
+  return now.getMonth() >= 3 ? now.getFullYear() : now.getFullYear() - 1;
+}
+
+function reiwaLabel(fy: number): string {
+  const reiwa = fy - 2018;
+  if (reiwa <= 0) return `${fy} 年度`;
+  return `令和${reiwa}年度`;
+}
+
+// 会計年度の月並び（4月→翌3月）
+const FY_MONTH_ORDER: number[] = [4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3];
+
 export function IntakeDashboardClient({
   rows,
   errorMessage,
@@ -69,33 +88,114 @@ export function IntakeDashboardClient({
   errorMessage?: string | null;
 }) {
   const [studio, setStudio] = useState<string | null>(null);
+  // デフォルトは現在の会計年度（令和8）
+  const [selectedFy, setSelectedFy] = useState<number | null>(currentFiscalYear());
+  const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
+
+  const fyChoices = useMemo(() => {
+    const cur = currentFiscalYear();
+    return [cur - 2, cur - 1, cur]; // 例: [2024, 2025, 2026]
+  }, []);
 
   const filtered = useMemo(() => {
-    if (!studio) return rows;
-    return rows.filter((r) => r.studio_location === studio);
-  }, [rows, studio]);
+    return rows.filter((r) => {
+      // 事業所フィルタ
+      if (studio && r.studio_location !== studio) return false;
+
+      // 年度・月フィルタ用の日付（お問合せ日 → 提出日）
+      const dateStr = r.inquiry_date ?? r.submitted_at;
+      if (!dateStr) return selectedFy == null && selectedMonth == null;
+      const d = new Date(dateStr);
+      if (Number.isNaN(d.getTime())) return selectedFy == null && selectedMonth == null;
+
+      // 年度フィルタ
+      if (selectedFy != null) {
+        const fyStart = new Date(`${selectedFy}-04-01`);
+        const fyEnd = new Date(`${selectedFy + 1}-03-31T23:59:59`);
+        if (d < fyStart || d > fyEnd) return false;
+      }
+
+      // 月フィルタ（年度未選択でも単独で機能する）
+      if (selectedMonth != null) {
+        if (d.getMonth() + 1 !== selectedMonth) return false;
+      }
+
+      return true;
+    });
+  }, [rows, studio, selectedFy, selectedMonth]);
 
   return (
     <>
-      <div className="staff-list-controls">
-        <button
-          type="button"
-          onClick={() => setStudio(null)}
-          className={`staff-filter-chip ${!studio ? "staff-filter-chip--active" : ""}`}
-        >
-          すべて
-        </button>
-        {STUDIO_OPTIONS.map((opt) => (
-          <button
-            key={opt.value}
-            type="button"
-            onClick={() => setStudio(opt.value)}
-            className={`staff-filter-chip ${studio === opt.value ? "staff-filter-chip--active" : ""}`}
-          >
-            {opt.label}
-          </button>
-        ))}
-        <span className="staff-count">{filtered.length} 件</span>
+      <div className="dash-filter">
+        <div className="dash-filter-row">
+          <span className="dash-filter-title">事業所</span>
+          <div className="dash-filter-chips">
+            <button
+              type="button"
+              onClick={() => setStudio(null)}
+              className={`staff-filter-chip ${!studio ? "staff-filter-chip--active" : ""}`}
+            >
+              すべて
+            </button>
+            {STUDIO_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => setStudio(opt.value)}
+                className={`staff-filter-chip ${studio === opt.value ? "staff-filter-chip--active" : ""}`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="dash-filter-row">
+          <span className="dash-filter-title">年度</span>
+          <div className="dash-filter-chips">
+            <button
+              type="button"
+              onClick={() => setSelectedFy(null)}
+              className={`staff-filter-chip ${selectedFy == null ? "staff-filter-chip--active" : ""}`}
+            >
+              全年度
+            </button>
+            {fyChoices.map((fy) => (
+              <button
+                key={fy}
+                type="button"
+                onClick={() => setSelectedFy(fy)}
+                className={`staff-filter-chip ${selectedFy === fy ? "staff-filter-chip--active" : ""}`}
+              >
+                {reiwaLabel(fy)}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="dash-filter-row">
+          <span className="dash-filter-title">月</span>
+          <div className="dash-filter-chips">
+            <button
+              type="button"
+              onClick={() => setSelectedMonth(null)}
+              className={`staff-filter-chip staff-filter-chip--month ${selectedMonth == null ? "staff-filter-chip--active" : ""}`}
+            >
+              全月
+            </button>
+            {FY_MONTH_ORDER.map((m) => (
+              <button
+                key={m}
+                type="button"
+                onClick={() => setSelectedMonth(m)}
+                className={`staff-filter-chip staff-filter-chip--month ${selectedMonth === m ? "staff-filter-chip--active" : ""}`}
+              >
+                {m}月
+              </button>
+            ))}
+          </div>
+          <span className="dash-filter-count">{filtered.length} 件</span>
+        </div>
       </div>
 
       <div className="staff-list">
@@ -138,7 +238,9 @@ export function IntakeDashboardClient({
                 </span>
                 <span className="dash-row-name">
                   {row.name}
-                  <span className="dash-row-furigana">{row.furigana}</span>
+                  {row.furigana && (
+                    <span className="dash-row-furigana">{row.furigana}</span>
+                  )}
                 </span>
                 <span className="dash-row-source">
                   {primarySource ? sourceShortLabel(primarySource) : "—"}
@@ -154,28 +256,28 @@ export function IntakeDashboardClient({
                       ✓ 誓約{agreements.length > 1 ? `(${agreements.length})` : ""}
                     </span>
                   ) : (
-                    <span className="dash-status dash-status--empty">誓約 未</span>
+                    <span className="dash-status dash-status--empty">誓約</span>
                   )}
                   {trialDays > 0 ? (
                     <span className="dash-status dash-status--trial">
                       体験 {trialDays}日
                     </span>
                   ) : (
-                    <span className="dash-status dash-status--empty">体験 未</span>
+                    <span className="dash-status dash-status--empty">体験</span>
                   )}
                   {cityMeeting ? (
                     <span className="dash-status dash-status--meeting">
-                      市役所 {formatMonthDay(cityMeeting)}
+                      市役 {formatMonthDay(cityMeeting)}
                     </span>
                   ) : (
-                    <span className="dash-status dash-status--empty">市役所 未</span>
+                    <span className="dash-status dash-status--empty">市役</span>
                   )}
                   {serviceStarted ? (
                     <span className="dash-status dash-status--service">
                       ✓ 利用 {formatMonthDay(row.service_start_date!)}
                     </span>
                   ) : (
-                    <span className="dash-status dash-status--empty">利用 未</span>
+                    <span className="dash-status dash-status--empty">利用</span>
                   )}
                 </div>
 
@@ -183,15 +285,17 @@ export function IntakeDashboardClient({
                   <Link
                     href={`/staff/intake/${row.id}`}
                     className="dash-row-btn dash-row-btn--secondary"
+                    title="面談票を表示"
                   >
-                    面談票を表示
+                    面談票
                   </Link>
                   {hasAgreement ? (
                     <Link
                       href={`/staff/agreement/${latestAgreement.id}?from=intake&intake_id=${row.id}`}
                       className="dash-row-btn dash-row-btn--secondary"
+                      title="誓約書を表示"
                     >
-                      誓約書を表示
+                      誓約書
                       {agreements.length > 1 && (
                         <span className="dash-row-btn-count">
                           ({agreements.length})
@@ -202,8 +306,9 @@ export function IntakeDashboardClient({
                     <Link
                       href={`/agreement?intake_id=${row.id}`}
                       className="dash-row-btn dash-row-btn--primary"
+                      title="誓約書を発行"
                     >
-                      誓約書を発行
+                      ＋誓約書
                     </Link>
                   )}
                 </div>

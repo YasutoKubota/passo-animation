@@ -332,6 +332,51 @@
   margin-left: auto;
 }
 
+/* --- ダッシュボードのフィルタ群（事業所・年度・月） --- */
+.dash-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding: 14px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+}
+.dash-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.dash-filter-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-light);
+  letter-spacing: 0.06em;
+  min-width: 56px;
+  text-transform: uppercase;
+  font-family: var(--font-en);
+}
+.dash-filter-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.dash-filter-count {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--text-light);
+  font-family: var(--font-en);
+  font-weight: 600;
+}
+.staff-filter-chip--month {
+  padding: 6px 10px;
+  font-size: 11px;
+  min-width: 38px;
+  text-align: center;
+}
+
 .staff-list {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -958,6 +1003,61 @@
   margin-top: 4px;
   font-weight: 600;
 }
+.analytics-funnel-dropout {
+  margin-top: 4px;
+  font-size: 10px;
+  color: #c9603a;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* 脱落分析グリッド */
+.analytics-dropout-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+@media (max-width: 720px) {
+  .analytics-dropout-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.analytics-dropout-cell {
+  text-align: center;
+  padding: 14px 8px;
+  background: #fdf3ee;
+  border: 1px solid #f5d4c5;
+  border-radius: 10px;
+}
+.analytics-dropout-num {
+  font-family: var(--font-en);
+  font-size: 22px;
+  font-weight: 800;
+  color: #c9603a;
+  line-height: 1;
+}
+.analytics-dropout-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+}
+.analytics-dropout-arrow {
+  color: var(--text-light);
+  font-size: 10px;
+}
+.analytics-dropout-ratio {
+  font-family: var(--font-en);
+  font-size: 11px;
+  color: var(--text-light);
+  margin-top: 3px;
+  font-weight: 600;
+}
+.analytics-note {
+  font-size: 11px;
+  color: var(--text-light);
+  margin: 10px 0 0 0;
+  line-height: 1.6;
+}
 
 .analytics-bar-list {
   display: flex;
@@ -1226,15 +1326,15 @@
 .dash-row {
   display: grid;
   grid-template-columns:
-    96px              /* 日付（お問合せ日 or 見学日）*/
-    130px             /* 事業所（短縮表記）*/
-    minmax(160px, 1fr) /* 名前 */
-    90px              /* ルート（流入経路の短縮）*/
-    auto              /* 進捗 4 バッジ */
-    auto;             /* アクション 2 ボタン */
-  gap: 12px;
+    92px              /* 日付（お問合せ日 or 見学日）*/
+    100px             /* 事業所（短縮表記）*/
+    minmax(140px, 1fr) /* 名前 */
+    78px              /* ルート（流入経路の短縮）*/
+    288px             /* 進捗 4 バッジ（4 × 68px + 3 × gap） */
+    188px;            /* アクション 2 ボタン（2 × 88px + gap） */
+  gap: 10px;
   align-items: center;
-  padding: 14px 18px;
+  padding: 14px 16px;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 10px;
@@ -1288,7 +1388,7 @@
 /* 進捗 4 バッジ: 誓約 / 体験 / 市役所 / 利用 を等幅で並べる */
 .dash-row-status-group {
   display: grid;
-  grid-template-columns: repeat(4, 84px);
+  grid-template-columns: repeat(4, 68px);
   gap: 4px;
   align-items: center;
 }
@@ -1352,8 +1452,8 @@
 
 .dash-row-actions {
   display: grid;
-  grid-template-columns: 110px 110px;
-  gap: 8px;
+  grid-template-columns: 88px 88px;
+  gap: 12px;
   align-items: center;
 }
 
@@ -1362,7 +1462,7 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding: 8px 14px;
+  padding: 8px 10px;
   border-radius: 8px;
   font-size: 12.5px;
   font-weight: 700;
@@ -1415,7 +1515,7 @@
   .dash-row-actions {
     flex: 1 1 100%;
     justify-content: flex-end;
-    grid-template-columns: 110px 110px;
+    grid-template-columns: 88px 88px;
   }
 }
 
@@ -2320,4 +2420,126 @@
   margin-top: 4px;
   font-size: 12px;
   color: #a5361e;
+}
+
+/* ============================================
+   /staff/ads — AdCampaignForm
+   inquiry-stub-form と同じ Japandi トンマナ
+   ============================================ */
+.ad-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.ad-form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+.ad-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ad-form-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ad-form-required {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+}
+.ad-form-input,
+.ad-form-textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--white);
+  font-family: var(--font-jp);
+  font-size: 14px;
+  color: var(--text-primary);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+  width: 100%;
+}
+.ad-form-input:focus,
+.ad-form-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.ad-form-textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.7;
+}
+select.ad-form-input {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%23706560' d='M6 8L0 0h12z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+.ad-form-hint {
+  font-size: 12px;
+  color: var(--text-light);
+  margin: 0;
+  line-height: 1.6;
+}
+.ad-form-radio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+}
+.ad-form-radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  background: var(--white);
+  cursor: pointer;
+  font-size: 13px;
+  transition: all var(--t-fast);
+}
+.ad-form-radio:hover {
+  border-color: var(--accent);
+}
+.ad-form-radio.is-selected,
+.ad-form-radio:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.ad-form-radio input[type="radio"] {
+  accent-color: var(--accent);
+}
+.ad-form-radio-sub {
+  display: block;
+  font-size: 11px;
+  color: var(--text-light);
+  margin-top: 2px;
+  font-weight: 400;
+}
+.ad-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+.ad-form-error {
+  padding: 10px 14px;
+  background: rgba(201, 96, 58, 0.08);
+  border: 1px solid rgba(201, 96, 58, 0.3);
+  border-radius: 8px;
+  color: #a5361e;
+  font-size: 13px;
 }

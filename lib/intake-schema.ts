@@ -55,17 +55,23 @@ export function studioShortLabel(value: string | null | undefined): string {
 
 export const GENDER_OPTIONS = ["男", "女", "回答しない"] as const;
 
+// 紹介・流入経路。施策判断に効くよう細かく分類:
+//  - 病院は「リーフレット (= モノ)」と「先生紹介 (= 人)」で別カテゴリ
+//  - 紹介系は「相談支援員 / 学校 / 自社経由 / 個人紹介」で別カテゴリ
 export const SOURCE_OPTIONS = [
   { value: "newspaper", label: "新聞折り込みチラシ" },
   { value: "posting", label: "ポスティング" },
   { value: "passerby", label: "通りすがり" },
-  { value: "homepage", label: "ホームページ" },
-  { value: "hello_work", label: "ハローワーク" },
-  { value: "support_office", label: "相談支援事業所", hasDetail: true, detailField: "source_facility_name", detailLabel: "事業所名" },
-  { value: "city_office", label: "市役所 / 保健所" },
-  { value: "hospital", label: "病院", hasDetail: true, detailField: "source_hospital_name", detailLabel: "病院名" },
+  { value: "homepage", label: "ホームページ・問合せフォーム・メール" },
   { value: "sns", label: "SNS", hasDetail: true, detailField: "source_sns_name", detailLabel: "どのSNS?（Instagram・TikTok など）" },
-  { value: "referral", label: "個人紹介（知人・他施設スタッフ等）", hasDetail: true, detailField: "source_other", detailLabel: "紹介者名・経緯" },
+  { value: "hello_work", label: "ハローワーク・若者サポートステーション" },
+  { value: "city_office", label: "市役所 / 保健所" },
+  { value: "hospital_leaflet", label: "病院（置いてあったリーフレット）", hasDetail: true, detailField: "source_hospital_name", detailLabel: "病院名" },
+  { value: "hospital_referral", label: "病院（先生・スタッフからの紹介）", hasDetail: true, detailField: "source_hospital_name", detailLabel: "病院名" },
+  { value: "support_office", label: "相談支援員からの紹介", hasDetail: true, detailField: "source_facility_name", detailLabel: "相談支援事業所・相談員名" },
+  { value: "school", label: "学校・特支（教師等からの紹介）", hasDetail: true, detailField: "source_other", detailLabel: "学校名・先生名" },
+  { value: "internal", label: "自社の他事業所経由（スタッフ・利用者）", hasDetail: true, detailField: "source_other", detailLabel: "経由先（PAS/PAST/創造空間/就職ゼミナール 等）" },
+  { value: "referral", label: "個人紹介（友人・知人）", hasDetail: true, detailField: "source_other", detailLabel: "紹介者・経緯" },
   { value: "other", label: "その他", hasDetail: true, detailField: "source_other", detailLabel: "詳細" },
 ] as const;
 
