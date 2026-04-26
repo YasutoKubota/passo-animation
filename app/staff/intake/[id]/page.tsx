@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { StaffTopbar } from "../../components/Topbar";
 import { StaffNotesEditor } from "./StaffNotesEditor";
+import { BasicInfoEditor } from "./BasicInfoEditor";
 import { DeleteIntakeButton, DeleteAgreementButton } from "./DeleteButtons";
 import { supabaseAdmin } from "@/lib/supabase";
 import {
@@ -233,6 +234,20 @@ export default async function IntakeDetailPage({
               <DetailRow label="性別" value={data.gender} />
               <DetailRow label="郵便番号" value={data.postal_code} />
               <DetailRow label="住所" value={data.address} />
+              <BasicInfoEditor
+                id={data.id}
+                initial={{
+                  name: data.name ?? "",
+                  furigana: data.furigana ?? "",
+                  phone: data.phone ?? null,
+                  birth_date: data.birth_date ?? null,
+                  gender: data.gender ?? null,
+                  postal_code: data.postal_code ?? null,
+                  address: data.address ?? null,
+                  notebook_status: data.notebook_status ?? null,
+                  notebook_grade: data.notebook_grade ?? null,
+                }}
+              />
             </div>
 
             <div className="staff-card">

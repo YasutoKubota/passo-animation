@@ -2062,3 +2062,262 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+/* ============================================
+   /staff/inquiry-new — 新規お問合せ stub form
+   ============================================ */
+.inquiry-stub-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.inquiry-stub-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 720px) {
+  .inquiry-stub-row {
+    grid-template-columns: 1fr;
+  }
+}
+.inquiry-stub-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.inquiry-stub-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.inquiry-stub-required {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+}
+.inquiry-stub-input,
+.inquiry-stub-textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--white);
+  font-family: var(--font-jp);
+  font-size: 14px;
+  color: var(--text-primary);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.inquiry-stub-input:focus,
+.inquiry-stub-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.inquiry-stub-textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.7;
+}
+.inquiry-stub-hint {
+  font-size: 12px;
+  color: var(--text-light);
+  margin: 0;
+}
+.inquiry-stub-radio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+@media (max-width: 720px) {
+  .inquiry-stub-radio-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.inquiry-stub-radio-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.inquiry-stub-radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--white);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all var(--t-fast);
+}
+.inquiry-stub-radio:hover {
+  border-color: var(--accent);
+}
+.inquiry-stub-radio:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.inquiry-stub-radio--inline {
+  padding: 8px 12px;
+}
+.inquiry-stub-radio-sub {
+  display: block;
+  font-size: 11px;
+  color: var(--text-light);
+  margin-top: 2px;
+}
+.inquiry-stub-checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+@media (max-width: 720px) {
+  .inquiry-stub-checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.inquiry-stub-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--white);
+  cursor: pointer;
+  font-size: 13px;
+  transition: all var(--t-fast);
+}
+.inquiry-stub-checkbox:hover {
+  border-color: var(--accent);
+}
+.inquiry-stub-checkbox:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.inquiry-stub-submit {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+/* ============================================
+   /staff/intake/[id] — BasicInfoEditor
+   ============================================ */
+.basic-info-editor-toggle {
+  margin-top: 14px;
+  padding: 8px 14px;
+  border: 1px dashed var(--border-light);
+  border-radius: 999px;
+  background: var(--white);
+  font-family: var(--font-jp);
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--t-fast);
+}
+.basic-info-editor-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.basic-info-editor {
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--bg-offwhite);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.basic-info-editor-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 720px) {
+  .basic-info-editor-row {
+    grid-template-columns: 1fr;
+  }
+}
+.basic-info-editor-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.basic-info-editor-field label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-light);
+  letter-spacing: 0.04em;
+}
+.basic-info-editor-field input,
+.basic-info-editor-field select {
+  padding: 8px 10px;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  background: var(--white);
+  font-family: var(--font-jp);
+  font-size: 13px;
+}
+.basic-info-editor-field input:focus,
+.basic-info-editor-field select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+.basic-info-editor-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+.basic-info-editor-cancel,
+.basic-info-editor-save {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: var(--font-jp);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--t-fast);
+}
+.basic-info-editor-cancel {
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+}
+.basic-info-editor-cancel:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.basic-info-editor-save {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: var(--white);
+}
+.basic-info-editor-save:hover {
+  background: var(--accent-hover);
+}
+.basic-info-editor-save:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.basic-info-editor-saved {
+  font-size: 11px;
+  color: var(--text-light);
+  font-family: var(--font-en);
+}
+.basic-info-editor-error {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #a5361e;
+}

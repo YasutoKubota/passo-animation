@@ -46,6 +46,50 @@ export async function updateStaffNotes(payload: UpdateNotesPayload): Promise<
   return { success: true };
 }
 
+export type UpdateBasicInfoPayload = {
+  id: string;
+  name: string;
+  furigana: string;
+  phone: string | null;
+  birth_date: string | null;
+  gender: string | null;
+  postal_code: string | null;
+  address: string | null;
+  notebook_status: string | null;
+  notebook_grade: string | null;
+};
+
+// 仮名・最低限情報で起票したお問合せに、後から正式な情報を上書き保存。
+export async function updateBasicInfo(
+  payload: UpdateBasicInfoPayload
+): Promise<{ success: true } | { success: false; error: string }> {
+  if (!payload.id) return { success: false, error: "ID が指定されていません" };
+  if (!payload.name?.trim()) {
+    return { success: false, error: "名前は空にできません" };
+  }
+
+  const { error } = await supabaseAdmin
+    .from("intake_forms")
+    .update({
+      name: payload.name.trim(),
+      furigana: payload.furigana.trim(),
+      phone: payload.phone,
+      birth_date: payload.birth_date,
+      gender: payload.gender,
+      postal_code: payload.postal_code,
+      address: payload.address,
+      notebook_status: payload.notebook_status,
+      notebook_grade: payload.notebook_grade,
+    })
+    .eq("id", payload.id);
+
+  if (error) return { success: false, error: error.message };
+
+  revalidatePath(`/staff/intake/${payload.id}`);
+  revalidatePath("/staff");
+  return { success: true };
+}
+
 // 面談票を削除する。
 // 紐づく trial_agreements は FK on delete set null で intake_id=null のまま残る。
 export async function deleteIntake(formData: FormData): Promise<void> {

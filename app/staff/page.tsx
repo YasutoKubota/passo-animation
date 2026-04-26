@@ -33,8 +33,14 @@ export default async function StaffDashboard() {
 
           <div className="staff-detail-actions">
             <Link
-              href="/intake"
+              href="/staff/inquiry-new"
               className="staff-action-btn staff-action-btn--primary"
+            >
+              + 新規お問合せ
+            </Link>
+            <Link
+              href="/intake"
+              className="staff-action-btn staff-action-btn--secondary"
             >
               + 新規 面談票を発行
             </Link>
