@@ -964,7 +964,7 @@ function Topbar({ step }: { step: number | null }) {
     <header className="intake-topbar">
       <div className="intake-brand">
         <span className="dot" />
-        <span>スタジオ</span>
+        <span>Passo a Passo</span>
       </div>
       {step !== null && step > 0 && (
         <div className="intake-progress" aria-label={`ステップ ${step} / ${TOTAL_STEPS}`}>
