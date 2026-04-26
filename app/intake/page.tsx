@@ -330,23 +330,34 @@ export default function IntakePage() {
             </div>
 
             <div className="studio-choice studio-choice--four">
-              {STUDIO_OPTIONS.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  className="studio-card"
-                  onClick={() => handleStudioSelect(option.value)}
-                >
-                  <div className="studio-card-label">
-                    Studio
-                    <span className={`studio-card-type studio-card-type--${option.type === "B型" ? "btype" : "ikou"}`}>
-                      {option.type}
-                    </span>
-                  </div>
-                  <div className="studio-card-name">{option.label}</div>
-                  <div className="studio-card-desc">{option.description}</div>
-                </button>
-              ))}
+              {STUDIO_OPTIONS.map((option) => {
+                const disabled = option.comingSoon;
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    className={`studio-card ${disabled ? "studio-card--disabled" : ""}`}
+                    onClick={() => !disabled && handleStudioSelect(option.value)}
+                    disabled={disabled}
+                    aria-disabled={disabled}
+                  >
+                    <div className="studio-card-label">
+                      Studio
+                      {disabled ? (
+                        <span className="studio-card-type studio-card-type--soon">
+                          準備中
+                        </span>
+                      ) : (
+                        <span className={`studio-card-type studio-card-type--${option.type === "B型" ? "btype" : "ikou"}`}>
+                          {option.type}
+                        </span>
+                      )}
+                    </div>
+                    <div className="studio-card-name">{option.label}</div>
+                    <div className="studio-card-desc">{option.description}</div>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </main>
@@ -953,7 +964,7 @@ function Topbar({ step }: { step: number | null }) {
     <header className="intake-topbar">
       <div className="intake-brand">
         <span className="dot" />
-        <span>Passo Studio</span>
+        <span>スタジオ</span>
       </div>
       {step !== null && step > 0 && (
         <div className="intake-progress" aria-label={`ステップ ${step} / ${TOTAL_STEPS}`}>

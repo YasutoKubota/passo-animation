@@ -3,30 +3,35 @@
 // label: 画面に表示する正式名称
 // address: ウェルカムカードに表示する所在地
 // type: 就労継続支援 B 型 or 就労移行支援
+// comingSoon: true なら現状はまだ運用していない事業所（フォーム発行を無効化）
 export const STUDIO_OPTIONS = [
   {
     value: "pas_okazaki",
     label: "パッソアニメーションスタジオ",
     description: "愛知県岡崎市康生通東",
     type: "B型",
+    comingSoon: false,
   },
   {
     value: "pas_toyota",
     label: "パッソアニメーションスタジオ豊田",
     description: "愛知県豊田市御幸本町",
     type: "B型",
+    comingSoon: false,
   },
   {
     value: "sozo",
     label: "創造空間 Passo a Passo",
     description: "愛知県岡崎市本町通",
     type: "B型",
+    comingSoon: true,
   },
   {
     value: "shushoku",
     label: "就職ゼミナール Passo a Passo",
     description: "愛知県岡崎市柱",
     type: "就労移行",
+    comingSoon: true,
   },
 ] as const;
 

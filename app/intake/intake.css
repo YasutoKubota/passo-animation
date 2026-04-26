@@ -649,6 +649,26 @@
   background: rgba(120, 140, 200, 0.12);
   color: #4a6aa0;
 }
+.studio-card-type--soon {
+  background: rgba(160, 152, 144, 0.18);
+  color: var(--text-light);
+  font-weight: 700;
+}
+
+/* 「準備中」事業所のカードは押せない見た目に */
+.studio-card--disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  filter: grayscale(20%);
+}
+.studio-card--disabled:hover {
+  transform: none;
+  box-shadow: var(--shadow-sm);
+  border-color: var(--border-subtle);
+}
+.studio-card--disabled:hover::after {
+  transform: scaleX(0);
+}
 
 /* --- 完了画面のスタッフ PIN ゲート --- */
 .intake-staff-gate {
