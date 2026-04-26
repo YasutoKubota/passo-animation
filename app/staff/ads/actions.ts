@@ -14,6 +14,7 @@ export type AdCampaignPayload = {
   budget_yen: number | null;
   target_description: string | null;
   creative_notes: string | null;
+  creative_url: string | null;
   notes: string | null;
 };
 
@@ -43,6 +44,7 @@ export async function upsertAdCampaign(payload: AdCampaignPayload) {
     budget_yen: payload.budget_yen,
     target_description: clean(payload.target_description),
     creative_notes: clean(payload.creative_notes),
+    creative_url: clean(payload.creative_url),
     notes: clean(payload.notes),
   };
 

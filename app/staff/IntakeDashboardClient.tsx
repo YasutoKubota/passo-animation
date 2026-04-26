@@ -18,6 +18,7 @@ export type IntakeRow = {
   id: string;
   submitted_at: string;
   inquiry_date: string | null;
+  scheduled_visit_date: string | null;
   service_start_date: string | null;
   studio_location: string | null;
   name: string;
@@ -223,8 +224,15 @@ export function IntakeDashboardClient({
             const trialDays = row.trial_sessions?.length ?? 0;
             const cityMeeting = row.city_office_meeting_at ?? null;
             const serviceStarted = !!row.service_start_date;
-            // お問合せ日があればそれを表示、なければ見学日（submitted_at）
-            const primaryDate = row.inquiry_date ?? row.submitted_at;
+            // 表示する日付の優先度: 見学日（確定）> お問合せ日 > フォーム提出日
+            // 見学日が決まったら、進捗の節目になる「いつ来るか」が一目で分かるようにする
+            const primaryDate =
+              row.scheduled_visit_date ?? row.inquiry_date ?? row.submitted_at;
+            const dateType: "見学" | "問合せ" | "登録" = row.scheduled_visit_date
+              ? "見学"
+              : row.inquiry_date
+                ? "問合せ"
+                : "登録";
             // ルート: 最初の選択肢を短縮表記で表示
             const primarySource = row.source_choices?.[0] ?? null;
 
@@ -232,6 +240,11 @@ export function IntakeDashboardClient({
               <div key={row.id} className="dash-row">
                 <span className="dash-row-date">
                   {formatDateOnly(primaryDate)}
+                  <span
+                    className={`dash-row-date-tag dash-row-date-tag--${dateType === "見学" ? "visit" : dateType === "問合せ" ? "inquiry" : "submitted"}`}
+                  >
+                    {dateType}
+                  </span>
                 </span>
                 <span className="dash-row-studio">
                   {row.studio_location ? studioShortLabel(row.studio_location) : "—"}

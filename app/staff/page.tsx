@@ -14,7 +14,7 @@ export default async function StaffDashboard() {
   const { data, error } = await supabaseAdmin
     .from("intake_forms")
     .select(
-      "id, submitted_at, inquiry_date, service_start_date, studio_location, name, furigana, source_choices, trial_sessions, city_office_meeting_at, trial_agreements(id, created_at)"
+      "id, submitted_at, inquiry_date, scheduled_visit_date, service_start_date, studio_location, name, furigana, source_choices, trial_sessions, city_office_meeting_at, trial_agreements(id, created_at)"
     )
     .gte("submitted_at", sinceISO)
     .order("submitted_at", { ascending: false })

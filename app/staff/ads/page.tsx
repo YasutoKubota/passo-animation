@@ -17,6 +17,7 @@ type AdCampaign = {
   budget_yen: number | null;
   target_description: string | null;
   creative_notes: string | null;
+  creative_url: string | null;
   notes: string | null;
   created_at: string;
 };
@@ -115,6 +116,17 @@ export default async function AdCampaignsPage() {
                     </div>
                   )}
                   <div className="ads-row-actions">
+                    {c.creative_url && (
+                      <a
+                        href={c.creative_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ads-row-creative-link"
+                        title="SharePoint / OneDrive のクリエイティブを別タブで開く"
+                      >
+                        📎 クリエイティブを見る
+                      </a>
+                    )}
                     <DeleteAdButton id={c.id} name={c.name} />
                   </div>
                 </div>

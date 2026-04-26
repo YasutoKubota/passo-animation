@@ -38,6 +38,7 @@ export function AdCampaignForm({ initial }: Props) {
   );
   const [target, setTarget] = useState<string>(initial?.target_description ?? "");
   const [creative, setCreative] = useState<string>(initial?.creative_notes ?? "");
+  const [creativeUrl, setCreativeUrl] = useState<string>(initial?.creative_url ?? "");
   const [notes, setNotes] = useState<string>(initial?.notes ?? "");
 
   const [pending, startTransition] = useTransition();
@@ -61,6 +62,7 @@ export function AdCampaignForm({ initial }: Props) {
         budget_yen: Number.isFinite(budgetNum) ? budgetNum : null,
         target_description: target,
         creative_notes: creative,
+        creative_url: creativeUrl || null,
         notes,
       });
       if (result.success) {
@@ -219,6 +221,25 @@ export function AdCampaignForm({ initial }: Props) {
         <p className="ad-form-hint">
           チラシのコンセプト・キャッチコピー・写真の方向性などを残しておくと
           後で AI に分析させたり、改稿の参考になります
+        </p>
+      </div>
+
+      {/* クリエイティブのリンク（SharePoint・OneDrive） */}
+      <div className="ad-form-field">
+        <label className="ad-form-label" htmlFor="ad-creative-url">
+          📎 クリエイティブのリンク（SharePoint / OneDrive）
+        </label>
+        <input
+          id="ad-creative-url"
+          type="url"
+          className="ad-form-input"
+          placeholder="https://passo-my.sharepoint.com/..."
+          value={creativeUrl}
+          onChange={(e) => setCreativeUrl(e.target.value)}
+        />
+        <p className="ad-form-hint">
+          SharePoint でファイルを右クリック →「リンクをコピー」→ ここに貼り付け。
+          画像本体はアプリには保存せず、SharePoint 上のリンクだけ記録します。
         </p>
       </div>
 
