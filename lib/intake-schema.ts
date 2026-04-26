@@ -8,6 +8,7 @@ export const STUDIO_OPTIONS = [
   {
     value: "pas_okazaki",
     label: "パッソアニメーションスタジオ",
+    shortLabel: "PAS",
     description: "愛知県岡崎市康生通東",
     type: "B型",
     comingSoon: false,
@@ -15,6 +16,7 @@ export const STUDIO_OPTIONS = [
   {
     value: "pas_toyota",
     label: "パッソアニメーションスタジオ豊田",
+    shortLabel: "PAST",
     description: "愛知県豊田市御幸本町",
     type: "B型",
     comingSoon: false,
@@ -22,6 +24,7 @@ export const STUDIO_OPTIONS = [
   {
     value: "sozo",
     label: "創造空間 Passo a Passo",
+    shortLabel: "創造空間",
     description: "愛知県岡崎市本町通",
     type: "B型",
     comingSoon: true,
@@ -29,17 +32,25 @@ export const STUDIO_OPTIONS = [
   {
     value: "shushoku",
     label: "就職ゼミナール Passo a Passo",
+    shortLabel: "就職ゼミナール",
     description: "愛知県岡崎市柱",
     type: "就労移行",
     comingSoon: true,
   },
 ] as const;
 
-// DB の studio_location コードを人間可読なラベルに変換する
+// DB の studio_location コードを正式名称に変換（フォーム・詳細ページ用）
 export function studioLabel(value: string | null | undefined): string {
   if (!value) return "";
   const found = STUDIO_OPTIONS.find((o) => o.value === value);
   return found?.label ?? value;
+}
+
+// 短縮表記（ダッシュボードの一覧行など、横幅が限られる場面用）
+export function studioShortLabel(value: string | null | undefined): string {
+  if (!value) return "";
+  const found = STUDIO_OPTIONS.find((o) => o.value === value);
+  return found?.shortLabel ?? value;
 }
 
 export const GENDER_OPTIONS = ["男", "女", "回答しない"] as const;

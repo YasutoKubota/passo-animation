@@ -905,11 +905,17 @@
   border-color: var(--border-subtle);
 }
 
-/* --- Intake Dashboard 行（シンプル横並び）--- */
+/* --- Intake Dashboard 行（テーブル風に列幅を揃える Grid レイアウト）--- */
 .dash-row {
-  display: flex;
+  display: grid;
+  grid-template-columns:
+    100px            /* 日付 */
+    130px            /* 事業所（短縮表記）*/
+    minmax(180px, 1fr) /* 名前 */
+    auto             /* 進捗 3 バッジ */
+    auto;            /* アクション 2 ボタン */
+  gap: 14px;
   align-items: center;
-  gap: 16px;
   padding: 14px 18px;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -923,29 +929,26 @@
 }
 
 .dash-row-date {
-  flex: 0 0 auto;
   font-family: var(--font-en);
   font-size: 13px;
   font-weight: 600;
   color: var(--text-light);
   letter-spacing: 0.02em;
-  min-width: 100px;
 }
 
 .dash-row-studio {
-  flex: 0 0 auto;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--accent);
   background: var(--accent-soft);
   padding: 4px 10px;
   border-radius: 6px;
   white-space: nowrap;
-  /* 「パッソアニメーションスタジオ豊田」など全部表示できる幅 */
+  text-align: center;
+  /* 短縮表記（PAS / PAST / 創造空間 / 就職ゼミナール）が固定幅で揃う */
 }
 
 .dash-row-name {
-  flex: 1;
   min-width: 0;
   font-size: 15px;
   font-weight: 600;
@@ -954,6 +957,8 @@
   align-items: baseline;
   gap: 10px;
   flex-wrap: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dash-row-furigana {
@@ -962,22 +967,24 @@
   font-weight: 400;
 }
 
+/* 進捗 3 バッジ: 誓約 / 体験 / 市役所 を等幅で並べる */
 .dash-row-status-group {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, 92px);
   gap: 6px;
-  flex-shrink: 0;
-  flex-wrap: wrap;
+  align-items: center;
 }
 .dash-status {
   display: inline-flex;
   align-items: center;
-  padding: 3px 9px;
+  justify-content: center;
+  padding: 3px 8px;
   border-radius: 999px;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.02em;
   white-space: nowrap;
+  text-align: center;
 }
 .dash-status--trial {
   background: rgba(120, 140, 200, 0.12);
@@ -1000,15 +1007,16 @@
 }
 
 .dash-row-actions {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 110px 110px;
   gap: 8px;
-  flex-shrink: 0;
+  align-items: center;
 }
 
 .dash-row-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   padding: 8px 14px;
   border-radius: 8px;
@@ -1018,6 +1026,7 @@
   transition: all var(--t-fast);
   white-space: nowrap;
   border: 1px solid transparent;
+  text-align: center;
 }
 .dash-row-btn--secondary {
   background: var(--white);
@@ -1045,20 +1054,24 @@
 }
 
 /* レスポンシブ: 狭い画面では 2 段組（情報 / アクション）に */
-@media (max-width: 880px) {
+/* 狭い画面（モバイル / タブレット）では grid を解除して 2 段組に */
+@media (max-width: 1080px) {
   .dash-row {
+    display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
+    align-items: center;
   }
   .dash-row-name {
+    flex: 1 1 200px;
+  }
+  .dash-row-status-group {
     flex: 1 1 100%;
-    order: 4;
+    justify-content: flex-start;
   }
   .dash-row-actions {
     flex: 1 1 100%;
     justify-content: flex-end;
-    order: 5;
-    margin-top: 4px;
+    grid-template-columns: 110px 110px;
   }
 }
 

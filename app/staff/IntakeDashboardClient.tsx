@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { STUDIO_OPTIONS, studioLabel, type TrialSession } from "@/lib/intake-schema";
+import {
+  STUDIO_OPTIONS,
+  studioShortLabel,
+  type TrialSession,
+} from "@/lib/intake-schema";
 
 type AgreementLite = {
   id: string;
@@ -103,7 +107,7 @@ export function IntakeDashboardClient({
                   {formatDateOnly(row.submitted_at)}
                 </span>
                 <span className="dash-row-studio">
-                  {row.studio_location ? studioLabel(row.studio_location) : "—"}
+                  {row.studio_location ? studioShortLabel(row.studio_location) : "—"}
                 </span>
                 <span className="dash-row-name">
                   {row.name}
