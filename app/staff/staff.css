@@ -1404,16 +1404,16 @@
 .dash-row {
   display: grid;
   grid-template-columns:
-    88px              /* 日付（お問合せ日 or 見学日）*/
-    88px              /* 事業所（短縮表記）*/
-    minmax(120px, 1fr) /* 名前 */
-    74px              /* ルート（流入経路の短縮）*/
-    340px             /* 進捗 6 バッジ（6 × 54px + 5 × gap） */
+    84px              /* 日付（お問合せ日 or 見学日）*/
+    78px              /* 事業所（短縮表記）*/
+    minmax(110px, 1fr) /* 名前 */
+    66px              /* ルート（流入経路の短縮）*/
+    420px             /* 進捗 7 バッジ（7 × 56px + 6 × gap） */
     50px              /* 状態ピル（脱落/持ち越し時のみ表示）*/
     180px;            /* アクション 2 ボタン */
-  gap: 8px;
+  gap: 6px;
   align-items: center;
-  padding: 14px 14px;
+  padding: 14px 12px;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 10px;
@@ -1505,10 +1505,10 @@
   font-weight: 400;
 }
 
-/* 進捗 6 バッジ: 誓約 / 体験 / 市役 / 計画 / 契約 / 利用 を等幅で並べる */
+/* 進捗 7 バッジ: 見学 / 誓約 / 体験 / 市役 / 計画 / 契約 / 利用 を等幅で並べる */
 .dash-row-status-group {
   display: grid;
-  grid-template-columns: repeat(6, 54px);
+  grid-template-columns: repeat(7, 56px);
   gap: 4px;
   align-items: center;
 }
@@ -1543,6 +1543,17 @@
   letter-spacing: 0.02em;
   white-space: nowrap;
   text-align: center;
+}
+/* 見学予定（未来日）= 来所をこれから受け入れる状態 */
+.dash-status--visit-scheduled {
+  background: rgba(120, 140, 200, 0.18);
+  color: #3a5688;
+  font-weight: 700;
+}
+/* 見学完了（過去日）= もう来てもらった */
+.dash-status--visit-done {
+  background: rgba(80, 130, 180, 0.13);
+  color: #2c4a6e;
 }
 .dash-status--trial {
   background: rgba(120, 140, 200, 0.12);

@@ -70,6 +70,14 @@ function formatMonthDay(iso: string) {
   return `${d.getMonth() + 1}/${d.getDate()}`;
 }
 
+// その日付が今日より前か（= 来所済み判定）
+function isPastDate(iso: string): boolean {
+  const d = new Date(iso);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return d < today;
+}
+
 // 今日の日付から「現在の会計年度」を返す（4月以降ならその年、3月以前なら前年）
 function currentFiscalYear(): number {
   const now = new Date();
@@ -273,8 +281,21 @@ export function IntakeDashboardClient({
                   )}
                 </span>
 
-                {/* 業務フロー: 誓約 → 体験 → 市役 → 計画 → 契約 → 利用 */}
+                {/* 業務フロー: 見学 → 誓約 → 体験 → 市役 → 計画 → 契約 → 利用 */}
                 <div className="dash-row-status-group">
+                  {row.scheduled_visit_date ? (
+                    isPastDate(row.scheduled_visit_date) ? (
+                      <span className="dash-status dash-status--visit-done">
+                        ✓ 見学
+                      </span>
+                    ) : (
+                      <span className="dash-status dash-status--visit-scheduled">
+                        見学 {formatMonthDay(row.scheduled_visit_date)}
+                      </span>
+                    )
+                  ) : (
+                    <span className="dash-status dash-status--empty">見学</span>
+                  )}
                   {hasAgreement ? (
                     <span className="dash-status dash-status--agreement">
                       ✓ 誓約{agreements.length > 1 ? `(${agreements.length})` : ""}
