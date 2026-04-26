@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""4 ファイルの令和7年度シートを読み、intake_forms に挿入する SQL を出力する。
+"""4 ファイルの「令和7年度」+「令和8年度」シートを読み、
+intake_forms に挿入する SQL を出力する。
 
 出力: scripts/excel-import/import-fy7.sql
 
@@ -29,9 +30,17 @@ FILE_TO_STUDIO = {
     "04_PAST_お問合せ管理表.xlsx": "pas_toyota",
 }
 
-FY7_START = dt.date(2025, 4, 1)
-FY7_END = dt.date(2026, 3, 31)
+# 取込対象の会計年度（令和7 = 2025/4-2026/3、令和8 = 2026/4-2027/3）
+TARGET_FYS = [2025, 2026]
+DATE_RANGE_START = dt.date(2025, 4, 1)
+DATE_RANGE_END = dt.date(2027, 3, 31)
 TODAY_YEAR = dt.date.today().year  # 2026
+
+# 各 FY ごとのシート名の候補（全角・半角・末尾スペースを許容するため後で normalize）
+def fy_to_sheet_name(fy):
+    """会計年度 (西暦) → 探すべき和暦シート名（normalize 後の文字列）"""
+    reiwa = fy - 2018
+    return f"令和{reiwa}年度"
 
 
 def normalize_sheet_name(s: str) -> str:
@@ -252,7 +261,7 @@ def find_col(header, name, alt_names=None):
 
 
 def parse_row(row, columns):
-    """行 → intake_forms カラム dict。FY7 範囲外 / 例 行は None を返す。"""
+    """行 → intake_forms カラム dict。対象 FY 範囲外 / 例 行は None を返す。"""
     no = cell_str(row[columns["No"]]) if columns.get("No") is not None else ""
     if no == "例":
         return None
@@ -260,7 +269,7 @@ def parse_row(row, columns):
     inquiry_date = excel_to_date(row[columns["お問合せ日"]]) if columns.get("お問合せ日") is not None else None
     if inquiry_date is None:
         return None
-    if not (FY7_START <= inquiry_date <= FY7_END):
+    if not (DATE_RANGE_START <= inquiry_date <= DATE_RANGE_END):
         return None
 
     name = cell_str(row[columns["名前"]]) if columns.get("名前") is not None else ""
@@ -399,6 +408,7 @@ def sql_escape(s):
 
 def main():
     all_records = []
+    target_sheet_names = {fy_to_sheet_name(fy) for fy in TARGET_FYS}
 
     for fname, studio in FILE_TO_STUDIO.items():
         fp = DIR / fname
@@ -406,36 +416,42 @@ def main():
             print(f"WARN: ファイルがありません: {fp}", file=sys.stderr)
             continue
         wb = openpyxl.load_workbook(fp, data_only=True, read_only=True)
-        sheet = None
+
+        # 対象シートを全部洗い出す（令和7 / 令和8 両方）
+        target_sheets = []
         for sn in wb.sheetnames:
-            if normalize_sheet_name(sn) == "令和7年度":
-                sheet = sn
-                break
-        if not sheet:
-            print(f"WARN: 令和7年度シートなし: {fname}", file=sys.stderr)
+            if normalize_sheet_name(sn) in target_sheet_names:
+                target_sheets.append(sn)
+        if not target_sheets:
+            print(f"WARN: 対象シートなし ({target_sheet_names}): {fname}", file=sys.stderr)
             wb.close()
             continue
 
-        ws = wb[sheet]
-        rows = list(ws.iter_rows(values_only=True))
-        header = rows[0]
-        cols = find_columns(header)
+        for sheet in target_sheets:
+            ws = wb[sheet]
+            rows = list(ws.iter_rows(values_only=True))
+            header = rows[0]
+            cols = find_columns(header)
 
-        count_in = 0
-        count_out = 0
-        for raw in rows[1:]:
-            if not raw or all(v in (None, "") for v in raw):
-                continue
-            count_in += 1
-            rec = parse_row(raw, cols)
-            if rec is None:
-                continue
-            rec["studio_location"] = studio
-            rec["_source_file"] = fname
-            all_records.append(rec)
-            count_out += 1
+            count_in = 0
+            count_out = 0
+            for raw in rows[1:]:
+                if not raw or all(v in (None, "") for v in raw):
+                    continue
+                count_in += 1
+                rec = parse_row(raw, cols)
+                if rec is None:
+                    continue
+                rec["studio_location"] = studio
+                rec["_source_file"] = fname
+                rec["_source_sheet"] = sheet
+                all_records.append(rec)
+                count_out += 1
 
-        print(f"  {fname}: {count_out} / {count_in} 行を取込", file=sys.stderr)
+            print(
+                f"  {fname} / {sheet!r}: {count_out} / {count_in} 行を取込",
+                file=sys.stderr,
+            )
         wb.close()
 
     print(f"\n合計取込: {len(all_records)} 件\n", file=sys.stderr)
@@ -449,19 +465,20 @@ def main():
 
     # SQL 出力
     lines = []
-    lines.append("-- 令和7年度 (2025/4-2026/3) お問合せ管理表 取込")
+    lines.append("-- 令和7+8年度 (2025/4-2027/3) お問合せ管理表 取込")
     lines.append("-- 自動生成: scripts/excel-import/import-fy7.py")
     lines.append("-- 4 ファイル合計 {} 件\n".format(len(all_records)))
     lines.append("BEGIN;\n")
     # 冪等性: 既存の取込分を削除して再投入する。
-    # サンプル (山田太郎 / 鈴木花子) と 2026/4/1 以降の手入力分は残す。
+    # サンプル (山田太郎 / 鈴木花子) と窪田さんの手入力テストデータは残す。
     lines.append(
         "DELETE FROM public.intake_forms\n"
         " WHERE submitted_at >= '2025-04-01'\n"
-        "   AND submitted_at <  '2026-04-01'\n"
+        "   AND submitted_at <  '2027-04-01'\n"
         "   AND id NOT IN (\n"
         "     '11111111-1111-1111-1111-111111111111',\n"
-        "     '22222222-2222-2222-2222-222222222222'\n"
+        "     '22222222-2222-2222-2222-222222222222',\n"
+        "     '050e8173-c74b-4e20-9562-06cbc47342b3'\n"
         "   );\n"
     )
 
