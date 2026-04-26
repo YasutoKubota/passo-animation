@@ -40,6 +40,7 @@ function sourceShortLabel(value: string): string {
     city_office: "市役所",
     hospital: "病院",
     sns: "SNS",
+    referral: "紹介",
     other: "その他",
   };
   return map[value] ?? value;

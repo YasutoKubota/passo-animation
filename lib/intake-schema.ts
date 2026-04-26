@@ -65,6 +65,7 @@ export const SOURCE_OPTIONS = [
   { value: "city_office", label: "市役所 / 保健所" },
   { value: "hospital", label: "病院", hasDetail: true, detailField: "source_hospital_name", detailLabel: "病院名" },
   { value: "sns", label: "SNS", hasDetail: true, detailField: "source_sns_name", detailLabel: "どのSNS?（Instagram・TikTok など）" },
+  { value: "referral", label: "個人紹介（知人・他施設スタッフ等）", hasDetail: true, detailField: "source_other", detailLabel: "紹介者名・経緯" },
   { value: "other", label: "その他", hasDetail: true, detailField: "source_other", detailLabel: "詳細" },
 ] as const;
 

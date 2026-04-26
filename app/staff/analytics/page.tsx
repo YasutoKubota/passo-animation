@@ -5,6 +5,7 @@ import {
   STUDIO_OPTIONS,
   SOURCE_OPTIONS,
   studioShortLabel,
+  studioLabel,
 } from "@/lib/intake-schema";
 
 export const dynamic = "force-dynamic";
@@ -25,7 +26,7 @@ type IntakeRow = {
   trial_agreements: { id: string }[];
 };
 
-// SOURCE コードから日本語短縮ラベル
+// SOURCE コードから日本語ラベル
 function sourceLabel(code: string): string {
   return SOURCE_OPTIONS.find((o) => o.value === code)?.label ?? code;
 }
@@ -59,6 +60,37 @@ function cityFromAddress(addr: string | null): string {
   return addr.slice(0, 6);
 }
 
+type CountMap = Record<string, number>;
+function bumpKey(map: CountMap, key: string) {
+  map[key] = (map[key] ?? 0) + 1;
+}
+
+// 会計年度 → 開始/終了日 (4月1日 〜 翌3月31日)
+function fiscalYearRange(fy: number): { startISO: string; endISO: string } {
+  const startISO = `${fy}-04-01`;
+  const endISO = `${fy + 1}-03-31`;
+  return { startISO, endISO };
+}
+
+// 会計年度 → 12 ヶ月のキー配列（4月→翌3月の順）
+function fiscalYearMonths(fy: number): string[] {
+  const arr: string[] = [];
+  for (let i = 0; i < 12; i++) {
+    const monthIndex = 3 + i; // 0-indexed: 3 = April
+    const year = fy + Math.floor(monthIndex / 12);
+    const month = (monthIndex % 12) + 1;
+    arr.push(`${year}-${String(month).padStart(2, "0")}`);
+  }
+  return arr;
+}
+
+// 令和換算（令和元年 = 2019）
+function reiwaLabel(fy: number): string {
+  const reiwa = fy - 2018;
+  if (reiwa <= 0) return `${fy} 年度`;
+  return `令和${reiwa}年度`;
+}
+
 // 月別キーを作る（YYYY-MM）
 function monthKey(iso: string | null): string | null {
   if (!iso) return null;
@@ -67,25 +99,45 @@ function monthKey(iso: string | null): string | null {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
 }
 
-type CountMap = Record<string, number>;
-function bumpKey(map: CountMap, key: string) {
-  map[key] = (map[key] ?? 0) + 1;
+// 今日の日付から「現在の会計年度」を返す（4月以降ならその年、3月以前なら前年）
+function currentFiscalYear(): number {
+  const now = new Date();
+  return now.getMonth() >= 3 ? now.getFullYear() : now.getFullYear() - 1;
 }
 
-export default async function AnalyticsPage() {
-  // 過去 12 ヶ月の問合せに絞る
-  const since = new Date();
-  since.setFullYear(since.getFullYear() - 1);
-  const sinceISO = since.toISOString().split("T")[0];
+// 表示する会計年度の選択肢（過去2年〜現在）
+function fiscalYearChoices(): number[] {
+  const cur = currentFiscalYear();
+  return [cur - 2, cur - 1, cur];
+}
 
-  const { data, error } = await supabaseAdmin
+export default async function AnalyticsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ studio?: string; fy?: string }>;
+}) {
+  const params = await searchParams;
+  const selectedStudio = params.studio ?? null;
+  const selectedFy = params.fy ? Number(params.fy) : currentFiscalYear() - 1;
+  const fyRange = fiscalYearRange(selectedFy);
+  const months12 = fiscalYearMonths(selectedFy);
+
+  // クエリ：会計年度 (inquiry_date or submitted_at) の範囲で絞る
+  // inquiry_date は null のことがあるので、submitted_at で絞った後にメモリ側で再判定
+  let query = supabaseAdmin
     .from("intake_forms")
     .select(
       "id, submitted_at, inquiry_date, service_start_date, studio_location, gender, birth_date, address, notebook_status, source_choices, trial_sessions, city_office_meeting_at, trial_agreements(id)"
     )
-    .gte("submitted_at", sinceISO)
+    .gte("submitted_at", fyRange.startISO)
+    .lte("submitted_at", `${fyRange.endISO}T23:59:59`)
     .limit(2000);
 
+  if (selectedStudio) {
+    query = query.eq("studio_location", selectedStudio);
+  }
+
+  const { data, error } = await query;
   const rows = (data ?? []) as IntakeRow[];
   const total = rows.length;
 
@@ -131,20 +183,35 @@ export default async function AnalyticsPage() {
 
   // 並び替え用
   const sourcesSorted = Object.entries(bySource).sort((a, b) => b[1] - a[1]);
-  const monthsSorted = Object.entries(monthlyTrend).sort((a, b) => a[0].localeCompare(b[0]));
   const studiosSorted = Object.entries(byStudio).sort((a, b) => b[1] - a[1]);
   const maxSourceCount = Math.max(1, ...sourcesSorted.map(([, n]) => n));
-  const maxMonth = Math.max(1, ...monthsSorted.map(([, n]) => n));
+  // 月別は会計年度 12 ヶ月固定 → 各月 0 件でも表示
+  const monthsFixed = months12.map((m) => [m, monthlyTrend[m] ?? 0] as [string, number]);
+  const maxMonth = Math.max(1, ...monthsFixed.map(([, n]) => n));
 
   // ファネルカウント（合計）
   const funnel = {
     inquiries: total,
-    visited: rows.filter((r) => r.submitted_at).length, // intake 提出 = 見学
+    visited: rows.filter((r) => r.submitted_at).length,
     agreementSigned: rows.filter((r) => (r.trial_agreements ?? []).length > 0).length,
     trialScheduled: rows.filter((r) => (r.trial_sessions ?? []).length > 0).length,
     cityMeeting: rows.filter((r) => r.city_office_meeting_at).length,
     serviceStarted: rows.filter((r) => r.service_start_date).length,
   };
+
+  // フィルタ用のクエリ文字列ビルダ
+  const buildHref = (next: { studio?: string | null; fy?: number | null }) => {
+    const sp = new URLSearchParams();
+    const studio = next.studio === undefined ? selectedStudio : next.studio;
+    const fy = next.fy === undefined ? selectedFy : next.fy;
+    if (studio) sp.set("studio", studio);
+    if (fy != null) sp.set("fy", String(fy));
+    const q = sp.toString();
+    return `/staff/analytics${q ? `?${q}` : ""}`;
+  };
+
+  const fyChoices = fiscalYearChoices();
+  const studioName = selectedStudio ? studioLabel(selectedStudio) : "全事業所";
 
   return (
     <div className="staff-root">
@@ -159,9 +226,51 @@ export default async function AnalyticsPage() {
           </div>
           <h1 className="staff-page-title">流入・コンバージョン分析</h1>
           <p className="staff-page-sub">
-            過去 12 ヶ月の問合せ {total} 件を集計しています。広告効果や属性傾向の把握に。
+            {reiwaLabel(selectedFy)}（{selectedFy}/4 〜 {selectedFy + 1}/3）・{studioName}
+            の問合せ {total} 件を集計しています。
           </p>
         </div>
+
+        {/* フィルタ */}
+        <section className="staff-card">
+          <div className="staff-card-label">表示条件</div>
+
+          <div className="analytics-filter-row">
+            <span className="analytics-filter-title">事業所</span>
+            <div className="analytics-filter-chips">
+              <Link
+                href={buildHref({ studio: null })}
+                className={`staff-filter-chip ${!selectedStudio ? "staff-filter-chip--active" : ""}`}
+              >
+                すべて
+              </Link>
+              {STUDIO_OPTIONS.map((opt) => (
+                <Link
+                  key={opt.value}
+                  href={buildHref({ studio: opt.value })}
+                  className={`staff-filter-chip ${selectedStudio === opt.value ? "staff-filter-chip--active" : ""}`}
+                >
+                  {opt.shortLabel}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="analytics-filter-row">
+            <span className="analytics-filter-title">会計年度</span>
+            <div className="analytics-filter-chips">
+              {fyChoices.map((fy) => (
+                <Link
+                  key={fy}
+                  href={buildHref({ fy })}
+                  className={`staff-filter-chip ${selectedFy === fy ? "staff-filter-chip--active" : ""}`}
+                >
+                  {reiwaLabel(fy)}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {error && (
           <div className="staff-list-empty">読み込みに失敗しました: {error.message}</div>
@@ -169,7 +278,7 @@ export default async function AnalyticsPage() {
 
         {/* ファネル */}
         <section className="staff-card">
-          <div className="staff-card-label">ファネル（過去 12 ヶ月）</div>
+          <div className="staff-card-label">ファネル</div>
           <div className="analytics-funnel">
             {[
               { label: "問合せ", n: funnel.inquiries },
@@ -217,53 +326,51 @@ export default async function AnalyticsPage() {
         {/* ルート別 CV 率 */}
         <section className="staff-card">
           <div className="staff-card-label">ルート × 利用開始（コンバージョン率）</div>
-          <table className="analytics-table">
-            <thead>
-              <tr>
-                <th>ルート</th>
-                <th className="analytics-table-num">問合せ</th>
-                <th className="analytics-table-num">利用開始</th>
-                <th className="analytics-table-num">CV 率</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sourcesSorted.map(([src]) => {
-                const c = sourceConvCounted[src];
-                const cv = c.total > 0 ? ((c.converted / c.total) * 100).toFixed(1) : "—";
-                return (
-                  <tr key={src}>
-                    <td>{src}</td>
-                    <td className="analytics-table-num">{c.total}</td>
-                    <td className="analytics-table-num">{c.converted}</td>
-                    <td className="analytics-table-num">{cv}%</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <div className="analytics-table-wrap">
+            <table className="analytics-table analytics-table--cv">
+              <thead>
+                <tr>
+                  <th>ルート</th>
+                  <th className="analytics-table-num">問合せ</th>
+                  <th className="analytics-table-num">利用開始</th>
+                  <th className="analytics-table-num">CV 率</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sourcesSorted.map(([src]) => {
+                  const c = sourceConvCounted[src];
+                  const cv = c.total > 0 ? ((c.converted / c.total) * 100).toFixed(1) : "—";
+                  return (
+                    <tr key={src}>
+                      <td>{src}</td>
+                      <td className="analytics-table-num">{c.total}</td>
+                      <td className="analytics-table-num">{c.converted}</td>
+                      <td className="analytics-table-num">{cv}%</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </section>
 
-        {/* 月別推移 */}
+        {/* 月別推移（会計年度 12 ヶ月固定） */}
         <section className="staff-card">
-          <div className="staff-card-label">月別 問合せ推移</div>
-          {monthsSorted.length === 0 ? (
-            <div className="staff-list-empty">データなし</div>
-          ) : (
-            <div className="analytics-month-grid">
-              {monthsSorted.map(([m, n]) => (
-                <div key={m} className="analytics-month-cell">
-                  <div className="analytics-month-bar-wrap">
-                    <div
-                      className="analytics-month-bar"
-                      style={{ height: `${(n / maxMonth) * 100}%` }}
-                    />
-                  </div>
-                  <div className="analytics-month-label">{m.slice(5)}月</div>
-                  <div className="analytics-month-num">{n}</div>
+          <div className="staff-card-label">月別 問合せ推移（{reiwaLabel(selectedFy)}）</div>
+          <div className="analytics-month-grid">
+            {monthsFixed.map(([m, n]) => (
+              <div key={m} className="analytics-month-cell">
+                <div className="analytics-month-bar-wrap">
+                  <div
+                    className="analytics-month-bar"
+                    style={{ height: `${(n / maxMonth) * 100}%` }}
+                  />
                 </div>
-              ))}
-            </div>
-          )}
+                <div className="analytics-month-label">{m.slice(5)}月</div>
+                <div className="analytics-month-num">{n}</div>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* クロス集計（属性 × ルート） */}
@@ -285,33 +392,39 @@ export default async function AnalyticsPage() {
         </section>
         <section className="staff-card">
           <div className="staff-card-label">ルート × 障害者手帳</div>
-          <CrossTab matrix={sourceXNotebook} sources={sourcesSorted.map(([s]) => s)} />
+          <CrossTab
+            matrix={sourceXNotebook}
+            sources={sourcesSorted.map(([s]) => s)}
+            keyOrder={["無", "精神", "療育", "身体", "不明"]}
+          />
         </section>
 
-        {/* 事業所別件数 */}
-        <section className="staff-card">
-          <div className="staff-card-label">事業所別 問合せ件数</div>
-          {studiosSorted.length === 0 ? (
-            <div className="staff-list-empty">データなし</div>
-          ) : (
-            <div className="analytics-bar-list">
-              {studiosSorted.map(([s, n]) => (
-                <div key={s} className="analytics-bar-row">
-                  <div className="analytics-bar-label">{s}</div>
-                  <div className="analytics-bar-track">
-                    <div
-                      className="analytics-bar-fill"
-                      style={{
-                        width: `${(n / Math.max(...studiosSorted.map(([, x]) => x))) * 100}%`,
-                      }}
-                    />
+        {/* 事業所別件数（フィルタ未指定時のみ） */}
+        {!selectedStudio && (
+          <section className="staff-card">
+            <div className="staff-card-label">事業所別 問合せ件数</div>
+            {studiosSorted.length === 0 ? (
+              <div className="staff-list-empty">データなし</div>
+            ) : (
+              <div className="analytics-bar-list">
+                {studiosSorted.map(([s, n]) => (
+                  <div key={s} className="analytics-bar-row">
+                    <div className="analytics-bar-label">{s}</div>
+                    <div className="analytics-bar-track">
+                      <div
+                        className="analytics-bar-fill"
+                        style={{
+                          width: `${(n / Math.max(...studiosSorted.map(([, x]) => x))) * 100}%`,
+                        }}
+                      />
+                    </div>
+                    <div className="analytics-bar-value">{n}</div>
                   </div>
-                  <div className="analytics-bar-value">{n}</div>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
       </main>
     </div>
   );
@@ -326,7 +439,6 @@ function CrossTab({
   sources: string[];
   keyOrder?: string[];
 }) {
-  // 全カラムを集める
   const allKeys = new Set<string>();
   for (const src of sources) {
     Object.keys(matrix[src] ?? {}).forEach((k) => allKeys.add(k));
@@ -340,11 +452,11 @@ function CrossTab({
   }
 
   return (
-    <div style={{ overflowX: "auto" }}>
-      <table className="analytics-table">
+    <div className="analytics-table-wrap">
+      <table className="analytics-table analytics-table--cross">
         <thead>
           <tr>
-            <th>ルート</th>
+            <th className="analytics-table-route">ルート</th>
             {cols.map((c) => (
               <th key={c} className="analytics-table-num">
                 {c}
@@ -359,7 +471,7 @@ function CrossTab({
             const sum = cols.reduce((s, c) => s + (row[c] ?? 0), 0);
             return (
               <tr key={src}>
-                <td>{src}</td>
+                <td className="analytics-table-route">{src}</td>
                 {cols.map((c) => (
                   <td key={c} className="analytics-table-num">
                     {row[c] ?? 0}
