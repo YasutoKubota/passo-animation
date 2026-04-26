@@ -21,6 +21,10 @@ export type AnalyticsRow = {
   source_choices: string[] | null;
   trial_sessions: { date: string }[] | null;
   city_office_meeting_at: string | null;
+  service_plan_completed_at: string | null;
+  contract_signed_at: string | null;
+  status: string | null;
+  dropout_at_step: string | null;
   trial_agreements: { id: string }[];
 };
 
@@ -94,13 +98,15 @@ function fiscalYearChoices(): number[] {
   return [cur - 2, cur - 1, cur];
 }
 
-// ファネルの各ステップ。最後に到達したステップを返すために順序が大事
+// ファネルの各ステップ。順序＝業務フロー通り。
+// 問合せ → 見学 → 体験 → 市役所（受給者証なしのみ）→ 計画 → 契約 → 利用開始
 const FUNNEL_STEPS = [
   { key: "inquiries", label: "問合せ" },
   { key: "visited", label: "見学" },
-  { key: "agreementSigned", label: "誓約書" },
-  { key: "trialScheduled", label: "体験予定" },
-  { key: "cityMeeting", label: "市役所面談" },
+  { key: "trialScheduled", label: "体験" },
+  { key: "cityMeeting", label: "市役所" },
+  { key: "planDone", label: "計画" },
+  { key: "contractDone", label: "契約" },
   { key: "serviceStarted", label: "利用開始" },
 ] as const;
 
@@ -109,9 +115,10 @@ type StepKey = (typeof FUNNEL_STEPS)[number]["key"];
 // その行が「どこまで進んだか」を判定する
 function reachedStep(r: AnalyticsRow): StepKey {
   if (r.service_start_date) return "serviceStarted";
+  if (r.contract_signed_at) return "contractDone";
+  if (r.service_plan_completed_at) return "planDone";
   if (r.city_office_meeting_at) return "cityMeeting";
   if ((r.trial_sessions ?? []).length > 0) return "trialScheduled";
-  if ((r.trial_agreements ?? []).length > 0) return "agreementSigned";
   if (r.scheduled_visit_date || r.submitted_at) return "visited";
   return "inquiries";
 }
@@ -217,22 +224,34 @@ export function AnalyticsClient({ rows }: Props) {
     );
     const maxMonth = Math.max(1, ...monthsFixed.map(([, n]) => n));
 
+    // 後段に進むほど件数が減るように cumulative で集計
     const funnel = {
       inquiries: total,
       visited: filtered.filter(
         (r) =>
-          r.scheduled_visit_date ||
-          ["visited", "agreementSigned", "trialScheduled", "cityMeeting", "serviceStarted"].includes(
+          ["visited", "trialScheduled", "cityMeeting", "planDone", "contractDone", "serviceStarted"].includes(
             reachedStep(r)
           )
       ).length,
-      agreementSigned: filtered.filter(
-        (r) => (r.trial_agreements ?? []).length > 0
-      ).length,
       trialScheduled: filtered.filter(
-        (r) => (r.trial_sessions ?? []).length > 0
+        (r) =>
+          ["trialScheduled", "cityMeeting", "planDone", "contractDone", "serviceStarted"].includes(
+            reachedStep(r)
+          )
       ).length,
-      cityMeeting: filtered.filter((r) => r.city_office_meeting_at).length,
+      cityMeeting: filtered.filter(
+        (r) =>
+          ["cityMeeting", "planDone", "contractDone", "serviceStarted"].includes(
+            reachedStep(r)
+          )
+      ).length,
+      planDone: filtered.filter(
+        (r) =>
+          ["planDone", "contractDone", "serviceStarted"].includes(reachedStep(r))
+      ).length,
+      contractDone: filtered.filter(
+        (r) => ["contractDone", "serviceStarted"].includes(reachedStep(r))
+      ).length,
       serviceStarted: filtered.filter((r) => r.service_start_date).length,
     };
 

@@ -12,9 +12,32 @@ type Props = {
     service_start_date: string | null; // YYYY-MM-DD
     trial_sessions: TrialSession[];
     city_office_meeting_at: string | null; // ISO string or null
+    service_plan_completed_at: string | null; // YYYY-MM-DD
+    contract_signed_at: string | null; // YYYY-MM-DD
+    status: string; // active / pending / dropped / started
+    dropout_at_step: string | null;
+    dropout_reason: string | null;
+    dropout_at: string | null; // YYYY-MM-DD
     staff_notes: string;
   };
 };
+
+const DROPOUT_STEPS = [
+  { value: "", label: "—" },
+  { value: "visit", label: "見学（来所しなかった）" },
+  { value: "trial", label: "体験（合わなかった等）" },
+  { value: "city_office", label: "市役所（認定調査が進まなかった）" },
+  { value: "plan", label: "計画（相談支援との調整で止まった）" },
+  { value: "contract", label: "契約（直前で見送り）" },
+  { value: "unknown", label: "不明（音信不通）" },
+] as const;
+
+const STATUS_OPTIONS = [
+  { value: "active", label: "進行中", desc: "通常進行" },
+  { value: "pending", label: "持ち越し", desc: "連絡待ち・しばらく音沙汰なし" },
+  { value: "dropped", label: "脱落", desc: "明確に「来ない」と判明" },
+  { value: "started", label: "利用中", desc: "すでに利用開始済" },
+] as const;
 
 // timestamptz を <input type="datetime-local"> 互換の "YYYY-MM-DDTHH:mm" へ変換。
 // DB には ISO 8601 で戻す（Supabase 側で timestamptz として受ける）。
@@ -47,6 +70,20 @@ export function StaffNotesEditor({ id, initial }: Props) {
   const [meetingAt, setMeetingAt] = useState<string>(
     toLocalInputValue(initial.city_office_meeting_at)
   );
+  const [planCompletedAt, setPlanCompletedAt] = useState<string>(
+    initial.service_plan_completed_at ?? ""
+  );
+  const [contractSignedAt, setContractSignedAt] = useState<string>(
+    initial.contract_signed_at ?? ""
+  );
+  const [status, setStatus] = useState<string>(initial.status || "active");
+  const [dropoutAtStep, setDropoutAtStep] = useState<string>(
+    initial.dropout_at_step ?? ""
+  );
+  const [dropoutReason, setDropoutReason] = useState<string>(
+    initial.dropout_reason ?? ""
+  );
+  const [dropoutAt, setDropoutAt] = useState<string>(initial.dropout_at ?? "");
   const [notes, setNotes] = useState<string>(initial.staff_notes);
 
   const [isPending, startTransition] = useTransition();
@@ -78,6 +115,12 @@ export function StaffNotesEditor({ id, initial }: Props) {
         service_start_date: serviceStartDate || null,
         trial_sessions: cleanedSessions,
         city_office_meeting_at: fromLocalInputValue(meetingAt),
+        service_plan_completed_at: planCompletedAt || null,
+        contract_signed_at: contractSignedAt || null,
+        status: status || "active",
+        dropout_at_step: dropoutAtStep || null,
+        dropout_reason: dropoutReason.trim() || null,
+        dropout_at: dropoutAt || null,
         staff_notes: notes,
       });
       if (result.success) {
@@ -182,7 +225,7 @@ export function StaffNotesEditor({ id, initial }: Props) {
       {/* 市役所面談（1 日・日時） */}
       <div className="staff-notes-field">
         <label htmlFor="city_office_meeting_at" className="staff-notes-label">
-          市役所面談 日時
+          市役所面談 日時（受給者証なしの方のみ）
         </label>
         <input
           id="city_office_meeting_at"
@@ -192,6 +235,105 @@ export function StaffNotesEditor({ id, initial }: Props) {
           onChange={(e) => setMeetingAt(e.target.value)}
         />
       </div>
+
+      {/* サービス等利用計画 / 利用契約（進捗フラグ） */}
+      <div className="staff-notes-field">
+        <label className="staff-notes-label">利用開始までの追加ステップ</label>
+        <div className="staff-notes-funnel-grid">
+          <div>
+            <div className="staff-notes-funnel-label">計画作成 完了日</div>
+            <input
+              type="date"
+              className="staff-notes-input"
+              value={planCompletedAt}
+              onChange={(e) => setPlanCompletedAt(e.target.value)}
+              title="サービス等利用計画作成（または変更）の完了日"
+            />
+          </div>
+          <div>
+            <div className="staff-notes-funnel-label">利用契約日</div>
+            <input
+              type="date"
+              className="staff-notes-input"
+              value={contractSignedAt}
+              onChange={(e) => setContractSignedAt(e.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* 進行状態 + 脱落 / 持ち越し管理 */}
+      <div className="staff-notes-field">
+        <label className="staff-notes-label">進行状態</label>
+        <div className="staff-status-grid">
+          {STATUS_OPTIONS.map((opt) => (
+            <label
+              key={opt.value}
+              className={`staff-status-radio ${status === opt.value ? "is-selected" : ""}`}
+            >
+              <input
+                type="radio"
+                name="status"
+                value={opt.value}
+                checked={status === opt.value}
+                onChange={() => setStatus(opt.value)}
+              />
+              <span>
+                <strong>{opt.label}</strong>
+                <span className="staff-status-radio-desc">{opt.desc}</span>
+              </span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* 持ち越し / 脱落 のとき、ステップ・理由・日付を入れる */}
+      {(status === "pending" || status === "dropped") && (
+        <div className="staff-notes-field staff-notes-dropout">
+          <label className="staff-notes-label">
+            {status === "pending" ? "持ち越しの状況" : "脱落の状況"}
+          </label>
+          <div className="staff-notes-funnel-grid">
+            <div>
+              <div className="staff-notes-funnel-label">どのステップで</div>
+              <select
+                className="staff-notes-input"
+                value={dropoutAtStep}
+                onChange={(e) => setDropoutAtStep(e.target.value)}
+              >
+                {DROPOUT_STEPS.map((s) => (
+                  <option key={s.value} value={s.value}>
+                    {s.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <div className="staff-notes-funnel-label">日付</div>
+              <input
+                type="date"
+                className="staff-notes-input"
+                value={dropoutAt}
+                onChange={(e) => setDropoutAt(e.target.value)}
+              />
+            </div>
+            <div style={{ gridColumn: "1 / -1" }}>
+              <div className="staff-notes-funnel-label">理由・メモ</div>
+              <input
+                type="text"
+                className="staff-notes-input"
+                placeholder="例: 「他事業所に決めた」「連絡が取れない」など"
+                value={dropoutReason}
+                onChange={(e) => setDropoutReason(e.target.value)}
+              />
+            </div>
+          </div>
+          <p className="staff-notes-hint">
+            持ち越しは「半年後にまた連絡が来た」ような暫定状態。脱落は「もう来ない」と確定した状態。
+            どちらも分析画面でルートごとの離脱傾向を可視化します。
+          </p>
+        </div>
+      )}
 
       {/* 聞き取り内容 */}
       <div className="staff-notes-field">

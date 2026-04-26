@@ -14,7 +14,7 @@ export default async function StaffDashboard() {
   const { data, error } = await supabaseAdmin
     .from("intake_forms")
     .select(
-      "id, submitted_at, inquiry_date, scheduled_visit_date, service_start_date, studio_location, name, furigana, source_choices, trial_sessions, city_office_meeting_at, trial_agreements(id, created_at)"
+      "id, submitted_at, inquiry_date, scheduled_visit_date, service_start_date, studio_location, name, furigana, source_choices, trial_sessions, city_office_meeting_at, service_plan_completed_at, contract_signed_at, status, dropout_at_step, trial_agreements(id, created_at)"
     )
     .gte("submitted_at", sinceISO)
     .order("submitted_at", { ascending: false })
@@ -45,7 +45,10 @@ export default async function StaffDashboard() {
             </Link>
             <Link
               href="/intake"
+              target="_blank"
+              rel="noopener noreferrer"
               className="staff-action-btn staff-action-btn--secondary"
+              title="新しいタブで開きます（利用者にお渡し）"
             >
               + 新規 面談票を発行
             </Link>

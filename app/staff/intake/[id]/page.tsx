@@ -178,7 +178,10 @@ export default async function IntakeDetailPage({
           <div className="staff-detail-actions">
             <Link
               href={`/agreement?intake_id=${data.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="staff-action-btn staff-action-btn--primary"
+              title="誓約書フォーム（新しいタブで開きます。利用者にお渡し）"
             >
               誓約書に署名してもらう
             </Link>
@@ -309,6 +312,12 @@ export default async function IntakeDetailPage({
                     ? data.trial_sessions
                     : [],
                   city_office_meeting_at: data.city_office_meeting_at ?? null,
+                  service_plan_completed_at: data.service_plan_completed_at ?? null,
+                  contract_signed_at: data.contract_signed_at ?? null,
+                  status: data.status ?? "active",
+                  dropout_at_step: data.dropout_at_step ?? null,
+                  dropout_reason: data.dropout_reason ?? null,
+                  dropout_at: data.dropout_at ?? null,
                   staff_notes: data.staff_notes ?? "",
                 }}
               />

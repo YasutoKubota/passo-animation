@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import {
   STUDIO_OPTIONS,
   GENDER_OPTIONS,
@@ -94,6 +94,19 @@ export default function IntakePage() {
   const [isPending, startTransition] = useTransition();
   const [done, setDone] = useState(false);
   const { trackField, finalize } = useTypingTracker();
+
+  // フォーム入力中、ブラウザの「戻る」ボタンでスタッフ画面（前のページ）に
+  // 戻れないように履歴を上書きし続ける（プライバシー保護のため）。
+  // 完了画面（done）のあとは制御を解除する。
+  useEffect(() => {
+    if (done) return;
+    window.history.pushState(null, "", window.location.href);
+    const handler = () => {
+      window.history.pushState(null, "", window.location.href);
+    };
+    window.addEventListener("popstate", handler);
+    return () => window.removeEventListener("popstate", handler);
+  }, [done]);
 
   const updateField = <K extends keyof FormState>(key: K, value: FormState[K]) => {
     setData((prev) => ({ ...prev, [key]: value }));

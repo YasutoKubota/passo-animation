@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState, useTransition } from "react";
+import { useMemo, useState, useTransition, useEffect } from "react";
 import { useTypingTracker } from "@/lib/typing-tracker";
 import { studioLabel } from "@/lib/intake-schema";
 import { verifyPin } from "@/app/staff/login/actions";
@@ -30,6 +30,18 @@ export function AgreementForm({ intake, loadError, queryIntakeId }: Props) {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [pending, startTransition] = useTransition();
+
+  // 利用者がブラウザの「戻る」ボタンでスタッフ画面に戻れないよう履歴上書き。
+  // 提出後（submitted）は制御を解除する。
+  useEffect(() => {
+    if (submitted) return;
+    window.history.pushState(null, "", window.location.href);
+    const handler = () => {
+      window.history.pushState(null, "", window.location.href);
+    };
+    window.addEventListener("popstate", handler);
+    return () => window.removeEventListener("popstate", handler);
+  }, [submitted]);
 
   const { trackField, finalize } = useTypingTracker();
   const signatureTracker = useMemo(() => trackField("signed_name"), [trackField]);

@@ -14,7 +14,7 @@ export default async function AnalyticsPage() {
   const { data, error } = await supabaseAdmin
     .from("intake_forms")
     .select(
-      "id, submitted_at, inquiry_date, scheduled_visit_date, service_start_date, studio_location, gender, birth_date, address, notebook_status, source_choices, trial_sessions, city_office_meeting_at, trial_agreements(id)"
+      "id, submitted_at, inquiry_date, scheduled_visit_date, service_start_date, studio_location, gender, birth_date, address, notebook_status, source_choices, trial_sessions, city_office_meeting_at, service_plan_completed_at, contract_signed_at, status, dropout_at_step, trial_agreements(id)"
     )
     .gte("submitted_at", sinceISO)
     .limit(5000);

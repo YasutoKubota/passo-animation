@@ -26,6 +26,10 @@ export type IntakeRow = {
   source_choices: string[] | null;
   trial_sessions: TrialSession[] | null;
   city_office_meeting_at: string | null;
+  service_plan_completed_at: string | null;
+  contract_signed_at: string | null;
+  status: string | null; // active / pending / dropped / started
+  dropout_at_step: string | null;
   trial_agreements: AgreementLite[];
 };
 
@@ -223,7 +227,11 @@ export function IntakeDashboardClient({
             const hasAgreement = !!latestAgreement;
             const trialDays = row.trial_sessions?.length ?? 0;
             const cityMeeting = row.city_office_meeting_at ?? null;
+            const planDone = !!row.service_plan_completed_at;
+            const contractDone = !!row.contract_signed_at;
             const serviceStarted = !!row.service_start_date;
+            const isDropped = row.status === "dropped";
+            const isPending = row.status === "pending";
             // 表示する日付の優先度: 見学日（確定）> お問合せ日 > フォーム提出日
             // 見学日が決まったら、進捗の節目になる「いつ来るか」が一目で分かるようにする
             const primaryDate =
@@ -237,7 +245,10 @@ export function IntakeDashboardClient({
             const primarySource = row.source_choices?.[0] ?? null;
 
             return (
-              <div key={row.id} className="dash-row">
+              <div
+                key={row.id}
+                className={`dash-row ${isDropped ? "dash-row--dropped" : ""} ${isPending ? "dash-row--pending" : ""}`}
+              >
                 <span className="dash-row-date">
                   {formatDateOnly(primaryDate)}
                   <span
@@ -262,7 +273,7 @@ export function IntakeDashboardClient({
                   )}
                 </span>
 
-                {/* 業務フロー: 誓約書 → 体験 → 市役所 → 利用 の順で進捗を表示 */}
+                {/* 業務フロー: 誓約 → 体験 → 市役 → 計画 → 契約 → 利用 */}
                 <div className="dash-row-status-group">
                   {hasAgreement ? (
                     <span className="dash-status dash-status--agreement">
@@ -285,6 +296,16 @@ export function IntakeDashboardClient({
                   ) : (
                     <span className="dash-status dash-status--empty">市役</span>
                   )}
+                  {planDone ? (
+                    <span className="dash-status dash-status--plan">✓ 計画</span>
+                  ) : (
+                    <span className="dash-status dash-status--empty">計画</span>
+                  )}
+                  {contractDone ? (
+                    <span className="dash-status dash-status--contract">✓ 契約</span>
+                  ) : (
+                    <span className="dash-status dash-status--empty">契約</span>
+                  )}
                   {serviceStarted ? (
                     <span className="dash-status dash-status--service">
                       ✓ 利用 {formatMonthDay(row.service_start_date!)}
@@ -293,6 +314,22 @@ export function IntakeDashboardClient({
                     <span className="dash-status dash-status--empty">利用</span>
                   )}
                 </div>
+
+                {/* 脱落 / 持ち越し のステータスバッジ（active のときは出さない） */}
+                {(isDropped || isPending) && (
+                  <span
+                    className={`dash-row-status-pill ${isDropped ? "is-dropped" : "is-pending"}`}
+                    title={
+                      row.dropout_at_step
+                        ? `${isDropped ? "脱落" : "持ち越し"}（${row.dropout_at_step}）`
+                        : isDropped
+                          ? "脱落"
+                          : "持ち越し"
+                    }
+                  >
+                    {isDropped ? "✕ 脱落" : "⏸ 持越"}
+                  </span>
+                )}
 
                 <div className="dash-row-actions">
                   <Link
@@ -318,8 +355,10 @@ export function IntakeDashboardClient({
                   ) : (
                     <Link
                       href={`/agreement?intake_id=${row.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="dash-row-btn dash-row-btn--primary"
-                      title="誓約書を発行"
+                      title="誓約書を発行（新しいタブで開きます）"
                     >
                       ＋誓約書
                     </Link>

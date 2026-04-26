@@ -12,6 +12,12 @@ export type UpdateNotesPayload = {
   service_start_date: string | null;
   trial_sessions: TrialSession[];
   city_office_meeting_at: string | null; // ISO 8601
+  service_plan_completed_at: string | null; // YYYY-MM-DD
+  contract_signed_at: string | null; // YYYY-MM-DD
+  status: string; // active / pending / dropped / started
+  dropout_at_step: string | null; // visit / trial / city_office / plan / contract
+  dropout_reason: string | null;
+  dropout_at: string | null; // YYYY-MM-DD
   staff_notes: string;
 };
 
@@ -36,6 +42,12 @@ export async function updateStaffNotes(payload: UpdateNotesPayload): Promise<
       service_start_date: payload.service_start_date,
       trial_sessions: cleanSessions,
       city_office_meeting_at: payload.city_office_meeting_at,
+      service_plan_completed_at: payload.service_plan_completed_at,
+      contract_signed_at: payload.contract_signed_at,
+      status: payload.status || "active",
+      dropout_at_step: payload.dropout_at_step,
+      dropout_reason: payload.dropout_reason,
+      dropout_at: payload.dropout_at,
       staff_notes: payload.staff_notes || null,
     })
     .eq("id", payload.id);

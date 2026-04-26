@@ -592,6 +592,63 @@
   }
 }
 
+/* 進行状態（active / pending / dropped / started）のラジオグリッド */
+.staff-status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+@media (max-width: 720px) {
+  .staff-status-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.staff-status-radio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--white);
+  cursor: pointer;
+  font-size: 13px;
+  transition: all var(--t-fast);
+}
+.staff-status-radio:hover {
+  border-color: var(--accent);
+}
+.staff-status-radio.is-selected,
+.staff-status-radio:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.staff-status-radio strong {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+.staff-status-radio-desc {
+  display: block;
+  font-size: 10.5px;
+  color: var(--text-light);
+  margin-top: 2px;
+  line-height: 1.5;
+  font-weight: 400;
+}
+.staff-notes-dropout {
+  padding: 14px;
+  background: rgba(201, 96, 58, 0.05);
+  border: 1px solid rgba(201, 96, 58, 0.2);
+  border-radius: 10px;
+}
+.staff-notes-hint {
+  font-size: 11px;
+  color: var(--text-light);
+  margin: 8px 0 0 0;
+  line-height: 1.6;
+}
+
 /* Staff notes editor — スタッフが聞き取り内容を入力する欄。書く量が多いので広めに。 */
 .staff-notes-field {
   display: flex;
@@ -990,12 +1047,12 @@
 /* --- Analytics ページ --- */
 .analytics-funnel {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
 }
 @media (max-width: 720px) {
   .analytics-funnel {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 .analytics-funnel-step {
@@ -1347,20 +1404,34 @@
 .dash-row {
   display: grid;
   grid-template-columns:
-    92px              /* 日付（お問合せ日 or 見学日）*/
-    100px             /* 事業所（短縮表記）*/
-    minmax(140px, 1fr) /* 名前 */
-    78px              /* ルート（流入経路の短縮）*/
-    288px             /* 進捗 4 バッジ（4 × 68px + 3 × gap） */
-    188px;            /* アクション 2 ボタン（2 × 88px + gap） */
-  gap: 10px;
+    88px              /* 日付（お問合せ日 or 見学日）*/
+    88px              /* 事業所（短縮表記）*/
+    minmax(120px, 1fr) /* 名前 */
+    74px              /* ルート（流入経路の短縮）*/
+    340px             /* 進捗 6 バッジ（6 × 54px + 5 × gap） */
+    50px              /* 状態ピル（脱落/持ち越し時のみ表示）*/
+    180px;            /* アクション 2 ボタン */
+  gap: 8px;
   align-items: center;
-  padding: 14px 16px;
+  padding: 14px 14px;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 10px;
   margin-bottom: 8px;
   transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+/* 脱落の行は薄くしてグレーに */
+.dash-row--dropped {
+  opacity: 0.55;
+  background: var(--bg-offwhite);
+}
+.dash-row--dropped:hover {
+  opacity: 0.85;
+}
+/* 持ち越しの行は黄色寄りで弱く強調 */
+.dash-row--pending {
+  border-color: rgba(200, 160, 90, 0.4);
+  background: rgba(255, 248, 230, 0.5);
 }
 .dash-row:hover {
   border-color: var(--accent);
@@ -1434,10 +1505,10 @@
   font-weight: 400;
 }
 
-/* 進捗 4 バッジ: 誓約 / 体験 / 市役所 / 利用 を等幅で並べる */
+/* 進捗 6 バッジ: 誓約 / 体験 / 市役 / 計画 / 契約 / 利用 を等幅で並べる */
 .dash-row-status-group {
   display: grid;
-  grid-template-columns: repeat(4, 68px);
+  grid-template-columns: repeat(6, 54px);
   gap: 4px;
   align-items: center;
 }
@@ -1484,6 +1555,33 @@
 .dash-status--agreement {
   background: rgba(120, 160, 120, 0.15);
   color: #4a7a4a;
+}
+.dash-status--plan {
+  background: rgba(140, 110, 170, 0.13);
+  color: #6b4a8a;
+}
+.dash-status--contract {
+  background: rgba(180, 140, 100, 0.15);
+  color: #8a5a30;
+}
+/* 脱落・持ち越しのステータスピル（行の右端） */
+.dash-row-status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 6px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.dash-row-status-pill.is-dropped {
+  background: rgba(180, 80, 80, 0.15);
+  color: #a5361e;
+}
+.dash-row-status-pill.is-pending {
+  background: rgba(200, 160, 90, 0.18);
+  color: #8a6520;
 }
 /* 利用開始済み（最終ゴール）= 濃い緑のチェックバッジ */
 .dash-status--service {
