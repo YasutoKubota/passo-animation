@@ -224,6 +224,27 @@ export function IntakeDashboardClient({
               : "まだ面談票はありません。上の「新規 面談票を発行」から追加できます。"}
           </div>
         )}
+
+        {/* ヘッダー行（カラム見出し）— 行と同じ grid で揃う */}
+        {!errorMessage && filtered.length > 0 && (
+          <div className="dash-row dash-row--header" aria-hidden="true">
+            <span>日付</span>
+            <span>事業所</span>
+            <span>名前</span>
+            <span>ルート</span>
+            <div className="dash-row-status-group">
+              <span>見学</span>
+              <span>誓約</span>
+              <span>体験</span>
+              <span>市役</span>
+              <span>計画</span>
+              <span>契約</span>
+              <span>利用</span>
+            </div>
+            <span>状態</span>
+            <span>操作</span>
+          </div>
+        )}
         {!errorMessage &&
           filtered.map((row) => {
             const agreements = (row.trial_agreements ?? []).slice().sort(
@@ -281,58 +302,79 @@ export function IntakeDashboardClient({
                   )}
                 </span>
 
-                {/* 業務フロー: 見学 → 誓約 → 体験 → 市役 → 計画 → 契約 → 利用 */}
+                {/* 業務フロー 7 段階: 統一ルール
+                 *  ・「○○予定 4/28」 = 未来日（青系）
+                 *  ・「○○済 4/15」または「✓ ○○」 = 過去日 or 完了（緑系）
+                 *  ・「○○未」 = 未着手（グレー破線）
+                 */}
                 <div className="dash-row-status-group">
+                  {/* 見学 */}
                   {row.scheduled_visit_date ? (
                     isPastDate(row.scheduled_visit_date) ? (
-                      <span className="dash-status dash-status--visit-done">
-                        ✓ 見学
+                      <span className="dash-status dash-status--done">
+                        ✓ 見学 {formatMonthDay(row.scheduled_visit_date)}
                       </span>
                     ) : (
-                      <span className="dash-status dash-status--visit-scheduled">
-                        見学 {formatMonthDay(row.scheduled_visit_date)}
+                      <span className="dash-status dash-status--scheduled">
+                        見学予定 {formatMonthDay(row.scheduled_visit_date)}
                       </span>
                     )
                   ) : (
-                    <span className="dash-status dash-status--empty">見学</span>
+                    <span className="dash-status dash-status--empty">見学未</span>
                   )}
+                  {/* 誓約（予定の概念がないので 済/未 のみ） */}
                   {hasAgreement ? (
-                    <span className="dash-status dash-status--agreement">
+                    <span className="dash-status dash-status--done">
                       ✓ 誓約{agreements.length > 1 ? `(${agreements.length})` : ""}
                     </span>
                   ) : (
-                    <span className="dash-status dash-status--empty">誓約</span>
+                    <span className="dash-status dash-status--empty">誓約未</span>
                   )}
+                  {/* 体験 */}
                   {trialDays > 0 ? (
-                    <span className="dash-status dash-status--trial">
-                      体験 {trialDays}日
+                    <span className="dash-status dash-status--scheduled">
+                      体験予定 {trialDays}日
                     </span>
                   ) : (
-                    <span className="dash-status dash-status--empty">体験</span>
+                    <span className="dash-status dash-status--empty">体験未</span>
                   )}
+                  {/* 市役所面談 */}
                   {cityMeeting ? (
-                    <span className="dash-status dash-status--meeting">
-                      市役 {formatMonthDay(cityMeeting)}
+                    isPastDate(cityMeeting) ? (
+                      <span className="dash-status dash-status--done">
+                        ✓ 市役 {formatMonthDay(cityMeeting)}
+                      </span>
+                    ) : (
+                      <span className="dash-status dash-status--scheduled">
+                        市役予定 {formatMonthDay(cityMeeting)}
+                      </span>
+                    )
+                  ) : (
+                    <span className="dash-status dash-status--empty">市役未</span>
+                  )}
+                  {/* サービス等利用計画 */}
+                  {planDone ? (
+                    <span className="dash-status dash-status--done">
+                      ✓ 計画 {formatMonthDay(row.service_plan_completed_at!)}
                     </span>
                   ) : (
-                    <span className="dash-status dash-status--empty">市役</span>
+                    <span className="dash-status dash-status--empty">計画未</span>
                   )}
-                  {planDone ? (
-                    <span className="dash-status dash-status--plan">✓ 計画</span>
-                  ) : (
-                    <span className="dash-status dash-status--empty">計画</span>
-                  )}
+                  {/* 利用契約 */}
                   {contractDone ? (
-                    <span className="dash-status dash-status--contract">✓ 契約</span>
+                    <span className="dash-status dash-status--done">
+                      ✓ 契約 {formatMonthDay(row.contract_signed_at!)}
+                    </span>
                   ) : (
-                    <span className="dash-status dash-status--empty">契約</span>
+                    <span className="dash-status dash-status--empty">契約未</span>
                   )}
+                  {/* 利用開始（最終ゴール → 別色で強調） */}
                   {serviceStarted ? (
                     <span className="dash-status dash-status--service">
                       ✓ 利用 {formatMonthDay(row.service_start_date!)}
                     </span>
                   ) : (
-                    <span className="dash-status dash-status--empty">利用</span>
+                    <span className="dash-status dash-status--empty">利用未</span>
                   )}
                 </div>
 
@@ -384,6 +426,19 @@ export function IntakeDashboardClient({
                       ＋誓約書
                     </Link>
                   )}
+                  {/* 面談票（/intake）を既存レコードに紐付けて開く。
+                      利用者にタブレットを渡し、書いてもらった内容で
+                      仮名やカタカナの基本情報を上書き更新する。 */}
+                  <Link
+                    href={`/intake?intake_id=${row.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="dash-row-btn-icon"
+                    title="この人の面談票を埋める（タブレットを渡して上書き更新）"
+                    aria-label="面談票で更新"
+                  >
+                    ✎
+                  </Link>
                 </div>
               </div>
             );

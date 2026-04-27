@@ -4,6 +4,9 @@ import { supabaseAdmin } from "@/lib/supabase";
 import type { TypingMetrics } from "@/lib/intake-schema";
 
 export type IntakePayload = {
+  // 既存お問合せレコードと紐づける場合に渡す。
+  // 指定されたら insert ではなく既存レコードを上書き更新する。
+  intake_id?: string;
   studio_location: string;
   furigana: string;
   name: string;
@@ -59,45 +62,61 @@ export async function submitIntake(payload: IntakePayload): Promise<SubmitResult
 
   const metrics = payload.typing_metrics;
 
+  // intake_forms の値オブジェクト。insert / update どちらでも使う。
+  const row = {
+    studio_location: payload.studio_location,
+    furigana: payload.furigana.trim(),
+    name: payload.name.trim(),
+    phone: clean(payload.phone),
+    birth_date: clean(payload.birth_date),
+    gender: clean(payload.gender),
+    postal_code: clean(payload.postal_code),
+    address: clean(payload.address),
+    source_choices: payload.source_choices ?? [],
+    source_sns_name: clean(payload.source_sns_name),
+    source_facility_name: clean(payload.source_facility_name),
+    source_hospital_name: clean(payload.source_hospital_name),
+    source_other: clean(payload.source_other),
+    experience_choices: payload.experience_choices ?? [],
+    experience_other: clean(payload.experience_other),
+    transport: clean(payload.transport),
+    interested_work: payload.interested_work ?? [],
+    interested_work_other: clean(payload.interested_work_other),
+    illness_name: clean(payload.illness_name),
+    notebook_status: clean(payload.notebook_status),
+    notebook_grade: clean(payload.notebook_grade),
+    hospital_name: clean(payload.hospital_name),
+    doctor_name: clean(payload.doctor_name),
+    support_office_used: payload.support_office_used ?? null,
+    support_office_name: clean(payload.support_office_name),
+    support_office_contact: clean(payload.support_office_contact),
+    symptom_detail: clean(payload.symptom_detail),
+    usual_pc_usage: clean(payload.usual_pc_usage),
+    usual_pc_type: clean(payload.usual_pc_type),
+    typing_total_duration_ms: metrics.totalDurationMs,
+    typing_total_keystrokes: metrics.totalKeystrokes,
+    typing_backspace_count: metrics.totalBackspaces,
+    typing_paste_count: metrics.totalPastes,
+    typing_avg_cpm: metrics.avgCpm,
+    typing_per_field: metrics.perField,
+  };
+
+  // 既存お問合せレコードの紐付け指定があれば update（仮名→正式名 上書き）
+  if (payload.intake_id) {
+    const { data, error } = await supabaseAdmin
+      .from("intake_forms")
+      .update(row)
+      .eq("id", payload.intake_id)
+      .select("id")
+      .single();
+    if (error) return { success: false, error: error.message };
+    return { success: true, id: data.id };
+  }
+
+  // 通常の新規登録
   const { data, error } = await supabaseAdmin
     .from("intake_forms")
-    .insert({
-      studio_location: payload.studio_location,
-      furigana: payload.furigana.trim(),
-      name: payload.name.trim(),
-      phone: clean(payload.phone),
-      birth_date: clean(payload.birth_date),
-      gender: clean(payload.gender),
-      postal_code: clean(payload.postal_code),
-      address: clean(payload.address),
-      source_choices: payload.source_choices ?? [],
-      source_sns_name: clean(payload.source_sns_name),
-      source_facility_name: clean(payload.source_facility_name),
-      source_hospital_name: clean(payload.source_hospital_name),
-      source_other: clean(payload.source_other),
-      experience_choices: payload.experience_choices ?? [],
-      experience_other: clean(payload.experience_other),
-      transport: clean(payload.transport),
-      interested_work: payload.interested_work ?? [],
-      interested_work_other: clean(payload.interested_work_other),
-      illness_name: clean(payload.illness_name),
-      notebook_status: clean(payload.notebook_status),
-      notebook_grade: clean(payload.notebook_grade),
-      hospital_name: clean(payload.hospital_name),
-      doctor_name: clean(payload.doctor_name),
-      support_office_used: payload.support_office_used ?? null,
-      support_office_name: clean(payload.support_office_name),
-      support_office_contact: clean(payload.support_office_contact),
-      symptom_detail: clean(payload.symptom_detail),
-      usual_pc_usage: clean(payload.usual_pc_usage),
-      usual_pc_type: clean(payload.usual_pc_type),
-      typing_total_duration_ms: metrics.totalDurationMs,
-      typing_total_keystrokes: metrics.totalKeystrokes,
-      typing_backspace_count: metrics.totalBackspaces,
-      typing_paste_count: metrics.totalPastes,
-      typing_avg_cpm: metrics.avgCpm,
-      typing_per_field: metrics.perField,
-    })
+    .insert(row)
     .select("id")
     .single();
 

@@ -95,6 +95,17 @@ export default function IntakePage() {
   const [done, setDone] = useState(false);
   const { trackField, finalize } = useTypingTracker();
 
+  // URL クエリ ?intake_id=xxx で起動された場合は「既存お問合せレコードを上書き更新」モード。
+  // ダッシュボードから「面談票で更新」を押した時に、Excel 取込された仮名レコードを
+  // 正式名・連絡先で上書きする使い方。
+  const [linkedIntakeId, setLinkedIntakeId] = useState<string | null>(null);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const sp = new URLSearchParams(window.location.search);
+    const id = sp.get("intake_id");
+    if (id) setLinkedIntakeId(id);
+  }, []);
+
   // フォーム入力中、ブラウザの「戻る」ボタンでスタッフ画面（前のページ）に
   // 戻れないように履歴を上書きし続ける（プライバシー保護のため）。
   // 完了画面（done）のあとは制御を解除する。
@@ -218,6 +229,7 @@ export default function IntakePage() {
     const composedName = `${data.last_name.trim()} ${data.first_name.trim()}`;
     startTransition(async () => {
       const result = await submitIntake({
+        intake_id: linkedIntakeId ?? undefined,
         studio_location: data.studio_location,
         furigana: composedFurigana,
         name: composedName,

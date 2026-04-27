@@ -85,10 +85,13 @@
   color: var(--accent);
 }
 
-/* --- Main container --- */
+/* --- Main container ---
+ * ダッシュボードのテーブルは横に長いので 1320px までは伸ばす。
+ * それより狭い画面では .staff-list 内で横スクロールに任せる。
+ */
 .staff-main {
   flex: 1;
-  max-width: 1080px;
+  max-width: 1320px;
   width: 100%;
   margin: 0 auto;
   padding: 48px 24px 80px;
@@ -381,9 +384,27 @@
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 14px;
-  overflow: hidden;
+  /* 横幅が足りない時は左右にスクロールできるように */
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  /* スクロールバーをわずかに目立たせる */
+  scrollbar-color: var(--border-light) transparent;
+}
+.staff-list::-webkit-scrollbar {
+  height: 10px;
+}
+.staff-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.staff-list::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 5px;
+}
+.staff-list::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }
 .staff-list-item {
   display: grid;
@@ -1404,21 +1425,50 @@
 .dash-row {
   display: grid;
   grid-template-columns:
-    84px              /* 日付（お問合せ日 or 見学日）*/
-    78px              /* 事業所（短縮表記）*/
-    minmax(110px, 1fr) /* 名前 */
-    66px              /* ルート（流入経路の短縮）*/
-    420px             /* 進捗 7 バッジ（7 × 56px + 6 × gap） */
-    50px              /* 状態ピル（脱落/持ち越し時のみ表示）*/
-    180px;            /* アクション 2 ボタン */
-  gap: 6px;
+    88px              /* 日付（お問合せ日 or 見学日）*/
+    104px             /* 事業所（短縮表記）*/
+    minmax(120px, 1fr) /* 名前 */
+    72px              /* ルート（流入経路の短縮）*/
+    600px             /* 進捗 7 バッジ（7 × 84px + 6 × gap） */
+    56px              /* 状態ピル（脱落/持ち越し時のみ表示）*/
+    216px;            /* アクション 3 ボタン（80 + 80 + 30 + 8×2 gap）*/
+  gap: 8px;
   align-items: center;
-  padding: 14px 12px;
+  padding: 14px 14px;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 10px;
   margin-bottom: 8px;
   transition: border-color var(--t-fast), box-shadow var(--t-fast);
+  min-width: 1320px; /* これより狭い画面では親で横スクロールさせる */
+}
+/* ヘッダー行（タイトル行）— 行と同じ grid に乗る */
+.dash-row--header {
+  background: var(--bg-offwhite);
+  border-color: var(--border-light);
+  padding: 10px 14px;
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-light);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.dash-row--header:hover {
+  border-color: var(--border-light);
+  box-shadow: none;
+}
+.dash-row--header > span,
+.dash-row--header .dash-row-status-group > span {
+  text-align: center;
+  font-weight: 700;
+}
+.dash-row--header .dash-row-status-group {
+  font-family: var(--font-jp);
+  font-size: 11px;
 }
 /* 脱落の行は薄くしてグレーに */
 .dash-row--dropped {
@@ -1479,10 +1529,12 @@
   font-weight: 700;
   color: var(--accent);
   background: var(--accent-soft);
-  padding: 4px 10px;
+  padding: 4px 8px;
   border-radius: 6px;
   white-space: nowrap;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
   /* 短縮表記（PAS / PAST / 創造空間 / 就職ゼミナール）が固定幅で揃う */
 }
 
@@ -1505,10 +1557,11 @@
   font-weight: 400;
 }
 
-/* 進捗 7 バッジ: 見学 / 誓約 / 体験 / 市役 / 計画 / 契約 / 利用 を等幅で並べる */
+/* 進捗 7 バッジ: 見学 / 誓約 / 体験 / 市役 / 計画 / 契約 / 利用 を等幅で並べる
+ * 「○○予定 4/28」が入る幅（84px）で統一 */
 .dash-row-status-group {
   display: grid;
-  grid-template-columns: repeat(7, 56px);
+  grid-template-columns: repeat(7, 84px);
   gap: 4px;
   align-items: center;
 }
@@ -1544,36 +1597,36 @@
   white-space: nowrap;
   text-align: center;
 }
-/* 見学予定（未来日）= 来所をこれから受け入れる状態 */
-.dash-status--visit-scheduled {
-  background: rgba(120, 140, 200, 0.18);
-  color: #3a5688;
+/* 統一カラールール:
+ *  ・done       = 完了（過去 or ✓）= 緑
+ *  ・scheduled  = 予定（未来日）   = 青
+ *  ・service    = 利用開始（最終ゴール）= 濃緑（特別扱い）
+ *  ・empty      = 未着手             = 破線グレー
+ */
+.dash-status--done {
+  background: rgba(80, 130, 90, 0.12);
+  color: #2e6a3a;
+  font-weight: 600;
+}
+.dash-status--scheduled {
+  background: rgba(80, 120, 200, 0.13);
+  color: #2c4a8a;
   font-weight: 700;
 }
-/* 見学完了（過去日）= もう来てもらった */
-.dash-status--visit-done {
-  background: rgba(80, 130, 180, 0.13);
-  color: #2c4a6e;
-}
-.dash-status--trial {
-  background: rgba(120, 140, 200, 0.12);
-  color: #4a6aa0;
-}
+/* 旧バッジクラスとの互換（移行期間中の表示崩れ防止） */
+.dash-status--visit-scheduled,
 .dash-status--meeting {
-  background: rgba(200, 160, 90, 0.15);
-  color: #8a6520;
+  background: rgba(80, 120, 200, 0.13);
+  color: #2c4a8a;
+  font-weight: 700;
 }
-.dash-status--agreement {
-  background: rgba(120, 160, 120, 0.15);
-  color: #4a7a4a;
-}
-.dash-status--plan {
-  background: rgba(140, 110, 170, 0.13);
-  color: #6b4a8a;
-}
+.dash-status--visit-done,
+.dash-status--trial,
+.dash-status--agreement,
+.dash-status--plan,
 .dash-status--contract {
-  background: rgba(180, 140, 100, 0.15);
-  color: #8a5a30;
+  background: rgba(80, 130, 90, 0.12);
+  color: #2e6a3a;
 }
 /* 脱落・持ち越しのステータスピル（行の右端） */
 .dash-row-status-pill {
@@ -1610,9 +1663,29 @@
 
 .dash-row-actions {
   display: grid;
-  grid-template-columns: 88px 88px;
-  gap: 12px;
+  grid-template-columns: 80px 80px 30px;
+  gap: 8px;
   align-items: center;
+}
+/* アイコン専用ボタン（✎ 面談票で更新 など） */
+.dash-row-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  background: var(--white);
+  color: var(--text-light);
+  border: 1px solid var(--border-light);
+  font-size: 13px;
+  text-decoration: none;
+  transition: all var(--t-fast);
+}
+.dash-row-btn-icon:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .dash-row-btn {
@@ -1655,27 +1728,8 @@
   margin-left: 2px;
 }
 
-/* レスポンシブ: 狭い画面では 2 段組（情報 / アクション）に */
-/* 狭い画面（モバイル / タブレット）では grid を解除して 2 段組に */
-@media (max-width: 1080px) {
-  .dash-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .dash-row-name {
-    flex: 1 1 200px;
-  }
-  .dash-row-status-group {
-    flex: 1 1 100%;
-    justify-content: flex-start;
-  }
-  .dash-row-actions {
-    flex: 1 1 100%;
-    justify-content: flex-end;
-    grid-template-columns: 88px 88px;
-  }
-}
+/* 狭い画面では .staff-list が overflow-x: auto で横スクロールするので、
+ * dash-row のレイアウトは固定（grid）のまま維持する。 */
 
 /* --- ダッシュボードの Quick Actions（当日の受付アクション） --- */
 .staff-quick-actions {
