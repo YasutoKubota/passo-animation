@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { verifyPin } from "./actions";
+
+export const metadata: Metadata = {
+  title: "ログイン",
+};
 
 export default async function StaffLoginPage({
   searchParams,

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { StaffTopbar } from "../../components/Topbar";
@@ -6,6 +7,23 @@ import { studioLabel } from "@/lib/intake-schema";
 import { DeleteAgreementFromView } from "./DeleteAgreementFromView";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const { data } = await supabaseAdmin
+    .from("trial_agreements")
+    .select("signed_name")
+    .eq("id", id)
+    .maybeSingle();
+  const name = (data?.signed_name as string | undefined)?.trim();
+  return {
+    title: name ? `${name} - 体験利用誓約書` : "体験利用誓約書",
+  };
+}
 
 type AgreementRow = {
   id: string;

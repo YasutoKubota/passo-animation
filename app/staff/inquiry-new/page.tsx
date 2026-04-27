@@ -1,8 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { StaffTopbar } from "../components/Topbar";
 import { InquiryStubForm } from "./InquiryStubForm";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "新規お問合せを記録",
+};
 
 export default function NewInquiryPage() {
   return (

@@ -1,9 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { StaffTopbar } from "../components/Topbar";
 import { supabaseAdmin } from "@/lib/supabase";
 import { AnalyticsClient, type AnalyticsRow } from "./AnalyticsClient";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "流入・コンバージョン分析",
+};
 
 export default async function AnalyticsPage() {
   // 過去 3 会計年度分を全件取得し、画面側でフィルタする（事業所切替を即時に）

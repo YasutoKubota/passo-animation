@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./intake.css";
 
 export const metadata: Metadata = {
-  title: "見学・体験利用面談票 | パッソアニメーションスタジオ",
+  title: "見学・体験利用 面談票 - パッソ",
   robots: { index: false, follow: false },
 };
 

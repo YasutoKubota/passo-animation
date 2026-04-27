@@ -1,9 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { StaffTopbar } from "./components/Topbar";
 import { supabaseAdmin } from "@/lib/supabase";
 import { IntakeDashboardClient, type IntakeRow } from "./IntakeDashboardClient";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "見学・体験利用 管理",
+};
 
 export default async function StaffDashboard() {
   // 過去 3 会計年度分をまとめて取得（年度・月フィルタはクライアント側で）

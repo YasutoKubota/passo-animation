@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { StaffTopbar } from "../components/Topbar";
 import { supabaseAdmin } from "@/lib/supabase";
@@ -6,6 +7,10 @@ import { AdCampaignForm, AD_CHANNELS } from "./AdCampaignForm";
 import { DeleteAdButton } from "./DeleteAdButton";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "広告キャンペーン管理",
+};
 
 type AdCampaign = {
   id: string;

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { StaffTopbar } from "../../components/Topbar";
@@ -23,6 +24,24 @@ import {
 } from "@/lib/typing-rank";
 
 export const dynamic = "force-dynamic";
+
+// 動的タイトル: 名前があればその人の名前、なければ「面談票」
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const { data } = await supabaseAdmin
+    .from("intake_forms")
+    .select("name")
+    .eq("id", id)
+    .maybeSingle();
+  const name = (data?.name as string | undefined)?.trim();
+  return {
+    title: name ? `${name} - 面談票` : "面談票",
+  };
+}
 
 // 電話番号の所有者コード → 表示ラベル
 const PHONE_OWNER_LABEL: Record<string, string> = {
