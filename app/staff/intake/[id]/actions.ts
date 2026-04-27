@@ -63,12 +63,14 @@ export type UpdateBasicInfoPayload = {
   name: string;
   furigana: string;
   phone: string | null;
+  phone_owner: string;
   birth_date: string | null;
   gender: string | null;
   postal_code: string | null;
   address: string | null;
   notebook_status: string | null;
   notebook_grade: string | null;
+  visited_at: string | null;
 };
 
 // 仮名・最低限情報で起票したお問合せに、後から正式な情報を上書き保存。
@@ -86,12 +88,14 @@ export async function updateBasicInfo(
       name: payload.name.trim(),
       furigana: payload.furigana.trim(),
       phone: payload.phone,
+      phone_owner: payload.phone_owner || "self",
       birth_date: payload.birth_date,
       gender: payload.gender,
       postal_code: payload.postal_code,
       address: payload.address,
       notebook_status: payload.notebook_status,
       notebook_grade: payload.notebook_grade,
+      visited_at: payload.visited_at,
     })
     .eq("id", payload.id);
 

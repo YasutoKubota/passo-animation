@@ -10,12 +10,14 @@ type Props = {
     name: string;
     furigana: string;
     phone: string | null;
+    phone_owner: string | null;
     birth_date: string | null;
     gender: string | null;
     postal_code: string | null;
     address: string | null;
     notebook_status: string | null;
     notebook_grade: string | null;
+    visited_at: string | null;
   };
   // モーダル等で常に編集 UI を表示したいケース用。
   // true なら開閉トグルなしで最初から編集 UI を出す。
@@ -23,6 +25,17 @@ type Props = {
   // 保存成功時に呼ばれるコールバック（モーダル閉じる等に使う）。
   onSaved?: () => void;
 };
+
+// 電話番号の所有者の選択肢
+const PHONE_OWNER_OPTIONS = [
+  { value: "self", label: "本人" },
+  { value: "mother", label: "母" },
+  { value: "father", label: "父" },
+  { value: "sibling", label: "兄弟・姉妹" },
+  { value: "spouse", label: "配偶者" },
+  { value: "guardian", label: "保護者・後見人" },
+  { value: "other", label: "その他" },
+] as const;
 
 // 仮名・最低限情報で起票したお問合せに、後から正式な情報を上書きするための編集パネル。
 export function BasicInfoEditor({ id, initial, alwaysOpen, onSaved }: Props) {
@@ -34,12 +47,14 @@ export function BasicInfoEditor({ id, initial, alwaysOpen, onSaved }: Props) {
   const [name, setName] = useState(initial.name);
   const [furigana, setFurigana] = useState(initial.furigana);
   const [phone, setPhone] = useState(initial.phone ?? "");
+  const [phoneOwner, setPhoneOwner] = useState(initial.phone_owner ?? "self");
   const [birthDate, setBirthDate] = useState(initial.birth_date ?? "");
   const [gender, setGender] = useState(initial.gender ?? "");
   const [postalCode, setPostalCode] = useState(initial.postal_code ?? "");
   const [address, setAddress] = useState(initial.address ?? "");
   const [notebookStatus, setNotebookStatus] = useState(initial.notebook_status ?? "");
   const [notebookGrade, setNotebookGrade] = useState(initial.notebook_grade ?? "");
+  const [visitedAt, setVisitedAt] = useState(initial.visited_at ?? "");
 
   const save = () => {
     setError(null);
@@ -53,12 +68,14 @@ export function BasicInfoEditor({ id, initial, alwaysOpen, onSaved }: Props) {
         name: name.trim(),
         furigana: furigana.trim(),
         phone: phone.trim() || null,
+        phone_owner: phoneOwner || "self",
         birth_date: birthDate || null,
         gender: gender || null,
         postal_code: postalCode.trim() || null,
         address: address.trim() || null,
         notebook_status: notebookStatus || null,
         notebook_grade: notebookGrade.trim() || null,
+        visited_at: visitedAt || null,
       });
       if (result.success) {
         setSavedAt(new Date().toLocaleTimeString("ja-JP"));
@@ -96,19 +113,43 @@ export function BasicInfoEditor({ id, initial, alwaysOpen, onSaved }: Props) {
       </div>
       <div className="basic-info-editor-row">
         <div className="basic-info-editor-field">
-          <label>電話番号</label>
+          <label>電話番号（番号のみ）</label>
           <input
             type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            placeholder="090-1234-5678"
           />
         </div>
+        <div className="basic-info-editor-field">
+          <label>↑ 誰の電話？</label>
+          <select
+            value={phoneOwner}
+            onChange={(e) => setPhoneOwner(e.target.value)}
+          >
+            {PHONE_OWNER_OPTIONS.map((o) => (
+              <option key={o.value} value={o.value}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div className="basic-info-editor-row">
         <div className="basic-info-editor-field">
           <label>生年月日</label>
           <input
             type="date"
             value={birthDate}
             onChange={(e) => setBirthDate(e.target.value)}
+          />
+        </div>
+        <div className="basic-info-editor-field">
+          <label>来所した日（実際に来た日）</label>
+          <input
+            type="date"
+            value={visitedAt}
+            onChange={(e) => setVisitedAt(e.target.value)}
           />
         </div>
       </div>

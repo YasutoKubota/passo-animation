@@ -315,12 +315,11 @@ def parse_row(row, columns):
     if city_meeting_date:
         city_office_meeting_at = dt.datetime.combine(city_meeting_date, dt.time(12, 0)).isoformat()
 
-    # メモ：見学日 / 病名以外の細かい情報を staff_notes に追記
+    # メモ：細かい補助情報のみ staff_notes に追記
+    # 「見学日」は専用カラム visited_at に保存するので staff_notes には書かない
     notes_parts = []
     if notes_raw:
         notes_parts.append(notes_raw)
-    if visit_date and visit_date != trial_date:
-        notes_parts.append(f"見学日: {visit_date.isoformat()}")
     if email:
         notes_parts.append(f"メール: {email}")
     if support_office_contact:
@@ -329,10 +328,30 @@ def parse_row(row, columns):
         notes_parts.append(f"障がい種別: {disability_type}")
     staff_notes = "\n".join(notes_parts) if notes_parts else None
 
+    # 電話番号文字列に「（母）」「(母)」のような所有者ヒントが含まれていたら抽出
+    phone_owner = "self"
+    phone_clean = phone
+    if phone:
+        m_owner = re.search(r"[（(]\s*(母|父|兄|弟|姉|妹|配偶者|妻|夫|祖母|祖父|本人|後見人|保護者)\s*[)）]", phone)
+        if m_owner:
+            owner_word = m_owner.group(1)
+            phone_clean = re.sub(r"[（(]\s*[^()）（]+\s*[)）]", "", phone).strip()
+            owner_map = {
+                "本人": "self",
+                "母": "mother",
+                "父": "father",
+                "兄": "sibling", "弟": "sibling", "姉": "sibling", "妹": "sibling",
+                "配偶者": "spouse", "妻": "spouse", "夫": "spouse",
+                "祖母": "guardian", "祖父": "guardian",
+                "後見人": "guardian", "保護者": "guardian",
+            }
+            phone_owner = owner_map.get(owner_word, "other")
+
     rec = {
         "name": name,
         "furigana": "",  # 元データに無い
-        "phone": phone,
+        "phone": phone_clean,
+        "phone_owner": phone_owner,
         "birth_date": birth_date.isoformat() if birth_date else None,
         "gender": gender if gender in ("男", "女") else None,
         "address": address,
@@ -351,6 +370,8 @@ def parse_row(row, columns):
         "support_office_contact": support_office_contact,
         "inquiry_date": inquiry_date.isoformat(),
         "scheduled_visit_date": scheduled_visit_date.isoformat() if scheduled_visit_date else None,
+        # Excel の「見学」列 = 実際に来所した日 → visited_at として保存
+        "visited_at": visit_date.isoformat() if visit_date else None,
         "service_start_date": service_start.isoformat() if service_start else None,
         "city_office_meeting_at": city_office_meeting_at,
         "staff_notes": staff_notes,
@@ -494,6 +515,7 @@ def main():
         add("name", r["name"])
         add("furigana", r["furigana"])
         add("phone", r["phone"])
+        add("phone_owner", r.get("phone_owner") or "self")
         add("birth_date", r["birth_date"])
         add("gender", r["gender"])
         add("address", r["address"])
@@ -521,6 +543,7 @@ def main():
         add("support_office_contact", r["support_office_contact"])
         add("inquiry_date", r["inquiry_date"])
         add("scheduled_visit_date", r["scheduled_visit_date"])
+        add("visited_at", r["visited_at"])
         add("service_start_date", r["service_start_date"])
         add("city_office_meeting_at", r["city_office_meeting_at"])
         add("staff_notes", r["staff_notes"])

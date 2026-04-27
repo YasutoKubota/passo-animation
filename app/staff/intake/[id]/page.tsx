@@ -24,6 +24,17 @@ import {
 
 export const dynamic = "force-dynamic";
 
+// 電話番号の所有者コード → 表示ラベル
+const PHONE_OWNER_LABEL: Record<string, string> = {
+  self: "本人",
+  mother: "母",
+  father: "父",
+  sibling: "兄弟・姉妹",
+  spouse: "配偶者",
+  guardian: "保護者・後見人",
+  other: "その他",
+};
+
 const FIELD_LABEL_MAP: Record<string, string> = {
   last_name_kana: "ふりがな(姓)",
   first_name_kana: "ふりがな(名)",
@@ -232,23 +243,33 @@ export default async function IntakeDetailPage({
               <DetailRow label="事業所" value={studioLabel(data.studio_location)} />
               <DetailRow label="ふりがな" value={data.furigana} />
               <DetailRow label="お名前" value={data.name} />
-              <DetailRow label="電話" value={data.phone} />
+              <DetailRow
+                label="電話"
+                value={
+                  data.phone
+                    ? `${data.phone}${data.phone_owner && data.phone_owner !== "self" ? `（${PHONE_OWNER_LABEL[data.phone_owner] ?? data.phone_owner}）` : ""}`
+                    : null
+                }
+              />
               <DetailRow label="生年月日" value={data.birth_date} />
               <DetailRow label="性別" value={data.gender} />
               <DetailRow label="郵便番号" value={data.postal_code} />
               <DetailRow label="住所" value={data.address} />
+              <DetailRow label="来所した日" value={data.visited_at} />
               <BasicInfoEditor
                 id={data.id}
                 initial={{
                   name: data.name ?? "",
                   furigana: data.furigana ?? "",
                   phone: data.phone ?? null,
+                  phone_owner: data.phone_owner ?? null,
                   birth_date: data.birth_date ?? null,
                   gender: data.gender ?? null,
                   postal_code: data.postal_code ?? null,
                   address: data.address ?? null,
                   notebook_status: data.notebook_status ?? null,
                   notebook_grade: data.notebook_grade ?? null,
+                  visited_at: data.visited_at ?? null,
                 }}
               />
             </div>

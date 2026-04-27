@@ -13,6 +13,7 @@ export type AnalyticsRow = {
   inquiry_date: string | null;
   service_start_date: string | null;
   scheduled_visit_date: string | null;
+  visited_at: string | null;
   studio_location: string | null;
   gender: string | null;
   birth_date: string | null;
@@ -113,13 +114,15 @@ const FUNNEL_STEPS = [
 type StepKey = (typeof FUNNEL_STEPS)[number]["key"];
 
 // その行が「どこまで進んだか」を判定する
+//   ・visited_at は「実際に来所した日」のみ
+//   ・scheduled_visit_date（来所予定日）だけでは「見学した」と見なさない
 function reachedStep(r: AnalyticsRow): StepKey {
   if (r.service_start_date) return "serviceStarted";
   if (r.contract_signed_at) return "contractDone";
   if (r.service_plan_completed_at) return "planDone";
   if (r.city_office_meeting_at) return "cityMeeting";
   if ((r.trial_sessions ?? []).length > 0) return "trialScheduled";
-  if (r.scheduled_visit_date || r.submitted_at) return "visited";
+  if (r.visited_at) return "visited";
   return "inquiries";
 }
 

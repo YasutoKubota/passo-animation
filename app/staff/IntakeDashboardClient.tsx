@@ -27,12 +27,14 @@ export type IntakeRow = {
   furigana: string;
   // 編集ポップアップで使う基本情報
   phone: string | null;
+  phone_owner: string | null;
   birth_date: string | null;
   gender: string | null;
   postal_code: string | null;
   address: string | null;
   notebook_status: string | null;
   notebook_grade: string | null;
+  visited_at: string | null;
   source_choices: string[] | null;
   trial_sessions: TrialSession[] | null;
   city_office_meeting_at: string | null;
@@ -341,17 +343,18 @@ export function IntakeDashboardClient({
                  *  ・「○○未」 = 未着手（グレー破線）
                  */}
                 <div className="dash-row-status-group">
-                  {/* 見学 */}
-                  {row.scheduled_visit_date ? (
-                    isPastDate(row.scheduled_visit_date) ? (
-                      <span className="dash-status dash-status--done">
-                        ✓ 見学 {formatMonthDay(row.scheduled_visit_date)}
-                      </span>
-                    ) : (
-                      <span className="dash-status dash-status--scheduled">
-                        見学予定 {formatMonthDay(row.scheduled_visit_date)}
-                      </span>
-                    )
+                  {/* 見学
+                   *  ・visited_at がある             → 「✓ 見学 4/15」（実来所）
+                   *  ・なくて scheduled_visit_date あり → 「見学予定 4/28」（予定）
+                   *  ・両方なし                       → 「見学未」 */}
+                  {row.visited_at ? (
+                    <span className="dash-status dash-status--done">
+                      ✓ 見学 {formatMonthDay(row.visited_at)}
+                    </span>
+                  ) : row.scheduled_visit_date ? (
+                    <span className="dash-status dash-status--scheduled">
+                      見学予定 {formatMonthDay(row.scheduled_visit_date)}
+                    </span>
                   ) : (
                     <span className="dash-status dash-status--empty">見学未</span>
                   )}
@@ -522,12 +525,14 @@ export function IntakeDashboardClient({
                   name: editingRow.name,
                   furigana: editingRow.furigana,
                   phone: editingRow.phone,
+                  phone_owner: editingRow.phone_owner,
                   birth_date: editingRow.birth_date,
                   gender: editingRow.gender,
                   postal_code: editingRow.postal_code,
                   address: editingRow.address,
                   notebook_status: editingRow.notebook_status,
                   notebook_grade: editingRow.notebook_grade,
+                  visited_at: editingRow.visited_at,
                 }}
               />
             </div>

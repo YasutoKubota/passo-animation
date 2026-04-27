@@ -4,6 +4,8 @@
 
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { lookup } from "node:dns/promises";
+import { URL as NodeURL } from "node:url";
 import pg from "pg";
 
 const loadEnv = () => {
@@ -36,7 +38,23 @@ if (!connectionString) {
 }
 
 const sql = readFileSync(resolve(file), "utf8");
-const client = new pg.Client({ connectionString });
+
+// IPv6 経路でタイムアウトすることがあるため IPv4 を解決して優先する
+async function makeClient(connStr) {
+  try {
+    const u = new NodeURL(connStr);
+    const v4 = await lookup(u.hostname, { family: 4 });
+    const originalHost = u.hostname;
+    u.hostname = v4.address;
+    return new pg.Client({
+      connectionString: u.toString(),
+      ssl: { rejectUnauthorized: false, servername: originalHost },
+    });
+  } catch {
+    return new pg.Client({ connectionString: connStr });
+  }
+}
+const client = await makeClient(connectionString);
 
 try {
   await client.connect();
