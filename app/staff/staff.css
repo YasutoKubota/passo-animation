@@ -1429,10 +1429,10 @@
     108px             /* 事業所（短縮表記）*/
     minmax(140px, 1fr) /* 名前 */
     78px              /* ルート（流入経路の短縮）*/
-    624px             /* 進捗 7 バッジ（7 × 88px + 6 × 4gap = 640、余裕分） */
+    640px             /* 進捗 7 バッジ（88 × 7 + 4 × 6 = 640、ぴったり）*/
     62px              /* 状態ピル（脱落/持ち越し時のみ表示）*/
-    220px;            /* アクション 3 ボタン（80 + 80 + 30 + 8×2 gap = 206、余裕分）*/
-  column-gap: 10px;
+    230px;            /* アクション 3 ボタン（80 + 80 + 30 + 8×2 gap = 206、余裕分）*/
+  column-gap: 12px;   /* 列間に十分なすきまを */
   align-items: center;
   padding: 14px 16px;
   background: var(--bg-card);
@@ -1440,7 +1440,11 @@
   border-radius: 10px;
   margin-bottom: 8px;
   transition: border-color var(--t-fast), box-shadow var(--t-fast);
-  min-width: 1380px; /* これより狭い画面では親で横スクロールさせる */
+  min-width: 1420px; /* これより狭い画面では親で横スクロールさせる */
+}
+/* 進捗バッジ列が万一 overflow しても隣に侵食しないよう保険 */
+.dash-row-status-group {
+  overflow: hidden;
 }
 /* ヘッダー行（タイトル行）— 行と同じ grid に乗る */
 .dash-row--header {
