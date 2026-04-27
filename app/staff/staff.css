@@ -1425,37 +1425,35 @@
 .dash-row {
   display: grid;
   grid-template-columns:
-    88px              /* 日付（お問合せ日 or 見学日）*/
-    104px             /* 事業所（短縮表記）*/
-    minmax(120px, 1fr) /* 名前 */
-    72px              /* ルート（流入経路の短縮）*/
-    600px             /* 進捗 7 バッジ（7 × 84px + 6 × gap） */
-    56px              /* 状態ピル（脱落/持ち越し時のみ表示）*/
-    216px;            /* アクション 3 ボタン（80 + 80 + 30 + 8×2 gap）*/
-  gap: 8px;
+    92px              /* 日付（お問合せ日 or 見学日）*/
+    108px             /* 事業所（短縮表記）*/
+    minmax(140px, 1fr) /* 名前 */
+    78px              /* ルート（流入経路の短縮）*/
+    624px             /* 進捗 7 バッジ（7 × 88px + 6 × 4gap = 640、余裕分） */
+    62px              /* 状態ピル（脱落/持ち越し時のみ表示）*/
+    220px;            /* アクション 3 ボタン（80 + 80 + 30 + 8×2 gap = 206、余裕分）*/
+  column-gap: 10px;
   align-items: center;
-  padding: 14px 14px;
+  padding: 14px 16px;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 10px;
   margin-bottom: 8px;
   transition: border-color var(--t-fast), box-shadow var(--t-fast);
-  min-width: 1320px; /* これより狭い画面では親で横スクロールさせる */
+  min-width: 1380px; /* これより狭い画面では親で横スクロールさせる */
 }
 /* ヘッダー行（タイトル行）— 行と同じ grid に乗る */
 .dash-row--header {
   background: var(--bg-offwhite);
   border-color: var(--border-light);
-  padding: 10px 14px;
+  padding: 10px 16px;
   font-family: var(--font-en);
   font-size: 11px;
   font-weight: 700;
   color: var(--text-light);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  position: sticky;
-  top: 0;
-  z-index: 5;
+  margin-bottom: 6px;
 }
 .dash-row--header:hover {
   border-color: var(--border-light);
@@ -1558,10 +1556,10 @@
 }
 
 /* 進捗 7 バッジ: 見学 / 誓約 / 体験 / 市役 / 計画 / 契約 / 利用 を等幅で並べる
- * 「○○予定 4/28」が入る幅（84px）で統一 */
+ * 「○○予定 4/28」が入る幅（88px）で統一 */
 .dash-row-status-group {
   display: grid;
-  grid-template-columns: repeat(7, 84px);
+  grid-template-columns: repeat(7, 88px);
   gap: 4px;
   align-items: center;
 }
