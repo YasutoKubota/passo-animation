@@ -30,7 +30,7 @@ export default async function AnalyticsPage() {
     <div className="staff-root">
       <StaffTopbar section="分析" />
       <main className="staff-main">
-        <Link href="/staff" className="staff-back-link">← ダッシュボードに戻る</Link>
+        <Link href="/inquiries" className="staff-back-link">← ダッシュボードに戻る</Link>
 
         {error ? (
           <div className="staff-list-empty">読み込みに失敗しました: {error.message}</div>

@@ -104,10 +104,10 @@ export default async function AgreementViewPage({
   const backTo =
     from === "intake" && (intake_id || ag.intake_id)
       ? {
-          href: `/staff/intake/${intake_id ?? ag.intake_id}`,
+          href: `/inquiries/${intake_id ?? ag.intake_id}`,
           label: "← 面談票の詳細に戻る",
         }
-      : { href: "/staff", label: "← ダッシュボードに戻る" };
+      : { href: "/inquiries", label: "← ダッシュボードに戻る" };
 
   return (
     <div className="staff-root">
@@ -171,7 +171,7 @@ export default async function AgreementViewPage({
 
             {intake && (
               <div className="agreement-view-intake-link">
-                <Link href={`/staff/intake/${intake.id}`}>
+                <Link href={`/inquiries/${intake.id}`}>
                   この方の面談票を見る →
                 </Link>
               </div>

@@ -10,8 +10,8 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         disallow: [
-          "/staff",
-          "/staff/",
+          "/inquiries",
+          "/inquiries/",
           "/intake",
           "/intake/",
           "/intake-sozo",

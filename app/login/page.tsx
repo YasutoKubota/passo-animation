@@ -16,12 +16,12 @@ export default async function StaffLoginPage({
   const existing = cookieStore.get("staff_pin")?.value;
   if (existing && existing === process.env.STAFF_PIN) {
     const params = await searchParams;
-    redirect(params.next && params.next.startsWith("/staff") ? params.next : "/staff");
+    redirect(params.next && params.next.startsWith("/inquiries") ? params.next : "/inquiries");
   }
 
   const params = await searchParams;
   const errored = params.error === "1";
-  const next = params.next ?? "/staff";
+  const next = params.next ?? "/inquiries";
 
   return (
     <div className="staff-login-shell">

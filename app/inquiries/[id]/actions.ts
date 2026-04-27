@@ -54,7 +54,7 @@ export async function updateStaffNotes(payload: UpdateNotesPayload): Promise<
 
   if (error) return { success: false, error: error.message };
 
-  revalidatePath(`/staff/intake/${payload.id}`);
+  revalidatePath(`/inquiries/${payload.id}`);
   return { success: true };
 }
 
@@ -101,8 +101,8 @@ export async function updateBasicInfo(
 
   if (error) return { success: false, error: error.message };
 
-  revalidatePath(`/staff/intake/${payload.id}`);
-  revalidatePath("/staff");
+  revalidatePath(`/inquiries/${payload.id}`);
+  revalidatePath("/inquiries");
   return { success: true };
 }
 
@@ -117,8 +117,8 @@ export async function deleteIntake(formData: FormData): Promise<void> {
     throw new Error(`削除に失敗しました: ${error.message}`);
   }
 
-  revalidatePath("/staff");
-  redirect("/staff");
+  revalidatePath("/inquiries");
+  redirect("/inquiries");
 }
 
 // 誓約書を 1 件削除する。
@@ -133,6 +133,6 @@ export async function deleteAgreement(formData: FormData): Promise<void> {
   }
 
   // 面談票詳細とダッシュボードの双方を再検証
-  if (intakeId) revalidatePath(`/staff/intake/${intakeId}`);
-  revalidatePath("/staff");
+  if (intakeId) revalidatePath(`/inquiries/${intakeId}`);
+  revalidatePath("/inquiries");
 }

@@ -9,7 +9,7 @@ import {
   studioShortLabel,
   type TrialSession,
 } from "@/lib/intake-schema";
-import { BasicInfoEditor } from "./intake/[id]/BasicInfoEditor";
+import { BasicInfoEditor } from "./[id]/BasicInfoEditor";
 
 type AgreementLite = {
   id: string;
@@ -432,7 +432,7 @@ export function IntakeDashboardClient({
 
                 <div className="dash-row-actions">
                   <Link
-                    href={`/staff/intake/${row.id}`}
+                    href={`/inquiries/${row.id}`}
                     className="dash-row-btn dash-row-btn--secondary"
                     title="面談票を表示"
                   >
@@ -440,7 +440,7 @@ export function IntakeDashboardClient({
                   </Link>
                   {hasAgreement ? (
                     <Link
-                      href={`/staff/agreement/${latestAgreement.id}?from=intake&intake_id=${row.id}`}
+                      href={`/inquiries/agreements/${latestAgreement.id}?from=intake&intake_id=${row.id}`}
                       className="dash-row-btn dash-row-btn--secondary"
                       title="誓約書を表示"
                     >

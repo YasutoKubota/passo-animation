@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { StaffTopbar } from "../../components/Topbar";
+import { StaffTopbar } from "../components/Topbar";
 import { StaffNotesEditor } from "./StaffNotesEditor";
 import { BasicInfoEditor } from "./BasicInfoEditor";
 import { DeleteIntakeButton, DeleteAgreementButton } from "./DeleteButtons";
@@ -137,9 +137,9 @@ export default async function IntakeDetailPage({
 }) {
   const { id } = await params;
   const { from } = await searchParams;
-  // 一覧ページは廃止されたのでダッシュボード（/staff）に戻す
-  const backTo = { href: "/staff", label: "← ダッシュボードに戻る" };
-  // from パラメータは互換性のため受け取るが、遷移先は常に /staff
+  // 一覧ページは廃止されたのでダッシュボード（/inquiries）に戻す
+  const backTo = { href: "/inquiries", label: "← ダッシュボードに戻る" };
+  // from パラメータは互換性のため受け取るが、遷移先は常に /inquiries
   void from;
 
   const [intakeResult, agreementsResult] = await Promise.all([
@@ -376,7 +376,7 @@ export default async function IntakeDetailPage({
                   {agreements.map((ag) => (
                     <div key={ag.id} className="staff-agreement-row">
                       <Link
-                        href={`/staff/agreement/${ag.id}?from=intake&intake_id=${data.id}`}
+                        href={`/inquiries/agreements/${ag.id}?from=intake&intake_id=${data.id}`}
                         className="staff-agreement-row-body staff-agreement-row-link"
                       >
                         <div className="staff-agreement-date">

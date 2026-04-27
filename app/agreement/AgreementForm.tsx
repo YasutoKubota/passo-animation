@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useMemo, useState, useTransition, useEffect } from "react";
 import { useTypingTracker } from "@/lib/typing-tracker";
 import { studioLabel } from "@/lib/intake-schema";
-import { verifyPin } from "@/app/staff/login/actions";
+import { verifyPin } from "@/app/login/actions";
 import { submitAgreement } from "./actions";
 
 type IntakeLite = {
@@ -104,7 +104,7 @@ export function AgreementForm({ intake, loadError, queryIntakeId }: Props) {
               <br />
               スタッフ画面のダッシュボードから該当の方を選んで開いてください。
             </p>
-            <Link href="/staff" className="agreement-notice-link">
+            <Link href="/inquiries" className="agreement-notice-link">
               ダッシュボードへ
             </Link>
           </div>
@@ -122,7 +122,7 @@ export function AgreementForm({ intake, loadError, queryIntakeId }: Props) {
             <div className="agreement-notice-mark">!</div>
             <h1>面談票を読み込めませんでした</h1>
             <p>{loadError ?? "該当する面談票が見つかりません。"}</p>
-            <Link href="/staff" className="agreement-notice-link">
+            <Link href="/inquiries" className="agreement-notice-link">
               ダッシュボードへ戻る
             </Link>
           </div>
@@ -160,7 +160,7 @@ export function AgreementForm({ intake, loadError, queryIntakeId }: Props) {
                 <input
                   type="hidden"
                   name="next"
-                  value={`/staff/intake/${intake.id}`}
+                  value={`/inquiries/${intake.id}`}
                 />
                 <input
                   type="password"

@@ -66,7 +66,7 @@ export function AdCampaignForm({ initial }: Props) {
         notes,
       });
       if (result.success) {
-        router.push("/staff/ads");
+        router.push("/inquiries/ads");
         router.refresh();
       } else {
         setError(result.error);

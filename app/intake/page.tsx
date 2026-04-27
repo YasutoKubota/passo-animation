@@ -14,7 +14,7 @@ import {
   PC_TYPE_OPTIONS,
 } from "@/lib/intake-schema";
 import { useTypingTracker } from "@/lib/typing-tracker";
-import { verifyPin } from "@/app/staff/login/actions";
+import { verifyPin } from "@/app/login/actions";
 import { submitIntake } from "./actions";
 
 type FormState = {
@@ -316,7 +316,7 @@ export default function IntakePage() {
             <div className="intake-staff-gate">
               <div className="intake-staff-gate-label">スタッフの方へ</div>
               <form action={verifyPin} className="intake-staff-gate-form">
-                <input type="hidden" name="next" value="/staff" />
+                <input type="hidden" name="next" value="/inquiries" />
                 <input
                   type="password"
                   name="pin"
@@ -354,7 +354,7 @@ export default function IntakePage() {
                 ご本人が来所する事業所を選択してから、<br />
                 このパソコンをご本人にお渡しください。
               </p>
-              <Link href="/staff" className="intake-staff-note-link">
+              <Link href="/inquiries" className="intake-staff-note-link">
                 ← ダッシュボードに戻る
               </Link>
             </div>

@@ -76,5 +76,5 @@ export async function createInquiryStub(formData: FormData) {
     throw new Error(error.message);
   }
 
-  redirect(`/staff/intake/${data.id}`);
+  redirect(`/inquiries/${data.id}`);
 }

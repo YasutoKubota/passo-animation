@@ -59,7 +59,7 @@ export async function upsertAdCampaign(payload: AdCampaignPayload) {
     if (error) return { success: false as const, error: error.message };
   }
 
-  revalidatePath("/staff/ads");
+  revalidatePath("/inquiries/ads");
   return { success: true as const };
 }
 
@@ -68,6 +68,6 @@ export async function deleteAdCampaign(formData: FormData): Promise<void> {
   if (!id) return;
   const { error } = await supabaseAdmin.from("ad_campaigns").delete().eq("id", id);
   if (error) throw new Error(`削除に失敗しました: ${error.message}`);
-  revalidatePath("/staff/ads");
-  redirect("/staff/ads");
+  revalidatePath("/inquiries/ads");
+  redirect("/inquiries/ads");
 }

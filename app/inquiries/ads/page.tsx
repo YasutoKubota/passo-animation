@@ -58,7 +58,7 @@ export default async function AdCampaignsPage() {
     <div className="staff-root">
       <StaffTopbar section="広告キャンペーン管理" />
       <main className="staff-main">
-        <Link href="/staff" className="staff-back-link">← ダッシュボードに戻る</Link>
+        <Link href="/inquiries" className="staff-back-link">← ダッシュボードに戻る</Link>
 
         <div className="staff-page-head">
           <div className="staff-page-label">

@@ -2378,7 +2378,7 @@
 }
 
 /* ============================================
-   /staff/inquiry-new — 新規お問合せ stub form
+   /inquiries/new — 新規お問合せ stub form
    ============================================ */
 .inquiry-stub-form {
   display: flex;
@@ -2546,7 +2546,7 @@
 }
 
 /* ============================================
-   /staff/intake/[id] — BasicInfoEditor
+   /inquiries/[id] — BasicInfoEditor
    ============================================ */
 .basic-info-editor-toggle {
   margin-top: 14px;
@@ -2761,7 +2761,7 @@
 }
 
 /* ============================================
-   /staff/ads — AdCampaignForm
+   /inquiries/ads — AdCampaignForm
    inquiry-stub-form と同じ Japandi トンマナ
    ============================================ */
 .ad-form {

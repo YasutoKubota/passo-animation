@@ -3,7 +3,7 @@
 import { useEffect, useState, useTransition } from "react";
 import { GENDER_OPTIONS } from "@/lib/intake-schema";
 import { submitSozoIntake, type SozoIntakePayload } from "./actions";
-import { verifyPin } from "@/app/staff/login/actions";
+import { verifyPin } from "@/app/login/actions";
 
 // 創造空間の認知経路（Word 書類どおり）
 const SOURCE_OPTIONS = [
@@ -717,7 +717,7 @@ function DoneScreen() {
           placeholder="••••"
           required
         />
-        <input type="hidden" name="next" value="/staff" />
+        <input type="hidden" name="next" value="/inquiries" />
         <button type="submit" className="intake-btn-next">
           スタッフ画面へ進む
         </button>

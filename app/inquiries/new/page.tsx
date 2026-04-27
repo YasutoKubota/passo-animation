@@ -14,7 +14,7 @@ export default function NewInquiryPage() {
     <div className="staff-root">
       <StaffTopbar section="新規お問合せ" />
       <main className="staff-main">
-        <Link href="/staff" className="staff-back-link">← ダッシュボードに戻る</Link>
+        <Link href="/inquiries" className="staff-back-link">← ダッシュボードに戻る</Link>
 
         <div className="staff-page-head">
           <div className="staff-page-label">

@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { logout } from "../login/actions";
+import { logout } from "@/app/login/actions";
 
 export function StaffTopbar({ section }: { section?: string }) {
   return (
     <header className="staff-topbar">
       <div className="staff-topbar-left">
-        <Link href="/staff" className="staff-brand" aria-label="ダッシュボードへ">
+        <Link href="/inquiries" className="staff-brand" aria-label="ダッシュボードへ">
           <img
             src="/images/logo-passo.png"
             alt="Passo a Passo"

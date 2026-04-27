@@ -43,7 +43,7 @@ export default async function StaffDashboard() {
 
           <div className="staff-detail-actions">
             <Link
-              href="/staff/inquiry-new"
+              href="/inquiries/new"
               className="staff-action-btn staff-action-btn--primary"
             >
               + 新規お問合せ
@@ -57,10 +57,10 @@ export default async function StaffDashboard() {
             >
               + 新規 面談票を発行
             </Link>
-            <Link href="/staff/analytics" className="staff-action-btn staff-action-btn--secondary">
+            <Link href="/inquiries/analytics" className="staff-action-btn staff-action-btn--secondary">
               📊 分析
             </Link>
-            <Link href="/staff/ads" className="staff-action-btn staff-action-btn--secondary">
+            <Link href="/inquiries/ads" className="staff-action-btn staff-action-btn--secondary">
               📣 広告管理
             </Link>
           </div>
