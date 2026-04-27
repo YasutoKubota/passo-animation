@@ -2659,6 +2659,108 @@
 }
 
 /* ============================================
+   ダッシュボードの編集モーダル
+   ============================================ */
+.edit-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(58, 51, 48, 0.55);
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 24px 40px;
+  overflow-y: auto;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: edit-modal-fade-in var(--t-fast) ease-out;
+}
+@keyframes edit-modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.edit-modal {
+  background: var(--white);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 680px;
+  box-shadow: 0 30px 80px rgba(58, 51, 48, 0.35);
+  animation: edit-modal-slide-up 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes edit-modal-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.edit-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 26px 18px;
+  border-bottom: 1px solid var(--border-light);
+}
+.edit-modal-eyebrow {
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.edit-modal-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.edit-modal-furigana {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-light);
+}
+.edit-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: all var(--t-fast);
+}
+.edit-modal-close:hover {
+  background: var(--bg-accent);
+  color: var(--accent);
+}
+.edit-modal-body {
+  padding: 24px 26px 26px;
+}
+/* モーダル内では BasicInfoEditor の枠 (basic-info-editor) を消す
+ * (既に edit-modal がカードの役割を担っているため二重枠を避ける) */
+.edit-modal-body .basic-info-editor {
+  margin-top: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+/* ============================================
    /staff/ads — AdCampaignForm
    inquiry-stub-form と同じ Japandi トンマナ
    ============================================ */

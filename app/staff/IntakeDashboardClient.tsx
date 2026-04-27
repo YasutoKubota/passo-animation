@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   STUDIO_OPTIONS,
   SOURCE_OPTIONS,
   studioShortLabel,
   type TrialSession,
 } from "@/lib/intake-schema";
+import { BasicInfoEditor } from "./intake/[id]/BasicInfoEditor";
 
 type AgreementLite = {
   id: string;
@@ -23,6 +25,14 @@ export type IntakeRow = {
   studio_location: string | null;
   name: string;
   furigana: string;
+  // 編集ポップアップで使う基本情報
+  phone: string | null;
+  birth_date: string | null;
+  gender: string | null;
+  postal_code: string | null;
+  address: string | null;
+  notebook_status: string | null;
+  notebook_grade: string | null;
   source_choices: string[] | null;
   trial_sessions: TrialSession[] | null;
   city_office_meeting_at: string | null;
@@ -100,10 +110,33 @@ export function IntakeDashboardClient({
   rows: IntakeRow[];
   errorMessage?: string | null;
 }) {
+  const router = useRouter();
   const [studio, setStudio] = useState<string | null>(null);
   // デフォルトは現在の会計年度（令和8）
   const [selectedFy, setSelectedFy] = useState<number | null>(currentFiscalYear());
   const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
+  // 編集ポップアップ：選択された行を開く
+  const [editingRow, setEditingRow] = useState<IntakeRow | null>(null);
+
+  // モーダル表示中は背面のスクロールを止める
+  useEffect(() => {
+    if (!editingRow) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [editingRow]);
+
+  // ESC キーでモーダル閉じる
+  useEffect(() => {
+    if (!editingRow) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setEditingRow(null);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [editingRow]);
 
   const fyChoices = useMemo(() => {
     const cur = currentFiscalYear();
@@ -426,24 +459,81 @@ export function IntakeDashboardClient({
                       ＋誓約書
                     </Link>
                   )}
-                  {/* 面談票（/intake）を既存レコードに紐付けて開く。
-                      利用者にタブレットを渡し、書いてもらった内容で
-                      仮名やカタカナの基本情報を上書き更新する。 */}
-                  <Link
-                    href={`/intake?intake_id=${row.id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  {/* ✎ ボタンでポップアップを開いて、基本情報をその場で編集 */}
+                  <button
+                    type="button"
+                    onClick={() => setEditingRow(row)}
                     className="dash-row-btn-icon"
-                    title="この人の面談票を埋める（タブレットを渡して上書き更新）"
-                    aria-label="面談票で更新"
+                    title="基本情報を編集（名前・電話・住所など）"
+                    aria-label="基本情報を編集"
                   >
                     ✎
-                  </Link>
+                  </button>
                 </div>
               </div>
             );
           })}
       </div>
+
+      {/* 基本情報の編集モーダル（✎ ボタンで開く） */}
+      {editingRow && (
+        <div
+          className="edit-modal-backdrop"
+          onClick={() => setEditingRow(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="edit-modal-title"
+        >
+          <div
+            className="edit-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="edit-modal-head">
+              <div>
+                <div className="edit-modal-eyebrow">基本情報を編集</div>
+                <h2 id="edit-modal-title" className="edit-modal-title">
+                  {editingRow.name}
+                  {editingRow.furigana && (
+                    <span className="edit-modal-furigana">
+                      {editingRow.furigana}
+                    </span>
+                  )}
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setEditingRow(null)}
+                className="edit-modal-close"
+                aria-label="閉じる"
+              >
+                ×
+              </button>
+            </div>
+            <div className="edit-modal-body">
+              <BasicInfoEditor
+                id={editingRow.id}
+                alwaysOpen
+                onSaved={() => {
+                  // 保存成功 → モーダル閉じて、ダッシュボードを最新に
+                  setEditingRow(null);
+                  router.refresh();
+                }}
+                initial={{
+                  name: editingRow.name,
+                  furigana: editingRow.furigana,
+                  phone: editingRow.phone,
+                  birth_date: editingRow.birth_date,
+                  gender: editingRow.gender,
+                  postal_code: editingRow.postal_code,
+                  address: editingRow.address,
+                  notebook_status: editingRow.notebook_status,
+                  notebook_grade: editingRow.notebook_grade,
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -17,11 +17,16 @@ type Props = {
     notebook_status: string | null;
     notebook_grade: string | null;
   };
+  // モーダル等で常に編集 UI を表示したいケース用。
+  // true なら開閉トグルなしで最初から編集 UI を出す。
+  alwaysOpen?: boolean;
+  // 保存成功時に呼ばれるコールバック（モーダル閉じる等に使う）。
+  onSaved?: () => void;
 };
 
 // 仮名・最低限情報で起票したお問合せに、後から正式な情報を上書きするための編集パネル。
-export function BasicInfoEditor({ id, initial }: Props) {
-  const [open, setOpen] = useState(false);
+export function BasicInfoEditor({ id, initial, alwaysOpen, onSaved }: Props) {
+  const [open, setOpen] = useState(alwaysOpen ?? false);
   const [isPending, startTransition] = useTransition();
   const [savedAt, setSavedAt] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -57,13 +62,15 @@ export function BasicInfoEditor({ id, initial }: Props) {
       });
       if (result.success) {
         setSavedAt(new Date().toLocaleTimeString("ja-JP"));
+        onSaved?.();
       } else {
         setError(result.error);
       }
     });
   };
 
-  if (!open) {
+  // alwaysOpen の時はトグルボタンを出さない（モーダル内で使う想定）
+  if (!open && !alwaysOpen) {
     return (
       <button
         type="button"
@@ -156,13 +163,15 @@ export function BasicInfoEditor({ id, initial }: Props) {
       </div>
 
       <div className="basic-info-editor-actions">
-        <button
-          type="button"
-          onClick={() => setOpen(false)}
-          className="basic-info-editor-cancel"
-        >
-          閉じる
-        </button>
+        {!alwaysOpen && (
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            className="basic-info-editor-cancel"
+          >
+            閉じる
+          </button>
+        )}
         <button
           type="button"
           onClick={save}
