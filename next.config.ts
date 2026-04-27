@@ -4,6 +4,8 @@ const NOINDEX_PATHS = [
   "/staff/:path*",
   "/intake",
   "/intake/:path*",
+  "/intake-sozo",
+  "/intake-sozo/:path*",
   "/agreement",
   "/agreement/:path*",
   "/start",

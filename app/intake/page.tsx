@@ -132,6 +132,11 @@ export default function IntakePage() {
   };
 
   const handleStudioSelect = (studio: string) => {
+    // 創造空間は別フォーム /intake-sozo に飛ばす（書類フォーマットが他の 3 拠点と違うため）
+    if (studio === "sozo") {
+      window.location.href = "/intake-sozo";
+      return;
+    }
     updateField("studio_location", studio);
     setStep(1);
   };

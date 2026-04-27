@@ -14,6 +14,8 @@ export default function robots(): MetadataRoute.Robots {
           "/staff/",
           "/intake",
           "/intake/",
+          "/intake-sozo",
+          "/intake-sozo/",
           "/agreement",
           "/agreement/",
           "/start",

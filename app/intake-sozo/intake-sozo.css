@@ -1,0 +1,331 @@
+/* ============================================
+   /intake-sozo — 創造空間 専用面談票
+   既存 intake.css とクラス名衝突を避けるため独立
+   ============================================ */
+
+.intake-main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+  font-family: var(--font-jp);
+  color: var(--text-primary);
+}
+
+.intake-topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 0 24px;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 32px;
+}
+.intake-brand {
+  display: flex;
+  align-items: center;
+}
+.intake-brand-logo {
+  height: 28px;
+  width: auto;
+}
+.intake-studio-pill {
+  margin-left: auto;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* イントロ */
+.intake-intro {
+  margin-bottom: 28px;
+}
+.intake-eyebrow {
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.intake-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+.intake-lead {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* フォームラッパ */
+.intake-form-wrap {
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 28px 24px;
+}
+.intake-stepper {
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text-light);
+  margin-bottom: 18px;
+}
+
+/* ステップ本体 */
+.intake-step {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.intake-step-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: var(--text-primary);
+}
+.intake-step-sub {
+  font-size: 13px;
+  color: var(--text-light);
+  margin: 0 0 8px;
+  line-height: 1.7;
+}
+
+.intake-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.intake-field-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+.intake-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.intake-required {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+}
+.intake-hint {
+  font-size: 12px;
+  color: var(--text-light);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.intake-input,
+.intake-textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--white);
+  font-family: var(--font-jp);
+  font-size: 14px;
+  color: var(--text-primary);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+  width: 100%;
+}
+.intake-input:focus,
+.intake-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.intake-textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.7;
+}
+
+/* ラジオ */
+.intake-radio-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.intake-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--white);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all var(--t-fast);
+}
+.intake-radio:hover {
+  border-color: var(--accent);
+}
+.intake-radio:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* チェックボックス */
+.intake-checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px;
+}
+.intake-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--white);
+  cursor: pointer;
+  font-size: 13.5px;
+  transition: all var(--t-fast);
+}
+.intake-checkbox:hover {
+  border-color: var(--accent);
+}
+.intake-checkbox:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* ナビゲーション */
+.intake-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+}
+.intake-btn-back,
+.intake-btn-next,
+.intake-btn-submit {
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-family: var(--font-jp);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--t-fast);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.intake-btn-back {
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+}
+.intake-btn-back:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.intake-btn-next,
+.intake-btn-submit {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: var(--white);
+  margin-left: auto;
+  box-shadow: 0 3px 10px var(--accent-glow);
+}
+.intake-btn-next:hover,
+.intake-btn-submit:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+.intake-btn-submit:disabled,
+.intake-btn-next:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* エラーメッセージ */
+.intake-error {
+  margin-top: 16px;
+  padding: 10px 14px;
+  background: rgba(201, 96, 58, 0.08);
+  border: 1px solid rgba(201, 96, 58, 0.3);
+  border-radius: 8px;
+  color: #a5361e;
+  font-size: 13px;
+}
+
+/* 完了画面 */
+.intake-done {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 540px;
+  margin: 0 auto;
+}
+.intake-done-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(80, 130, 90, 0.15);
+  color: #2e6a3a;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+.intake-done-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  color: var(--text-primary);
+}
+.intake-done-message {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--text-secondary);
+  margin: 0 0 32px;
+}
+.intake-pin-gate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+  background: var(--bg-offwhite);
+  border: 1px dashed var(--border-light);
+  border-radius: 12px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+.intake-pin-gate-hint {
+  font-size: 12px;
+  color: var(--text-light);
+  margin: 0;
+}
+.intake-pin-gate input {
+  text-align: center;
+  letter-spacing: 0.5em;
+  font-size: 18px;
+  max-width: 200px;
+}
